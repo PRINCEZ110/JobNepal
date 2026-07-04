@@ -1,0 +1,253 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 88px;
+  background-color: #0B66A9;
+  z-index: 50;
+  transition: box-shadow 0.3s ease;
+}
+.header.scrolled {
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+}
+
+/* ========== Container ========== */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ========== Logo ========== */
+.logo-block {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  flex-shrink: 0;
+  text-decoration: none;
+  transform: translateY(-20px);
+
+}
+.logo-text {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: bold;
+  font-size: 25px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+.logo-subtitle {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 400;
+  margin-top: -4px;
+  padding-left: 60px;
+}
+
+/* ========== Desktop Nav ========== */
+.nav-desktop {
+  display: none;
+  align-items: center;
+  gap: 42px;
+}
+@media (min-width: 1024px) {
+  .nav-desktop {
+    display: flex;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .nav-desktop {
+    gap: 24px;
+  }
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  border-radius: 2px;
+}
+.nav-item:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+.nav-item:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ========== Dropdown Arrow ========== */
+.arrow {
+  width: 10px;
+  height: 10px;
+  transition: transform 0.3s ease;
+}
+.arrow.open {
+  transform: rotate(180deg);
+}
+
+/* ========== Right Buttons ========== */
+.btn-group {
+  display: none;
+  align-items: center;
+}
+@media (min-width: 1024px) {
+  .btn-group {
+    display: flex;
+  }
+}
+
+.btn-login {
+  width: 92px;
+  height: 42px;
+  background: #fff;
+  color: #333;
+  font-weight: 600;
+  font-size: 15px;
+  border: none;
+  border-radius: 6px 0 0 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.btn-login:hover {
+  background: #f3f3f3;
+}
+.btn-login:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.btn-signup {
+  width: 118px;
+  height: 42px;
+  background: #F89A1C;
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  border: none;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: background 0.3s ease;
+}
+.btn-signup:hover {
+  background: #E78600;
+}
+.btn-signup:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ========== Hamburger ========== */
+.hamburger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+@media (min-width: 1024px) {
+  .hamburger {
+    display: none;
+  }
+}
+.hamburger:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ========== Mobile Menu ========== */
+.mobile-menu-wrapper {
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+  max-height: 0;
+}
+@media (min-width: 1024px) {
+  .mobile-menu-wrapper {
+    display: none;
+  }
+}
+.mobile-menu-wrapper.open {
+  max-height: 600px;
+}
+
+.mobile-nav {
+  background: #0B66A9;
+  padding: 8px 30px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mobile-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 8px 0;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  border-radius: 2px;
+  text-align: left;
+}
+.mobile-nav-item:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+.mobile-nav-item:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.mobile-btn-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.mobile-btn-login,
+.mobile-btn-signup {
+  flex: 1;
+  height: 42px;
+  font-weight: 600;
+  font-size: 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.mobile-btn-login {
+  background: #fff;
+  color: #333;
+}
+.mobile-btn-login:hover {
+  background: #f3f3f3;
+}
+.mobile-btn-signup {
+  background: #F89A1C;
+  color: #fff;
+}
+.mobile-btn-signup:hover {
+  background: #E78600;
+}
