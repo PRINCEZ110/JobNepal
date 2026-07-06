@@ -1,0 +1,102 @@
+.featured-jobs {
+  padding: 60px 0 70px;
+  background: #fff ;
+}
+.fj-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+.fj-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.fj-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+.fj-subtitle {
+  font-size: 16px;
+  color: #64748b;
+}
+.fj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+.fj-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  transition: box-shadow 0.3s ease;
+}
+.fj-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+.fj-card-top {
+  margin-bottom: 20px;
+}
+.fj-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.fj-company-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+.fj-deadline {
+  font-size: 12px;
+  font-weight: 600;
+  color: #dc2626;
+  background: #fef2f2;
+  padding: 4px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.fj-job-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+.fj-company-name {
+  font-size: 14px;
+  color: #64748b;
+}
+.fj-card-bottom {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.fj-location,
+.fj-job-type {
+  font-size: 13px;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+.fj-footer {
+  text-align: center;
+  margin-top: 40px;
+}
+.fj-view-all {
+  color: #0B66A9;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+}
+.fj-view-all:hover {
+  text-decoration: underline;
+}
