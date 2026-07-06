@@ -1,6 +1,6 @@
 import Navbar from './Components/Navbar/Navbar.jsx'
 import Hero from './Components/Hero/Hero.jsx'
-import Products from './Components/Products/Products.jsx'
+import PopularCategories from './Components/PopularCategories/PopularCategories.jsx'
 import './App.css'
 
 function App() {
