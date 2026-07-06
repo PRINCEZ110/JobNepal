@@ -1,5 +1,5 @@
 import './WhyChooseUs.css'
-import { HiBriefcase, HiUserGroup, HiLightningBolt, HiShieldCheck, HiGlobe, HiChartBar } from 'react-icons/hi2'
+import { HiBriefcase, HiUserGroup, HiBolt, HiShieldCheck, HiGlobeAlt, HiChartBar } from 'react-icons/hi2'
 
 const features = [
   {
@@ -13,7 +13,7 @@ const features = [
     desc: 'Apply directly to employers. No middlemen, no fees for job seekers.',
   },
   {
-    icon: <HiLightningBolt />,
+    icon:  <HiBolt />,
     title: 'Fast & Easy Apply',
     desc: 'One-click apply with your saved profile. Get hired faster.',
   },
@@ -23,7 +23,7 @@ const features = [
     desc: 'All companies and organizations are verified before posting jobs.',
   },
   {
-    icon: <HiGlobe />,
+    icon: <HiGlobeAlt />,
     title: 'Nationwide Reach',
     desc: 'Jobs from all 7 provinces — Kathmandu to remote districts.',
   },
