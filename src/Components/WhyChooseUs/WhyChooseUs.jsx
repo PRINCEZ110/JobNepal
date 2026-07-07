@@ -36,19 +36,22 @@ const features = [
 
 function WhyChooseUs() {
   return (
-    <section className="why-choose-us">
+    <section className="wcu-section">
       <div className="wcu-container">
         <div className="wcu-header">
-          <h2 className="wcu-title">Why Choose JobsNepal?</h2>
-          <p className="wcu-subtitle">Nepal's trusted job platform for job seekers and employers</p>
+          <span className="wcu-label">Why JobsNepal</span>
+          <h2 className="wcu-title">All the help you need to find your next job</h2>
+          <p className="wcu-subtitle">
+            Whether you're a fresh graduate or an experienced professional, JobsNepal gives you the tools to succeed.
+          </p>
         </div>
 
         <div className="wcu-grid">
           {features.map((feature, i) => (
             <div key={i} className="wcu-card">
-              <span className="wcu-icon">{feature.icon}</span>
-              <h3 className="wcu-feature-title">{feature.title}</h3>
-              <p className="wcu-feature-desc">{feature.desc}</p>
+              <span className="wcu-card-icon">{feature.icon}</span>
+              <h3 className="wcu-card-title">{feature.title}</h3>
+              <p className="wcu-card-desc">{feature.desc}</p>
             </div>
           ))}
         </div>
