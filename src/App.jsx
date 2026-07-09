@@ -1,24 +1,27 @@
+import { Routes, Route } from 'react-router-dom'
 import Navbar from './Components/Navbar/Navbar.jsx'
-import Hero from './Components/Hero/Hero.jsx'
-import FeaturedJobs from './Components/FeaturedJobs/FeaturedJobs.jsx'
-import PopularCategories from './Components/PopularCategories/PopularCategories.jsx'
-import WhyChooseUs from './Components/WhyChooseUs/WhyChooseUs.jsx'
-import TopCompanies from './Components/TopCompanies/TopCompanies.jsx'
-import CTA from './Components/CTA/CTA.jsx'
 import Footer from './Components/Footer/Footer.jsx'
+import Home from './pages/Home/Home.jsx'
+import JobDetail from './pages/JobDetail/JobDetail.jsx'
+import Login from './pages/Login/Login.jsx'
+import Signup from './pages/Signup/Signup.jsx'
+import HireForm from './pages/HireForm/HireForm.jsx'
+import JobSeekerForm from './pages/JobSeekerForm/JobSeekerForm.jsx'
 import './App.css'
 
 function App() {
   return (
     <>
       <Navbar />
-      <Hero />
-      <FeaturedJobs/>
-      <PopularCategories/>
-      <WhyChooseUs/>
-      <TopCompanies/>
-      <CTA/>
-      <Footer/>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/job/:id" element={<JobDetail />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/hire" element={<HireForm />} />
+        <Route path="/find-job" element={<JobSeekerForm />} />
+      </Routes>
+      <Footer />
     </>
   )
 }

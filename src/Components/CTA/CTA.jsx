@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import './CTA.css'
 
 function CTA() {
@@ -12,12 +13,12 @@ function CTA() {
           <div className="cta-card">
             <h3 className="cta-card-title">I'm looking for a job</h3>
             <p className="cta-card-desc">Browse thousands of jobs from top companies and NGOs across Nepal.</p>
-            <a href="#" className="cta-btn cta-btn--primary">Find Jobs</a>
+            <Link to="/find-job" className="cta-btn cta-btn--primary">Find Jobs</Link>
           </div>
           <div className="cta-card">
             <h3 className="cta-card-title">I'm hiring</h3>
             <p className="cta-card-desc">Post vacancies and find the right candidates for your organization.</p>
-            <a href="#" className="cta-btn cta-btn--secondary">Post a Job</a>
+            <Link to="/hire" className="cta-btn cta-btn--secondary">Post a Job</Link>
           </div>
         </div>
       </div>

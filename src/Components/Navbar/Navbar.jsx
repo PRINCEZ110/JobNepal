@@ -1,20 +1,43 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { HiChevronDown, HiBars3, HiXMark } from 'react-icons/hi2'
 import './Navbar.css'
 
 const navItems = [
-  { label: 'Search', hasArrow: true },
-  { label: 'About Us', hasArrow: false },
-  { label: 'Services', hasArrow: true },
-  { label: 'Help', hasArrow: true },
-  { label: 'Blog', hasArrow: false },
-  { label: 'Contact Us', hasArrow: false },
+  {
+    label: 'Search',
+    children: [
+      { label: 'Jobs by Category', path: '/jobs/category' },
+      { label: 'Jobs by Company', path: '/jobs/company' },
+      { label: 'Advanced Search', path: '/search' },
+    ],
+  },
+  { label: 'About Us', path: '/about' },
+  {
+    label: 'Services',
+    children: [
+      { label: 'Post a Job', path: '/hire' },
+      { label: 'Resume Building', path: '/resume' },
+      { label: 'Career Counseling', path: '/counseling' },
+    ],
+  },
+  {
+    label: 'Help',
+    children: [
+      { label: 'FAQ', path: '/faq' },
+      { label: 'Contact Support', path: '/support' },
+    ],
+  },
+  { label: 'Blog', path: '/blog' },
+  { label: 'Contact Us', path: '/contact' },
 ]
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [openDropdowns, setOpenDropdowns] = useState({})
+  const [openDropdown, setOpenDropdown] = useState(null)
+  const [mobileSubOpen, setMobileSubOpen] = useState(null)
+  const dropdownRef = useRef(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
@@ -22,48 +45,61 @@ function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const toggleDropdown = (label) =>
-    setOpenDropdowns((prev) => ({ ...prev, [label]: !prev[label] }))
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpenDropdown(null)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   return (
     <header className={`header ${scrolled ? 'scrolled' : ''}`}>
       <div className="container">
-        {/* Logo */}
-        <a href="/" className="logo-block">
+        <Link to="/" className="logo-block">
           <span className="logo-text">JobsNepal.com</span>
           <span className="logo-subtitle">Nepal's #1 job and career portal</span>
-        </a>
+        </Link>
 
-        {/* Desktop Nav */}
-        <nav className="nav-desktop" aria-label="Main navigation">
+        <nav className="nav-desktop" ref={dropdownRef}>
           {navItems.map((item) => (
-            <button
-              key={item.label}
-              className="nav-item"
-              onClick={() => item.hasArrow && toggleDropdown(item.label)}
-              aria-haspopup={item.hasArrow}
-              aria-expanded={item.hasArrow ? !!openDropdowns[item.label] : undefined}
-            >
-              {item.label}
-              {item.hasArrow && (
-                <HiChevronDown
-                  className={`arrow ${openDropdowns[item.label] ? 'open' : ''}`}
-                />
+            <div key={item.label} className="nav-item-wrapper">
+              {item.children ? (
+                <>
+                  <button
+                    className="nav-item"
+                    onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}
+                  >
+                    {item.label}
+                    <HiChevronDown className={`arrow ${openDropdown === item.label ? 'open' : ''}`} />
+                  </button>
+                  {openDropdown === item.label && (
+                    <div className="dropdown-menu">
+                      {item.children.map((child) => (
+                        <Link key={child.label} to={child.path} className="dropdown-item" onClick={() => setOpenDropdown(null)}>
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </>
+              ) : (
+                <Link to={item.path} className="nav-item nav-link">{item.label}</Link>
               )}
-            </button>
+            </div>
           ))}
         </nav>
 
-        {/* Right Buttons */}
         <div className="btn-group">
-          <button className="btn-login">LOG IN</button>
-          <button className="btn-signup">
+          <Link to="/login" className="btn-login">LOG IN</Link>
+          <Link to="/signup" className="btn-signup">
             SIGN UP
             <HiChevronDown className="arrow" />
-          </button>
+          </Link>
         </div>
 
-        {/* Hamburger */}
         <button
           className="hamburger"
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -74,29 +110,39 @@ function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       <div className={`mobile-menu-wrapper ${mobileOpen ? 'open' : ''}`}>
-        <nav className="mobile-nav" aria-label="Mobile navigation">
+        <nav className="mobile-nav">
           {navItems.map((item) => (
-            <button
-              key={item.label}
-              className="mobile-nav-item"
-              onClick={() => {
-                if (item.hasArrow) toggleDropdown(item.label)
-                else setMobileOpen(false)
-              }}
-            >
-              {item.label}
-              {item.hasArrow && (
-                <HiChevronDown
-                  className={`arrow ${openDropdowns[item.label] ? 'open' : ''}`}
-                />
+            <div key={item.label}>
+              {item.children ? (
+                <>
+                  <button
+                    className="mobile-nav-item"
+                    onClick={() => setMobileSubOpen(mobileSubOpen === item.label ? null : item.label)}
+                  >
+                    {item.label}
+                    <HiChevronDown className={`arrow ${mobileSubOpen === item.label ? 'open' : ''}`} />
+                  </button>
+                  {mobileSubOpen === item.label && (
+                    <div className="mobile-submenu">
+                      {item.children.map((child) => (
+                        <Link key={child.label} to={child.path} className="mobile-sub-item" onClick={() => { setMobileOpen(false); setMobileSubOpen(null) }}>
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </>
+              ) : (
+                <Link to={item.path} className="mobile-nav-item mobile-nav-link" onClick={() => setMobileOpen(false)}>
+                  {item.label}
+                </Link>
               )}
-            </button>
+            </div>
           ))}
           <div className="mobile-btn-group">
-            <button className="mobile-btn-login">LOG IN</button>
-            <button className="mobile-btn-signup">SIGN UP</button>
+            <Link to="/login" className="mobile-btn-login" onClick={() => setMobileOpen(false)}>LOG IN</Link>
+            <Link to="/signup" className="mobile-btn-signup" onClick={() => setMobileOpen(false)}>SIGN UP</Link>
           </div>
         </nav>
       </div>
