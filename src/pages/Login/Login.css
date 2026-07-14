@@ -77,6 +77,10 @@
 .auth-btn:hover {
   background: #084a7a;
 }
+.auth-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 .auth-footer {
   text-align: center;
   font-size: 14px;

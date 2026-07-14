@@ -1,10 +1,14 @@
 import { useState } from 'react'
+import { sanitizeInput } from '../../utils/security.js'
 import './HireForm.css'
 
 export default function HireForm() {
   const [form, setForm] = useState({ company: '', name: '', email: '', phone: '', title: '', type: '', description: '' })
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
+  const handleChange = (e) => {
+    const val = e.target.type === 'email' ? e.target.value.trim() : sanitizeInput(e.target.value)
+    setForm({ ...form, [e.target.name]: val })
+  }
   const handleSubmit = (e) => { e.preventDefault() /* TODO: API */ }
 
   return (
@@ -13,35 +17,35 @@ export default function HireForm() {
         <div className="form-card">
           <h1 className="form-title">Post a Job</h1>
           <p className="form-subtitle">Fill in the details to post a vacancy and find the right candidate.</p>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} noValidate>
             <div className="form-row">
               <div className="form-field">
-                <label>Company Name</label>
-                <input name="company" value={form.company} onChange={handleChange} placeholder="Your company name" required />
+                <label htmlFor="hire-company">Company Name</label>
+                <input id="hire-company" name="company" value={form.company} onChange={handleChange} placeholder="Your company name" required />
               </div>
               <div className="form-field">
-                <label>Contact Person</label>
-                <input name="name" value={form.name} onChange={handleChange} placeholder="Full name" required />
+                <label htmlFor="hire-contact">Contact Person</label>
+                <input id="hire-contact" name="name" value={form.name} onChange={handleChange} placeholder="Full name" required />
               </div>
             </div>
             <div className="form-row">
               <div className="form-field">
-                <label>Email Address</label>
-                <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="you@company.com" required />
+                <label htmlFor="hire-email">Email Address</label>
+                <input id="hire-email" name="email" type="email" value={form.email} onChange={handleChange} placeholder="you@company.com" autoComplete="email" required />
               </div>
               <div className="form-field">
-                <label>Phone Number</label>
-                <input name="phone" type="tel" value={form.phone} onChange={handleChange} placeholder="98XXXXXXXX" required />
+                <label htmlFor="hire-phone">Phone Number</label>
+                <input id="hire-phone" name="phone" type="tel" value={form.phone} onChange={handleChange} placeholder="98XXXXXXXX" autoComplete="tel" required />
               </div>
             </div>
             <div className="form-row">
               <div className="form-field">
-                <label>Job Title</label>
-                <input name="title" value={form.title} onChange={handleChange} placeholder="e.g. Laravel Developer" required />
+                <label htmlFor="hire-title">Job Title</label>
+                <input id="hire-title" name="title" value={form.title} onChange={handleChange} placeholder="e.g. Laravel Developer" required />
               </div>
               <div className="form-field">
-                <label>Employment Type</label>
-                <select name="type" value={form.type} onChange={handleChange} required>
+                <label htmlFor="hire-type">Employment Type</label>
+                <select id="hire-type" name="type" value={form.type} onChange={handleChange} required>
                   <option value="">Select type</option>
                   <option value="Full Time">Full Time</option>
                   <option value="Part Time">Part Time</option>
@@ -51,8 +55,8 @@ export default function HireForm() {
               </div>
             </div>
             <div className="form-field">
-              <label>Job Description</label>
-              <textarea name="description" value={form.description} onChange={handleChange} rows={5} placeholder="Describe the role, requirements, and benefits..." required />
+              <label htmlFor="hire-desc">Job Description</label>
+              <textarea id="hire-desc" name="description" value={form.description} onChange={handleChange} rows={5} placeholder="Describe the role, requirements, and benefits..." required />
             </div>
             <button type="submit" className="form-btn">Post Vacancy</button>
           </form>

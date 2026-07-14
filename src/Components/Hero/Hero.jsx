@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { HiMagnifyingGlass, HiMapPin, HiBriefcase } from 'react-icons/hi2'
 import './Hero.css'
 
 function Hero() {
+  const navigate = useNavigate()
   const [keyword, setKeyword] = useState('')
   const [location, setLocation] = useState('')
 
@@ -11,7 +13,7 @@ function Hero() {
     const params = new URLSearchParams()
     if (keyword) params.set('q', keyword)
     if (location) params.set('l', location)
-    window.location.href = `/search?${params.toString()}`
+    navigate(`/search?${params.toString()}`)
   }
 
   return (

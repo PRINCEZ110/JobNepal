@@ -1,8 +1,10 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { HiChevronDown, HiBars3, HiXMark, HiUser } from 'react-icons/hi2'
 import { useAuth } from '../../context/AuthContext.jsx'
 import './Navbar.css'
+
+const SESSION_TIMEOUT = 30 * 60 * 1000
 
 const navItems = [
   {
@@ -41,8 +43,34 @@ function Navbar() {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const dropdownRef = useRef(null)
   const userMenuRef = useRef(null)
+  const idleTimer = useRef(null)
   const { user, logout } = useAuth()
   const navigate = useNavigate()
+
+  const handleLogout = () => {
+    logout()
+    setUserMenuOpen(false)
+    setMobileOpen(false)
+    navigate('/')
+  }
+
+  const resetIdleTimer = useCallback(() => {
+    if (idleTimer.current) clearTimeout(idleTimer.current)
+    idleTimer.current = setTimeout(() => {
+      if (user) handleLogout()
+    }, SESSION_TIMEOUT)
+  }, [user])
+
+  useEffect(() => {
+    if (!user) return
+    const events = ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart']
+    resetIdleTimer()
+    events.forEach(e => window.addEventListener(e, resetIdleTimer))
+    return () => {
+      events.forEach(e => window.removeEventListener(e, resetIdleTimer))
+      if (idleTimer.current) clearTimeout(idleTimer.current)
+    }
+  }, [user, resetIdleTimer])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
@@ -62,13 +90,6 @@ function Navbar() {
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
-
-  const handleLogout = () => {
-    logout()
-    setUserMenuOpen(false)
-    setMobileOpen(false)
-    navigate('/')
-  }
 
   return (
     <header className={`header ${scrolled ? 'scrolled' : ''}`}>

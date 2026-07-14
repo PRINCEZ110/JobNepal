@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { createContext, useContext, useState, useEffect, useCallback } from 'react'
+import { hashPassword, checkRateLimit, resetRateLimit } from '../utils/security.js'
 
 const AuthContext = createContext(null)
 
@@ -9,41 +9,55 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const stored = localStorage.getItem('user')
     if (stored) {
-      try { setUser(JSON.parse(stored)) } catch { localStorage.removeItem('user') }
+      try {
+        const u = JSON.parse(stored)
+        setUser({ name: u.name, email: u.email })
+      } catch { localStorage.removeItem('user') }
     }
   }, [])
 
-  const login = (email, password) => {
+  const login = useCallback(async (email, password) => {
+    const rate = checkRateLimit(email)
+    if (rate.blocked) return { success: false, error: rate.message }
+
     const stored = localStorage.getItem('user')
-    if (stored) {
+    if (!stored) return { success: false, error: 'No account found. Please sign up.' }
+
+    try {
       const u = JSON.parse(stored)
-      if (u.email === email && u.password === password) {
-        const loggedIn = { name: u.name, email: u.email }
-        setUser(loggedIn)
+      const hash = await hashPassword(password)
+      if (u.email === email && u.passwordHash === hash) {
+        setUser({ name: u.name, email: u.email })
+        resetRateLimit(email)
         return { success: true }
       }
-    }
-    return { success: false, error: 'Invalid email or password' }
-  }
+    } catch { }
 
-  const signup = (name, email, password) => {
+    return { success: false, error: 'Invalid email or password' }
+  }, [])
+
+  const signup = useCallback(async (name, email, password) => {
     const existing = localStorage.getItem('user')
     if (existing) {
-      const u = JSON.parse(existing)
-      if (u.email === email) {
-        return { success: false, error: 'An account with this email already exists' }
-      }
+      try {
+        const u = JSON.parse(existing)
+        if (u.email === email) {
+          return { success: false, error: 'An account with this email already exists' }
+        }
+      } catch { }
     }
-    const newUser = { name, email, password }
+
+    const passwordHash = await hashPassword(password)
+    const newUser = { name, email, passwordHash }
     localStorage.setItem('user', JSON.stringify(newUser))
     setUser({ name, email })
     return { success: true }
-  }
+  }, [])
 
-  const logout = () => {
+  const logout = useCallback(() => {
     localStorage.removeItem('user')
     setUser(null)
-  }
+  }, [])
 
   return (
     <AuthContext.Provider value={{ user, login, signup, logout }}>

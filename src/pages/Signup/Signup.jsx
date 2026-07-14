@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext.jsx'
+import { sanitizeInput, validateEmail, validatePassword } from '../../utils/security.js'
 import './Signup.css'
 
 export default function Signup() {
@@ -8,13 +9,36 @@ export default function Signup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
   const { signup } = useAuth()
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
-    const result = signup(name, email, password)
+
+    const cleanName = sanitizeInput(name.trim())
+    if (cleanName.length < 2) {
+      setError('Name must be at least 2 characters')
+      return
+    }
+
+    const cleanEmail = sanitizeInput(email.trim())
+    if (!validateEmail(cleanEmail)) {
+      setError('Please enter a valid email address')
+      return
+    }
+
+    const passwordError = validatePassword(password)
+    if (passwordError) {
+      setError(passwordError)
+      return
+    }
+
+    setLoading(true)
+    const result = await signup(cleanName, cleanEmail, password)
+    setLoading(false)
+
     if (result.success) {
       navigate('/')
     } else {
@@ -29,21 +53,47 @@ export default function Signup() {
           <h1 className="auth-title">Create Account</h1>
           <p className="auth-subtitle">Join JobsNepal and find your next opportunity.</p>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} noValidate>
             <div className="auth-field">
-              <label>Full Name</label>
-              <input type="text" placeholder="Your Name" value={name} onChange={e => setName(e.target.value)} required />
+              <label htmlFor="signup-name">Full Name</label>
+              <input
+                id="signup-name"
+                type="text"
+                placeholder="Your Name"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                autoComplete="name"
+                required
+              />
             </div>
             <div className="auth-field">
-              <label>Email Address</label>
-              <input type="email" placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)} required />
+              <label htmlFor="signup-email">Email Address</label>
+              <input
+                id="signup-email"
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                autoComplete="email"
+                required
+              />
             </div>
             <div className="auth-field">
-              <label>Password</label>
-              <input type="password" placeholder="Create a password" value={password} onChange={e => setPassword(e.target.value)} required />
+              <label htmlFor="signup-password">Password</label>
+              <input
+                id="signup-password"
+                type="password"
+                placeholder="Create a password (8+ chars, upper, lower, number)"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                autoComplete="new-password"
+                required
+              />
             </div>
-            {error && <p className="auth-error">{error}</p>}
-            <button type="submit" className="auth-btn">Create Account</button>
+            {error && <p className="auth-error" role="alert">{error}</p>}
+            <button type="submit" className="auth-btn" disabled={loading}>
+              {loading ? 'Creating account...' : 'Create Account'}
+            </button>
           </form>
 
           <p className="auth-footer">
