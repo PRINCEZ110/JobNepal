@@ -2,16 +2,27 @@
 
 A job portal frontend built with **React 19**, **Vite 8**, and **Tailwind CSS v4** — connecting job seekers and employers in Nepal.
 
-## Sections
+## Pages / Routes
 
-- **Navbar** — Responsive nav with desktop/mobile menus, scroll-aware styling
-- **Hero** — Search form with keyword & location fields, stats counter
-- **Featured Jobs** — Grid of curated job listings with company logos
-- **Popular Categories** — 8 job categories (IT, NGO, Hospitality, etc.)
-- **Why Choose Us** — 6 feature cards highlighting platform benefits
-- **Top Companies** — Logo grid of hiring organizations
-- **CTA** — Dual call-to-action for job seekers and employers
-- **Footer** — Links, contact info, social icons
+| Route | Page |
+|---|---|
+| `/` | Home — Hero, Featured Jobs, Categories, Why Choose Us, Top Companies, CTA |
+| `/login` | Login with rate-limited auth |
+| `/signup` | Signup with password strength validation |
+| `/hire` | Post a job (employer form) |
+| `/find-job` | Submit application (job seeker form) |
+| `/job/:id` | Job detail page |
+
+## Auth & Security
+
+- **Auth context** with localStorage persistence
+- **Passwords SHA-256 hashed** before storage (never plaintext)
+- **Login rate limiting** — 5 attempts per 60s per email
+- **Password strength** — min 8 chars, uppercase, lowercase, number
+- **Input sanitization** — HTML special chars stripped on all form fields
+- **CSP headers** — Content-Security-Policy, X-Frame-Options, X-Content-Type-Options, Referrer-Policy
+- **Session timeout** — auto-logout after 30 min inactivity
+- **SPA routing** — no full page reloads (useNavigate throughout)
 
 ## Tech Stack
 
@@ -20,6 +31,8 @@ A job portal frontend built with **React 19**, **Vite 8**, and **Tailwind CSS v4
 | React | ^19.2.7 |
 | Vite | ^8.1.1 |
 | Tailwind CSS | ^4.3.2 |
+| React Router | ^7.18.1 |
+| React Icons | ^5.7.0 |
 | ESLint | ^10.6.0 |
 
 ## Getting Started
