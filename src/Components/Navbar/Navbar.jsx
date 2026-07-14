@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
-import { HiChevronDown, HiBars3, HiXMark } from 'react-icons/hi2'
+import { Link, useNavigate } from 'react-router-dom'
+import { HiChevronDown, HiBars3, HiXMark, HiUser } from 'react-icons/hi2'
+import { useAuth } from '../../context/AuthContext.jsx'
 import './Navbar.css'
 
 const navItems = [
@@ -37,7 +38,11 @@ function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState(null)
   const [mobileSubOpen, setMobileSubOpen] = useState(null)
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
   const dropdownRef = useRef(null)
+  const userMenuRef = useRef(null)
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
@@ -50,10 +55,20 @@ function Navbar() {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setOpenDropdown(null)
       }
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
+        setUserMenuOpen(false)
+      }
     }
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
+
+  const handleLogout = () => {
+    logout()
+    setUserMenuOpen(false)
+    setMobileOpen(false)
+    navigate('/')
+  }
 
   return (
     <header className={`header ${scrolled ? 'scrolled' : ''}`}>
@@ -92,12 +107,31 @@ function Navbar() {
           ))}
         </nav>
 
-        <div className="btn-group">
-          <Link to="/login" className="btn-login">LOG IN</Link>
-          <Link to="/signup" className="btn-signup">
-            SIGN UP
-            <HiChevronDown className="arrow" />
-          </Link>
+        <div className="btn-group" ref={userMenuRef}>
+          {user ? (
+            <div className="user-menu">
+              <button className="btn-user" onClick={() => setUserMenuOpen(!userMenuOpen)}>
+                <HiUser className="user-icon" />
+                <span className="user-name">{user.name.split(' ')[0]}</span>
+                <HiChevronDown className={`arrow ${userMenuOpen ? 'open' : ''}`} />
+              </button>
+              {userMenuOpen && (
+                <div className="user-dropdown">
+                  <span className="user-dropdown-name">{user.name}</span>
+                  <span className="user-dropdown-email">{user.email}</span>
+                  <button className="user-dropdown-logout" onClick={handleLogout}>Log Out</button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <>
+              <Link to="/login" className="btn-login">LOG IN</Link>
+              <Link to="/signup" className="btn-signup">
+                SIGN UP
+                <HiChevronDown className="arrow" />
+              </Link>
+            </>
+          )}
         </div>
 
         <button
@@ -141,8 +175,17 @@ function Navbar() {
             </div>
           ))}
           <div className="mobile-btn-group">
-            <Link to="/login" className="mobile-btn-login" onClick={() => setMobileOpen(false)}>LOG IN</Link>
-            <Link to="/signup" className="mobile-btn-signup" onClick={() => setMobileOpen(false)}>SIGN UP</Link>
+            {user ? (
+              <>
+                <span className="mobile-user-name">{user.name}</span>
+                <button className="mobile-btn-logout" onClick={handleLogout}>LOG OUT</button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="mobile-btn-login" onClick={() => setMobileOpen(false)}>LOG IN</Link>
+                <Link to="/signup" className="mobile-btn-signup" onClick={() => setMobileOpen(false)}>SIGN UP</Link>
+              </>
+            )}
           </div>
         </nav>
       </div>

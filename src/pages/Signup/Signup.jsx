@@ -1,15 +1,25 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext.jsx'
 import './Signup.css'
 
 export default function Signup() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const { signup } = useAuth()
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // TODO: API call
+    setError('')
+    const result = signup(name, email, password)
+    if (result.success) {
+      navigate('/')
+    } else {
+      setError(result.error)
+    }
   }
 
   return (
@@ -32,6 +42,7 @@ export default function Signup() {
               <label>Password</label>
               <input type="password" placeholder="Create a password" value={password} onChange={e => setPassword(e.target.value)} required />
             </div>
+            {error && <p className="auth-error">{error}</p>}
             <button type="submit" className="auth-btn">Create Account</button>
           </form>
 
