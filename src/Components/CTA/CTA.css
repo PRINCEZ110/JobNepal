@@ -1,28 +1,33 @@
 .cta-section {
   padding: 80px 0;
-  background: #fff;
+  background: #0f172a;
 }
+
 .cta-container {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 30px;
 }
+
 .cta-header {
   text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: 44px;
 }
+
 .cta-title {
-  font-size: 36px;
+  font-size: 32px;
   font-weight: 800;
-  color: #0f172a;
-  margin-bottom: 12px;
+  color: #fff;
+  margin: 0 0 12px;
   letter-spacing: -0.02em;
 }
+
 .cta-subtitle {
-  font-size: 17px;
+  font-size: 16px;
   color: #64748b;
   margin: 0;
 }
+
 .cta-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -30,60 +35,67 @@
   max-width: 800px;
   margin: 0 auto;
 }
+
 .cta-card {
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 14px;
   padding: 40px 32px;
   text-align: center;
-  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.2s, border-color 0.2s;
 }
+
 .cta-card:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-  border-color: #0B66A9;
   transform: translateY(-3px);
+  border-color: #475569;
 }
+
 .cta-card-title {
   font-size: 20px;
   font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 12px;
+  color: #fff;
+  margin: 0 0 12px;
 }
+
 .cta-card-desc {
   font-size: 14px;
-  color: #64748b;
+  color: #94a3b8;
   line-height: 1.6;
-  margin-bottom: 24px;
+  margin: 0 0 24px;
 }
+
 .cta-btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 12px 32px;
   border-radius: 8px;
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition: all 0.2s;
 }
+
 .cta-btn--primary {
-  background: #0B66A9;
-  color: #fff;
+  background: #fff;
+  color: #0f172a;
 }
 .cta-btn--primary:hover {
-  background: #084a7a;
-  transform: translateY(-2px);
+  background: #e2e8f0;
 }
+
 .cta-btn--secondary {
-  background: #fff;
-  color: #0B66A9;
-  border: 1px solid #0B66A9;
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
 }
 .cta-btn--secondary:hover {
-  background: #f8fafc;
-  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.08);
 }
 
 @media (max-width: 640px) {
   .cta-grid { grid-template-columns: 1fr; }
-  .cta-title { font-size: 28px; }
+  .cta-title { font-size: 26px; }
   .cta-card { padding: 32px 24px; }
 }

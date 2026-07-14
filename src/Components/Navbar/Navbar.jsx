@@ -1,17 +1,15 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { HiChevronDown, HiBars3, HiXMark, HiUser } from 'react-icons/hi2'
 import { useAuth } from '../../context/AuthContext.jsx'
 import './Navbar.css'
 
-const SESSION_TIMEOUT = 30 * 60 * 1000
-
 const navItems = [
   {
-    label: 'Search',
+    label: 'Search Jobs',
     children: [
-      { label: 'Jobs by Category', path: '/jobs/category' },
-      { label: 'Jobs by Company', path: '/jobs/company' },
+      { label: 'By Category', path: '/jobs/category' },
+      { label: 'By Company', path: '/jobs/company' },
       { label: 'Advanced Search', path: '/search' },
     ],
   },
@@ -24,15 +22,8 @@ const navItems = [
       { label: 'Career Counseling', path: '/counseling' },
     ],
   },
-  {
-    label: 'Help',
-    children: [
-      { label: 'FAQ', path: '/faq' },
-      { label: 'Contact Support', path: '/support' },
-    ],
-  },
   { label: 'Blog', path: '/blog' },
-  { label: 'Contact Us', path: '/contact' },
+  { label: 'Contact', path: '/contact' },
 ]
 
 function Navbar() {
@@ -43,7 +34,6 @@ function Navbar() {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const dropdownRef = useRef(null)
   const userMenuRef = useRef(null)
-  const idleTimer = useRef(null)
   const { user, logout } = useAuth()
   const navigate = useNavigate()
 
@@ -54,24 +44,6 @@ function Navbar() {
     navigate('/')
   }
 
-  const resetIdleTimer = useCallback(() => {
-    if (idleTimer.current) clearTimeout(idleTimer.current)
-    idleTimer.current = setTimeout(() => {
-      if (user) handleLogout()
-    }, SESSION_TIMEOUT)
-  }, [user])
-
-  useEffect(() => {
-    if (!user) return
-    const events = ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart']
-    resetIdleTimer()
-    events.forEach(e => window.addEventListener(e, resetIdleTimer))
-    return () => {
-      events.forEach(e => window.removeEventListener(e, resetIdleTimer))
-      if (idleTimer.current) clearTimeout(idleTimer.current)
-    }
-  }, [user, resetIdleTimer])
-
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
     window.addEventListener('scroll', onScroll)
@@ -80,12 +52,8 @@ function Navbar() {
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setOpenDropdown(null)
-      }
-      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
-        setUserMenuOpen(false)
-      }
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) setOpenDropdown(null)
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) setUserMenuOpen(false)
     }
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
@@ -95,8 +63,11 @@ function Navbar() {
     <header className={`header ${scrolled ? 'scrolled' : ''}`}>
       <div className="container">
         <Link to="/" className="logo-block">
-          <span className="logo-text">JobsNepal.com</span>
-          <span className="logo-subtitle">Nepal's #1 job and career portal</span>
+          <span className="logo-icon">JN</span>
+          <div>
+            <span className="logo-text">JobsNepal</span>
+            <span className="logo-subtitle">Nepal's #1 job portal</span>
+          </div>
         </Link>
 
         <nav className="nav-desktop" ref={dropdownRef}>
@@ -104,25 +75,20 @@ function Navbar() {
             <div key={item.label} className="nav-item-wrapper">
               {item.children ? (
                 <>
-                  <button
-                    className="nav-item"
-                    onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}
-                  >
+                  <button className="nav-item" onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}>
                     {item.label}
                     <HiChevronDown className={`arrow ${openDropdown === item.label ? 'open' : ''}`} />
                   </button>
                   {openDropdown === item.label && (
                     <div className="dropdown-menu">
                       {item.children.map((child) => (
-                        <Link key={child.label} to={child.path} className="dropdown-item" onClick={() => setOpenDropdown(null)}>
-                          {child.label}
-                        </Link>
+                        <Link key={child.label} to={child.path} className="dropdown-item" onClick={() => setOpenDropdown(null)}>{child.label}</Link>
                       ))}
                     </div>
                   )}
                 </>
               ) : (
-                <Link to={item.path} className="nav-item nav-link">{item.label}</Link>
+                <Link to={item.path} className="nav-item">{item.label}</Link>
               )}
             </div>
           ))}
@@ -146,21 +112,13 @@ function Navbar() {
             </div>
           ) : (
             <>
-              <Link to="/login" className="btn-login">LOG IN</Link>
-              <Link to="/signup" className="btn-signup">
-                SIGN UP
-                <HiChevronDown className="arrow" />
-              </Link>
+              <Link to="/login" className="btn-login">Log In</Link>
+              <Link to="/signup" className="btn-signup">Sign Up</Link>
             </>
           )}
         </div>
 
-        <button
-          className="hamburger"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={mobileOpen}
-        >
+        <button className="hamburger" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? 'Close menu' : 'Open menu'} aria-expanded={mobileOpen}>
           {mobileOpen ? <HiXMark /> : <HiBars3 />}
         </button>
       </div>
@@ -171,27 +129,20 @@ function Navbar() {
             <div key={item.label}>
               {item.children ? (
                 <>
-                  <button
-                    className="mobile-nav-item"
-                    onClick={() => setMobileSubOpen(mobileSubOpen === item.label ? null : item.label)}
-                  >
+                  <button className="mobile-nav-item" onClick={() => setMobileSubOpen(mobileSubOpen === item.label ? null : item.label)}>
                     {item.label}
                     <HiChevronDown className={`arrow ${mobileSubOpen === item.label ? 'open' : ''}`} />
                   </button>
                   {mobileSubOpen === item.label && (
                     <div className="mobile-submenu">
                       {item.children.map((child) => (
-                        <Link key={child.label} to={child.path} className="mobile-sub-item" onClick={() => { setMobileOpen(false); setMobileSubOpen(null) }}>
-                          {child.label}
-                        </Link>
+                        <Link key={child.label} to={child.path} className="mobile-sub-item" onClick={() => { setMobileOpen(false); setMobileSubOpen(null) }}>{child.label}</Link>
                       ))}
                     </div>
                   )}
                 </>
               ) : (
-                <Link to={item.path} className="mobile-nav-item mobile-nav-link" onClick={() => setMobileOpen(false)}>
-                  {item.label}
-                </Link>
+                <Link to={item.path} className="mobile-nav-item mobile-nav-link" onClick={() => setMobileOpen(false)}>{item.label}</Link>
               )}
             </div>
           ))}
@@ -199,12 +150,12 @@ function Navbar() {
             {user ? (
               <>
                 <span className="mobile-user-name">{user.name}</span>
-                <button className="mobile-btn-logout" onClick={handleLogout}>LOG OUT</button>
+                <button className="mobile-btn-logout" onClick={handleLogout}>Log Out</button>
               </>
             ) : (
               <>
-                <Link to="/login" className="mobile-btn-login" onClick={() => setMobileOpen(false)}>LOG IN</Link>
-                <Link to="/signup" className="mobile-btn-signup" onClick={() => setMobileOpen(false)}>SIGN UP</Link>
+                <Link to="/login" className="mobile-btn-login" onClick={() => setMobileOpen(false)}>Log In</Link>
+                <Link to="/signup" className="mobile-btn-signup" onClick={() => setMobileOpen(false)}>Sign Up</Link>
               </>
             )}
           </div>

@@ -20,36 +20,24 @@ function Hero() {
     <section className="hero">
       <div className="hero-container">
         <div className="hero-content">
-          <span className="hero-tag">Job Search Platform</span>
+          <span className="hero-tag">Nepal's #1 Job Portal</span>
           <h1 className="hero-title">
-            Find jobs, vacancy, <span className="hero-title-accent">career online.</span>
+            Find your <span className="hero-title-accent">dream job</span> in Nepal
           </h1>
           <p className="hero-subtitle">
-            Thousands of jobs in Nepal — from top companies and organizations
+            Thousands of vacancies from top companies and NGOs — across all 7 provinces
           </p>
 
           <form className="hero-form" onSubmit={handleSearch}>
             <div className="hero-form-inner">
               <div className="hero-input-group">
                 <span className="hero-input-icon"><HiBriefcase /></span>
-                <input
-                  type="text"
-                  placeholder="Job Title, Job Category, Company"
-                  value={keyword}
-                  onChange={(e) => setKeyword(e.target.value)}
-                  className="hero-input"
-                />
+                <input type="text" placeholder="Job title, skill, or company" value={keyword} onChange={(e) => setKeyword(e.target.value)} className="hero-input" />
               </div>
               <div className="hero-divider" />
               <div className="hero-input-group">
                 <span className="hero-input-icon"><HiMapPin /></span>
-                <input
-                  type="text"
-                  placeholder="Location"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  className="hero-input"
-                />
+                <input type="text" placeholder="Location" value={location} onChange={(e) => setLocation(e.target.value)} className="hero-input" />
               </div>
               <button type="submit" className="hero-btn" aria-label="Search Jobs">
                 <HiMagnifyingGlass />

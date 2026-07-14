@@ -17,7 +17,7 @@ function Footer() {
             <h3 className="footer-heading">For Employers</h3>
             <ul className="footer-links">
               <li><a href="#">Register Free</a></li>
-              <li><a href="#">Vacancy Announcement</a></li>
+              <li><a href="#">Post a Job</a></li>
             </ul>
           </div>
           <div className="footer-col">
@@ -25,17 +25,18 @@ function Footer() {
             <ul className="footer-links">
               <li><a href="#">Home</a></li>
               <li><a href="#">About Us</a></li>
-              <li><a href="#">Advertise</a></li>
               <li><a href="#">Contact Us</a></li>
               <li><a href="#">FAQ</a></li>
             </ul>
           </div>
           <div className="footer-col footer-col--brand">
-            <a href="/" className="footer-logo">JobsNepal.com</a>
+            <a href="/" className="footer-logo">
+              <span className="footer-logo-icon">JN</span>
+              JobsNepal
+            </a>
             <div className="footer-contact">
-              <span><HiMapPin /> Kupondole Road, Patan 44600, Kathmandu, Nepal</span>
-              <span><HiPhone /> 01-544 7709, 01-544 7710</span>
-              <span><HiPhone /> +977 984 942 6300</span>
+              <span><HiMapPin /> Kupondole, Lalitpur, Nepal</span>
+              <span><HiPhone /> 01-544 7710</span>
               <span><HiEnvelope /> info@jobsnepal.com</span>
             </div>
             <div className="footer-social">

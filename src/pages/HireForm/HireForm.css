@@ -1,75 +1,269 @@
-.form-wrapper {
-  margin-top: 88px;
-  padding: 60px 0 100px;
-  background: #f8fafc;
-  min-height: calc(100vh - 88px);
+.hire-page {
+  margin-top: 72px;
+  min-height: calc(100vh - 72px);
 }
-.form-container {
-  max-width: 680px;
+
+.hire-hero {
+  position: relative;
+  padding: 64px 0 72px;
+  background: #0f172a;
+  overflow: hidden;
+}
+
+.hire-hero-bg {
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.hire-container {
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 30px;
+  position: relative;
 }
-.form-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 40px 36px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+
+.hire-hero-content {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
 }
-.form-title {
-  font-size: 28px;
+
+.hire-hero-tag {
+  display: inline-block;
+  padding: 6px 18px;
+  background: rgba(255,255,255,0.1);
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.hire-hero-title {
+  font-size: 40px;
   font-weight: 800;
-  color: #0f172a;
-  margin: 0 0 8px;
+  color: #fff;
+  margin: 0 0 12px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
-.form-subtitle {
-  font-size: 15px;
-  color: #64748b;
+
+.hire-hero-accent {
+  position: relative;
+  color: #22c55e;
+  display: inline-block;
+}
+
+.hire-hero-accent::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: -4px;
+  right: -4px;
+  height: 14px;
+  background: url("data:image/svg+xml,%3Csvg width='100%25' height='14' viewBox='0 0 200 14' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,10 Q25,0 50,10 T100,10 T150,10 T200,10' stroke='%2322c55e' fill='none' stroke-width='3' stroke-linecap='round' opacity='0.6'/%3E%3C/svg%3E") repeat-x bottom;
+  background-size: 60px 14px;
+  pointer-events: none;
+}
+
+.hire-hero-subtitle {
+  font-size: 16px;
+  color: #94a3b8;
   margin: 0 0 32px;
+  line-height: 1.6;
 }
-.form-row {
+
+.hire-hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.hire-hero-stat {
+  text-align: center;
+}
+
+.hire-stat-num {
+  display: block;
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.hire-stat-label {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.hire-perks {
+  padding: 28px 0;
+  background: #fff;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.hire-perks-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.hire-perk-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hire-perk-icon {
+  font-size: 28px;
+  color: #0B66A9;
+  display: flex;
+  flex-shrink: 0;
+}
+
+.hire-perk-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 2px;
+}
+
+.hire-perk-desc {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0;
+}
+
+.hire-main {
+  padding: 40px 0 80px;
+  background: #f8fafc;
+}
+
+.hire-layout {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.hire-form-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.hire-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 36px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.hire-card-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 4px;
+}
+
+.hire-card-subtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0 0 28px;
+}
+
+.hire-section-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 24px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.hire-section-label:first-of-type {
+  margin-top: 0;
+}
+
+.hire-row {
   display: flex;
   gap: 20px;
 }
-.form-row .form-field {
+
+.hire-row .hire-field {
   flex: 1;
 }
-.form-field {
-  margin-bottom: 20px;
+
+.hire-field {
+  margin-bottom: 18px;
 }
-.form-field label {
+
+.hire-field label {
   display: block;
   font-size: 14px;
   font-weight: 600;
   color: #0f172a;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
-.form-field input,
-.form-field select,
-.form-field textarea {
+
+.hire-req {
+  color: #dc2626;
+}
+
+.hire-field input,
+.hire-field select,
+.hire-field textarea {
   width: 100%;
-  padding: 12px 14px;
+  padding: 11px 14px;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
-  font-size: 15px;
+  font-size: 14px;
   color: #0f172a;
   outline: none;
   box-sizing: border-box;
   font-family: inherit;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
-.form-field input:focus,
-.form-field select:focus,
-.form-field textarea:focus {
+
+.hire-field input:focus,
+.hire-field select:focus,
+.hire-field textarea:focus {
   border-color: #0B66A9;
+  box-shadow: 0 0 0 3px rgba(11,102,169,0.1);
 }
-.form-field textarea {
+
+.hire-field textarea {
   resize: vertical;
 }
-.form-field input[type="file"] {
-  padding: 10px 0;
+
+.hire-field input[type="file"] {
+  padding: 8px 0;
   border: none;
 }
-.form-btn {
+
+.hire-agreement {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 20px 0;
+}
+
+.hire-agreement input {
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.hire-agreement label {
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.hire-submit-btn {
   width: 100%;
   padding: 14px;
   background: #0B66A9;
@@ -79,13 +273,144 @@
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  margin-top: 8px;
   transition: background 0.2s;
 }
-.form-btn:hover {
+
+.hire-submit-btn:hover {
   background: #084a7a;
 }
+
+.hire-sidebar {
+  width: 340px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 92px;
+}
+
+.hire-sidebar-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.hire-sidebar-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 14px;
+}
+
+.hire-sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hire-sidebar-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #475569;
+  padding: 8px 0;
+  border-bottom: 1px solid #f8fafc;
+}
+
+.hire-sidebar-list li:last-child {
+  border-bottom: none;
+}
+
+.hire-sidebar-list li svg {
+  color: #22c55e;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.hire-tips {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hire-tips li {
+  font-size: 14px;
+  color: #475569;
+  padding: 7px 0 7px 20px;
+  position: relative;
+}
+
+.hire-tips li::before {
+  content: '\2713';
+  position: absolute;
+  left: 0;
+  color: #0B66A9;
+  font-weight: 700;
+}
+
+.hire-sidebar-cta p {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0 0 8px;
+}
+
+.hire-support-link {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0B66A9;
+  text-decoration: none;
+  margin-bottom: 4px;
+}
+
+.hire-support-link:hover {
+  text-decoration: underline;
+}
+
+.hire-support-phone {
+  font-size: 14px;
+  color: #475569 !important;
+  font-weight: 500;
+}
+
+@media (max-width: 1024px) {
+  .hire-layout {
+    flex-direction: column;
+  }
+  .hire-sidebar {
+    width: 100%;
+    position: static;
+  }
+  .hire-perks-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 640px) {
-  .form-row { flex-direction: column; gap: 0; }
-  .form-card { padding: 28px 20px; }
+  .hire-hero-title {
+    font-size: 28px;
+  }
+  .hire-hero-stats {
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .hire-stat-num {
+    font-size: 22px;
+  }
+  .hire-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  .hire-card {
+    padding: 24px 20px;
+  }
+  .hire-perks-grid {
+    grid-template-columns: 1fr;
+  }
+  .hire-perk-card {
+    padding: 12px 0;
+  }
 }

@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
-import { HiBriefcase, HiMapPin, HiClock, HiCurrencyDollar } from 'react-icons/hi2'
+import { HiBriefcase, HiMapPin, HiClock, HiCurrencyDollar, HiArrowLeft } from 'react-icons/hi2'
 import jobs from '../../data/jobs.js'
 import './JobDetail.css'
 
@@ -19,7 +19,7 @@ export default function JobDetail() {
   return (
     <div className="jd-wrapper">
       <div className="jd-container">
-        <Link to="/" className="jd-back">&larr; Back to Jobs</Link>
+        <Link to="/" className="jd-back"><HiArrowLeft /> Back to Jobs</Link>
 
         <div className="jd-card">
           <div className="jd-header">

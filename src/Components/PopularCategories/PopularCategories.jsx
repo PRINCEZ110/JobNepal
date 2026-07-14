@@ -1,3 +1,4 @@
+import { HiArrowRight } from 'react-icons/hi2'
 import './PopularCategories.css'
 
 const categories = [
@@ -74,7 +75,7 @@ function PopularCategories() {
         </div>
 
         <div className="pc-footer">
-          <a href="#" className="pc-view-all">View all categories &rarr;</a>
+          <a href="#" className="pc-view-all">View all categories <HiArrowRight /></a>
         </div>
       </div>
     </section>
