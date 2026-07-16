@@ -2,7 +2,9 @@ import { useState, useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/useAuth.js'
 import { sanitizeInput, validateEmail, validatePassword } from '../../utils/security.js'
-import { HiUser, HiEnvelope, HiLockClosed, HiEye, HiEyeSlash, HiPhone } from 'react-icons/hi2'
+import { HiUser, HiEnvelope, HiLockClosed, HiEye, HiEyeSlash, HiPhone, HiArrowRight, HiCheck } from 'react-icons/hi2'
+import { FcGoogle } from 'react-icons/fc'
+import { FaLinkedin } from 'react-icons/fa6'
 import './Signup.css'
 
 const strengthLabels = ['Weak', 'Fair', 'Good', 'Strong']
@@ -55,12 +57,33 @@ export default function Signup() {
     else { setError(result.error) }
   }
 
+  const rules = [
+    { text: 'At least 8 characters', test: password.length >= 8 },
+    { text: 'One uppercase letter', test: /[A-Z]/.test(password) },
+    { text: 'One lowercase letter', test: /[a-z]/.test(password) },
+    { text: 'One number', test: /[0-9]/.test(password) },
+  ]
+
   return (
     <div className="auth-page">
-      <div className="auth-container">
+      <div className="auth-image">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=960&h=900&fit=crop&auto=format" alt="" />
+        <div className="auth-image-overlay" />
+        <div className="auth-image-content">
+          <div className="auth-image-logo">JN</div>
+          <h2>Start Your Career Journey</h2>
+          <p>Join thousands of professionals who found their dream job on JobsNepal.</p>
+          <div className="auth-image-stats">
+            <div><strong>5000+</strong> Jobs</div>
+            <div><strong>800+</strong> Companies</div>
+            <div><strong>15K+</strong> Hired</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="auth-panel">
         <div className="auth-card">
           <div className="auth-brand">
-            <div className="auth-logo">JN</div>
             <h1 className="auth-title">Create Account</h1>
             <p className="auth-subtitle">Join JobsNepal and find your next opportunity</p>
           </div>
@@ -77,7 +100,15 @@ export default function Signup() {
               <label htmlFor="signup-name">Full Name</label>
               <div className="auth-input-wrap">
                 <HiUser className="auth-input-icon" />
-                <input id="signup-name" type="text" placeholder="Your Name" value={name} onChange={e => setName(e.target.value)} autoComplete="name" required />
+                <input
+                  id="signup-name"
+                  type="text"
+                  placeholder="Your Name"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  autoComplete="name"
+                  required
+                />
               </div>
             </div>
 
@@ -86,14 +117,29 @@ export default function Signup() {
                 <label htmlFor="signup-email">Email Address</label>
                 <div className="auth-input-wrap">
                   <HiEnvelope className="auth-input-icon" />
-                  <input id="signup-email" type="email" placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)} autoComplete="email" required />
+                  <input
+                    id="signup-email"
+                    type="email"
+                    placeholder="you@example.com"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    autoComplete="email"
+                    required
+                  />
                 </div>
               </div>
               <div className="auth-field">
                 <label htmlFor="signup-phone">Phone (optional)</label>
                 <div className="auth-input-wrap">
                   <HiPhone className="auth-input-icon" />
-                  <input id="signup-phone" type="tel" placeholder="98XXXXXXXX" value={phone} onChange={e => setPhone(e.target.value)} autoComplete="tel" />
+                  <input
+                    id="signup-phone"
+                    type="tel"
+                    placeholder="98XXXXXXXX"
+                    value={phone}
+                    onChange={e => setPhone(e.target.value)}
+                    autoComplete="tel"
+                  />
                 </div>
               </div>
             </div>
@@ -121,11 +167,20 @@ export default function Signup() {
               <label htmlFor="signup-password">Password</label>
               <div className="auth-input-wrap">
                 <HiLockClosed className="auth-input-icon" />
-                <input id="signup-password" type={showPw ? 'text' : 'password'} placeholder="Create a strong password" value={password} onChange={e => setPassword(e.target.value)} autoComplete="new-password" required />
+                <input
+                  id="signup-password"
+                  type={showPw ? 'text' : 'password'}
+                  placeholder="Create a strong password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  autoComplete="new-password"
+                  required
+                />
                 <button type="button" className="auth-toggle-pw" onClick={() => setShowPw(!showPw)} aria-label={showPw ? 'Hide password' : 'Show password'}>
                   {showPw ? <HiEyeSlash /> : <HiEye />}
                 </button>
               </div>
+
               {password && (
                 <div className="auth-strength">
                   <div className="auth-strength-bar">
@@ -134,11 +189,14 @@ export default function Signup() {
                   <span className={`auth-strength-label auth-strength--${strength}`}>{strengthLabel}</span>
                 </div>
               )}
+
               <ul className="auth-rules">
-                <li className={password.length >= 8 ? 'auth-rule--ok' : ''}>At least 8 characters</li>
-                <li className={/[A-Z]/.test(password) ? 'auth-rule--ok' : ''}>One uppercase letter</li>
-                <li className={/[a-z]/.test(password) ? 'auth-rule--ok' : ''}>One lowercase letter</li>
-                <li className={/[0-9]/.test(password) ? 'auth-rule--ok' : ''}>One number</li>
+                {rules.map((rule, i) => (
+                  <li key={i} className={rule.test ? 'auth-rule--ok' : ''}>
+                    {rule.test ? <HiCheck /> : null}
+                    {rule.text}
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -150,14 +208,19 @@ export default function Signup() {
             <button type="submit" className="auth-btn" disabled={loading}>
               {loading ? <span className="auth-spinner" /> : null}
               {loading ? 'Creating account...' : 'Create Account'}
+              {!loading && <HiArrowRight />}
             </button>
           </form>
 
           <div className="auth-divider"><span>Or sign up with</span></div>
 
           <div className="auth-social">
-            <button type="button" className="auth-social-btn auth-social--google" disabled>Google</button>
-            <button type="button" className="auth-social-btn auth-social--linkedin" disabled>LinkedIn</button>
+            <button type="button" className="auth-social-btn" disabled>
+              <FcGoogle /> Google
+            </button>
+            <button type="button" className="auth-social-btn" disabled>
+              <FaLinkedin /> LinkedIn
+            </button>
           </div>
 
           <p className="auth-footer">

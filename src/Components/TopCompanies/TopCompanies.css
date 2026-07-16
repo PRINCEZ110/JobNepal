@@ -2,15 +2,18 @@
   padding: 80px 0;
   background: #fff;
 }
+
 .tc-container {
-  max-width: 900px;
+  max-width: 1060px;
   margin: 0 auto;
   padding: 0 30px;
 }
+
 .tc-header {
   text-align: center;
-  margin-bottom: 56px;
+  margin-bottom: 48px;
 }
+
 .tc-label {
   display: inline-block;
   font-size: 12px;
@@ -20,6 +23,7 @@
   text-transform: uppercase;
   margin-bottom: 12px;
 }
+
 .tc-title {
   font-size: 32px;
   font-weight: 800;
@@ -27,48 +31,74 @@
   margin: 0 0 10px;
   letter-spacing: -0.02em;
 }
+
 .tc-subtitle {
   font-size: 16px;
   color: #64748b;
   margin: 0;
 }
+
 .tc-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 40px 48px;
+  align-items: center;
+  gap: 20px 32px;
 }
+
 .tc-card {
-  text-align: center;
-  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
   transition: opacity 0.2s;
 }
+
 .tc-card:hover {
-  opacity: 0.7;
+  opacity: 0.65;
 }
+
 .tc-logo {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: auto;
+  max-height: 56px;
   object-fit: contain;
   display: block;
-  margin: 0 auto 10px;
-  filter: grayscale(1) opacity(0.85);
+  filter: grayscale(1) opacity(0.7);
   transition: filter 0.3s;
 }
+
 .tc-card:hover .tc-logo {
   filter: grayscale(0) opacity(1);
 }
-.tc-name {
-  display: block;
-  font-size: 12px;
-  font-weight: 500;
-  color: #64748b;
-  line-height: 1.3;
+
+.tc-footer {
+  text-align: center;
+  margin-top: 44px;
 }
+
+.tc-view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 28px;
+  background: #0f172a;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s, gap 0.2s;
+}
+
+.tc-view-all:hover {
+  background: #1e293b;
+  gap: 10px;
+}
+
 @media (max-width: 640px) {
   .tc-section { padding: 60px 0; }
   .tc-title { font-size: 26px; }
-  .tc-grid { gap: 32px; }
-  .tc-card { width: 100px; }
-  .tc-logo { width: 64px; height: 64px; }
+  .tc-grid { gap: 16px 24px; }
+  .tc-logo { width: 80px; max-height: 44px; }
 }

@@ -1,3 +1,5 @@
+import { HiArrowRight } from 'react-icons/hi2'
+import { Link } from 'react-router-dom'
 import './TopCompanies.css'
 
 const companies = [
@@ -24,9 +26,11 @@ function TopCompanies() {
           {companies.map((c, i) => (
             <div key={i} className="tc-card">
               <img src={c.logo} alt={c.name} className="tc-logo" />
-              <span className="tc-name">{c.name}</span>
             </div>
           ))}
+        </div>
+        <div className="tc-footer">
+          <Link to="/jobs/company" className="tc-view-all">View All Companies <HiArrowRight /></Link>
         </div>
       </div>
     </section>

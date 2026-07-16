@@ -1,7 +1,6 @@
 export async function hashPassword(password) {
   if (!crypto.subtle) {
-    console.warn('crypto.subtle unavailable — running on HTTP, using fallback hash')
-    return btoa(password)
+    throw new Error('Secure context required — use HTTPS')
   }
   const enc = new TextEncoder().encode(password)
   const buf = await crypto.subtle.digest('SHA-256', enc)
@@ -18,6 +17,7 @@ export function sanitizeInput(val) {
 
 export function validatePassword(password) {
   if (password.length < 8) return 'Password must be at least 8 characters'
+  if (password.length > 128) return 'Password must be under 128 characters'
   if (!/[A-Z]/.test(password)) return 'Password must contain an uppercase letter'
   if (!/[a-z]/.test(password)) return 'Password must contain a lowercase letter'
   if (!/[0-9]/.test(password)) return 'Password must contain a number'
@@ -47,7 +47,6 @@ export function checkRateLimit(email) {
   entry.count++
   if (entry.count >= 5) {
     entry.lockUntil = now + 60000
-    entry.count = 0
     return { blocked: true, message: 'Too many attempts. Try again in 60s' }
   }
 

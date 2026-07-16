@@ -1,10 +1,9 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './Components/Navbar/Navbar.jsx'
 import Footer from './Components/Footer/Footer.jsx'
 import Home from './pages/Home/Home.jsx'
 import JobDetail from './pages/JobDetail/JobDetail.jsx'
-import Login from './pages/Login/Login.jsx'
-import Signup from './pages/Signup/Signup.jsx'
+import Auth from './pages/Auth/Auth.jsx'
 import HireForm from './pages/HireForm/HireForm.jsx'
 import JobSeekerForm from './pages/JobSeekerForm/JobSeekerForm.jsx'
 import ByCategory from './pages/ByCategory/ByCategory.jsx'
@@ -18,14 +17,17 @@ import Contact from './pages/Contact/Contact.jsx'
 import './App.css'
 
 function App() {
+  const location = useLocation()
+  const isAuth = location.pathname === '/login' || location.pathname === '/signup'
+
   return (
     <>
-      <Navbar />
+      {!isAuth && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/job/:id" element={<JobDetail />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Auth />} />
+        <Route path="/signup" element={<Auth />} />
         <Route path="/hire" element={<HireForm />} />
         <Route path="/find-job" element={<JobSeekerForm />} />
         <Route path="/jobs/category" element={<ByCategory />} />
@@ -37,7 +39,7 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
-      <Footer />
+      {!isAuth && <Footer />}
     </>
   )
 }

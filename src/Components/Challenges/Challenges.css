@@ -1,6 +1,6 @@
 .ch-section {
   padding: 80px 0;
-  background: #f8fafc;
+  background: #fff;
 }
 
 .ch-container {
@@ -43,51 +43,97 @@
   margin: 0;
 }
 
-.ch-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+.ch-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
-.ch-card {
-  background: #fff;
-  border: 1px solid #f1f5f9;
-  border-radius: 14px;
-  padding: 32px 28px;
-  transition: transform 0.2s, box-shadow 0.2s;
+.ch-item {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  background: #f8fafc;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
 }
 
-.ch-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+.ch-item:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.ch-item--reverse {
+  flex-direction: row-reverse;
+}
+
+.ch-item-image {
+  flex: 0 0 320px;
+  height: 280px;
+  overflow: hidden;
+}
+
+.ch-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.ch-item:hover .ch-item-image img {
+  transform: scale(1.05);
+}
+
+.ch-item-content {
+  flex: 1;
+  padding: 32px 32px 32px 0;
+}
+
+.ch-item--reverse .ch-item-content {
+  padding: 32px 0 32px 32px;
 }
 
 .ch-number {
-  font-size: 28px;
+  font-size: 40px;
   font-weight: 800;
   color: #0B66A9;
-  opacity: 0.15;
-  margin-bottom: 16px;
+  opacity: 0.12;
+  line-height: 1;
+  margin-bottom: 12px;
+  display: block;
 }
 
 .ch-card-title {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
   color: #0f172a;
   margin: 0 0 10px;
 }
 
 .ch-card-desc {
-  font-size: 14px;
+  font-size: 15px;
   color: #64748b;
-  line-height: 1.6;
+  line-height: 1.7;
   margin: 0;
+  max-width: 480px;
 }
 
-@media (max-width: 1024px) {
-  .ch-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 640px) {
-  .ch-grid { grid-template-columns: 1fr; }
+@media (max-width: 900px) {
+  .ch-item,
+  .ch-item--reverse {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .ch-item-image {
+    flex: unset;
+    width: 100%;
+    height: 220px;
+  }
+
+  .ch-item-content {
+    padding: 28px !important;
+  }
+
   .ch-title { font-size: 26px; }
 }

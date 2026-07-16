@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { HiMapPin, HiBriefcase, HiCurrencyDollar, HiArrowRight, HiChevronLeft, HiChevronRight } from 'react-icons/hi2'
+import { HiMapPin, HiBriefcase, HiCurrencyDollar, HiArrowRight, HiChevronLeft, HiChevronRight, HiClock } from 'react-icons/hi2'
 import jobs from '../../data/jobs.js'
 import './FeaturedJobs.css'
 
@@ -19,6 +19,13 @@ function FeaturedJobs() {
     if (!el) return
     const amt = el.querySelector('.fj-card')?.offsetWidth + 20 || 300
     el.scrollBy({ left: dir * amt, behavior: 'smooth' })
+  }
+
+  const getDeadlineUrgency = (deadline) => {
+    const days = parseInt(deadline)
+    if (days <= 3) return 'urgent'
+    if (days <= 10) return 'soon'
+    return 'normal'
   }
 
   return (
@@ -47,19 +54,26 @@ function FeaturedJobs() {
           <div className="fj-track" ref={scrollRef}>
             {filtered.map((job) => (
               <Link key={job.id} to={`/job/${job.id}`} className="fj-card">
-                <div className="fj-card-header">
-                  <img src={job.logo} alt={job.company} className="fj-logo" />
-                  <span className="fj-cat-label">{job.category}</span>
+                <div className="fj-card-img">
+                  <img src={job.logo} alt={job.company} />
                 </div>
-                <h3 className="fj-job-title">{job.title}</h3>
-                <p className="fj-company-name">{job.company}</p>
-                <div className="fj-meta">
-                  <span><HiMapPin /> {job.location}</span>
-                  <span><HiBriefcase /> {job.type}</span>
-                </div>
-                <div className="fj-card-footer">
-                  <span className="fj-salary"><HiCurrencyDollar /> {job.salary}</span>
-                  <span className="fj-deadline">{job.deadline}</span>
+                <div className="fj-card-body">
+                  <div className="fj-card-top">
+                    <span className="fj-cat-label">{job.category}</span>
+                    {job.featured && <span className="fj-featured-badge">Featured</span>}
+                  </div>
+                  <h3 className="fj-job-title">{job.title}</h3>
+                  <p className="fj-company-name">{job.company}</p>
+                  <div className="fj-meta">
+                    <span className="fj-meta-item"><HiMapPin /> {job.location}</span>
+                    <span className="fj-meta-item"><HiBriefcase /> {job.type}</span>
+                  </div>
+                  <div className="fj-card-footer">
+                    <span className="fj-salary"><HiCurrencyDollar /> {job.salary}</span>
+                    <span className={`fj-deadline fj-deadline--${getDeadlineUrgency(job.deadline)}`}>
+                      <HiClock /> {job.deadline}
+                    </span>
+                  </div>
                 </div>
               </Link>
             ))}
