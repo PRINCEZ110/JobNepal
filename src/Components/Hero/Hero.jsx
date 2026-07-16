@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { HiMagnifyingGlass, HiMapPin, HiBriefcase, HiUserGroup, HiChartBar, HiGlobeAlt } from 'react-icons/hi2'
+import { HiMagnifyingGlass, HiMapPin, HiBriefcase } from 'react-icons/hi2'
 import './Hero.css'
 
 function Hero() {
@@ -63,11 +63,10 @@ function Hero() {
             </div>
           </div>
           <div className="hero-visual">
-            <div className="hero-visual-grid">
-              <div className="hero-visual-card"><HiBriefcase /><span>IT & Software</span></div>
-              <div className="hero-visual-card"><HiUserGroup /><span>NGO / INGO</span></div>
-              <div className="hero-visual-card"><HiChartBar /><span>Accounting</span></div>
-              <div className="hero-visual-card"><HiGlobeAlt /><span>Hospitality</span></div>
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=560&h=480&fit=crop&auto=format" alt="Professionals collaborating" className="hero-img" />
+            <div className="hero-img-badge">
+              <HiBriefcase />
+              <span>10K+ jobs available</span>
             </div>
           </div>
         </div>
