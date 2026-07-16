@@ -7,7 +7,7 @@ const companies = [
   { name: 'Mercy Corps', logo: 'https://img.jobsnepal.com/x-small/7YRawoHo40pxuyrF6yMltf5IH8F0pb2OulmZqG9U.jpeg' },
   { name: 'Oxfam in Nepal', logo: 'https://img.jobsnepal.com/x-small/Fkte0tOB8c5CgiCS8FGRVbjUVOIjKMyF4bqOfHUQ.jpeg' },
   { name: 'Heifer International Nepal', logo: 'https://img.jobsnepal.com/x-small/acILJlY5IQqSsdu3LADgmpvq7E1vNdtgdTFgvQEm.jpeg' },
-  { name: 'SOS Children\'s Villages Nepal', logo: 'https://img.jobsnepal.com/x-small/hucDz77iTzpQ1xiSYBbmhKnLVuRSvzL89PTLu4tB.jpeg' },
+  { name: "SOS Children's Villages Nepal", logo: 'https://img.jobsnepal.com/x-small/hucDz77iTzpQ1xiSYBbmhKnLVuRSvzL89PTLu4tB.jpeg' },
   { name: 'DanChurchAid (DCA)', logo: 'https://img.jobsnepal.com/x-small/JoDlGdYGWNLf3jt3WbimDkIzY2RYtbeUPrdLqJe7.png' },
 ]
 
