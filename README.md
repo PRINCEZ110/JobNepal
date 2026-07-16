@@ -12,6 +12,19 @@ A job portal frontend built with **React 19**, **Vite 8**, and **Tailwind CSS v4
 | `/hire` | Post a job (employer form) |
 | `/find-job` | Submit application (job seeker form) |
 | `/job/:id` | Job detail page |
+| `/jobs/category` | Browse jobs by category |
+| `/jobs/company` | Browse jobs by company |
+| `/search` | Advanced job search |
+| `/about` | About JobsNepal |
+| `/resume` | Resume builder / tips |
+| `/counseling` | Career counseling |
+| `/blog` | Blog & articles |
+| `/contact` | Contact us |
+| `/pricing` | Pricing & plans |
+| `/solutions` | Recruitment solutions |
+| `/faq` | Frequently asked questions |
+| `/privacy` | Privacy policy |
+| `/terms` | Terms of service |
 
 ## Auth & Security
 
