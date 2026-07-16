@@ -18,9 +18,7 @@ export default function About() {
               </div>
             </div>
             <div className="ab-hero-visual">
-              <div className="ab-hero-icon-box">
-                <HiBriefcase />
-              </div>
+              <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=560&h=400&fit=crop" alt="JobsNepal team office" className="ab-hero-img" />
             </div>
           </div>
         </div>
@@ -65,12 +63,15 @@ export default function About() {
               <h2>How JobsNepal started</h2>
               <p>JobsNepal was founded in 2000 with a simple mission: make job searching in Nepal easier, faster, and more accessible. Before online job portals dominated the market, finding a job meant relying on newspaper ads, word of mouth, or costly recruitment agencies.</p>
               <p>Today, we are Nepal's #1 job portal, serving thousands of companies — from local startups to multinational NGOs — and millions of job seekers across all 7 provinces. We process thousands of applications daily and have helped shape the careers of Nepal's workforce for over two decades.</p>
+              <div className="ab-highlights">
+                <div className="ab-highlight"><HiStar /> <span>Nepal's #1 job portal by traffic and job listings</span></div>
+                <div className="ab-highlight"><HiUserGroup /> <span>Serving 50,000+ active job seekers monthly</span></div>
+                <div className="ab-highlight"><HiGlobeAlt /> <span>Jobs posted from all 7 provinces of Nepal</span></div>
+                <div className="ab-highlight"><HiAcademicCap /> <span>Free career resources, resume tips, and guidance</span></div>
+              </div>
             </div>
-            <div className="ab-story-highlights">
-              <div className="ab-highlight"><HiStar /> <span>Nepal's #1 job portal by traffic and job listings</span></div>
-              <div className="ab-highlight"><HiUserGroup /> <span>Serving 50,000+ active job seekers monthly</span></div>
-              <div className="ab-highlight"><HiGlobeAlt /> <span>Jobs posted from all 7 provinces of Nepal</span></div>
-              <div className="ab-highlight"><HiAcademicCap /> <span>Free career resources, resume tips, and guidance</span></div>
+            <div className="ab-story-visual">
+              <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=540&h=640&fit=crop" alt="Team collaboration at JobsNepal" className="ab-story-img" />
             </div>
           </div>
         </div>
