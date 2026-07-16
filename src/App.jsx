@@ -10,6 +10,11 @@ import JobSeekerForm from './pages/JobSeekerForm/JobSeekerForm.jsx'
 import ByCategory from './pages/ByCategory/ByCategory.jsx'
 import ByCompany from './pages/ByCompany/ByCompany.jsx'
 import AdvancedSearch from './pages/AdvancedSearch/AdvancedSearch.jsx'
+import About from './pages/About/About.jsx'
+import Resume from './pages/Resume/Resume.jsx'
+import Counseling from './pages/Counseling/Counseling.jsx'
+import Blog from './pages/Blog/Blog.jsx'
+import Contact from './pages/Contact/Contact.jsx'
 import './App.css'
 
 function App() {
@@ -26,6 +31,11 @@ function App() {
         <Route path="/jobs/category" element={<ByCategory />} />
         <Route path="/jobs/company" element={<ByCompany />} />
         <Route path="/search" element={<AdvancedSearch />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/resume" element={<Resume />} />
+        <Route path="/counseling" element={<Counseling />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
       <Footer />
     </>
