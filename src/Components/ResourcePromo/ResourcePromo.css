@@ -1,0 +1,94 @@
+.rp-section {
+  padding: 80px 0;
+  background: #0f172a;
+}
+
+.rp-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+.rp-content {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 60px;
+  align-items: center;
+}
+
+.rp-text {
+  max-width: 520px;
+}
+
+.rp-label {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #F89A1C;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.rp-title {
+  font-size: 30px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 16px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.rp-desc {
+  font-size: 16px;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin: 0 0 28px;
+}
+
+.rp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: #F89A1C;
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s, gap 0.2s;
+}
+.rp-btn:hover {
+  background: #e0890f;
+  gap: 12px;
+}
+
+.rp-book-icon {
+  width: 140px;
+  height: 180px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rp-book-icon svg {
+  font-size: 56px;
+  color: #F89A1C;
+}
+
+@media (max-width: 768px) {
+  .rp-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .rp-text {
+    max-width: 100%;
+  }
+  .rp-visual {
+    display: flex;
+    justify-content: center;
+  }
+}

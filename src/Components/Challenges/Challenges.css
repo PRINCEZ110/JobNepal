@@ -1,15 +1,15 @@
-.wcu-section {
+.ch-section {
   padding: 80px 0;
   background: #f8fafc;
 }
 
-.wcu-container {
+.ch-container {
   max-width: 1120px;
   margin: 0 auto;
   padding: 0 30px;
 }
 
-.wcu-header {
+.ch-header {
   text-align: center;
   margin-bottom: 56px;
   max-width: 680px;
@@ -17,7 +17,7 @@
   margin-right: auto;
 }
 
-.wcu-label {
+.ch-label {
   display: inline-block;
   font-size: 12px;
   font-weight: 700;
@@ -27,7 +27,7 @@
   margin-bottom: 12px;
 }
 
-.wcu-title {
+.ch-title {
   font-size: 32px;
   font-weight: 800;
   color: #0f172a;
@@ -36,54 +36,48 @@
   letter-spacing: -0.02em;
 }
 
-.wcu-subtitle {
+.ch-subtitle {
   font-size: 16px;
   color: #64748b;
   line-height: 1.6;
   margin: 0;
 }
 
-.wcu-grid {
+.ch-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 
-.wcu-card {
+.ch-card {
   background: #fff;
   border: 1px solid #f1f5f9;
   border-radius: 14px;
-  padding: 36px 28px;
+  padding: 32px 28px;
   transition: transform 0.2s, box-shadow 0.2s;
-  text-align: center;
 }
 
-.wcu-card:hover {
+.ch-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.06);
 }
 
-.wcu-card-icon {
-  display: inline-flex;
-  font-size: 32px;
-  color: #fff;
-  margin-bottom: 18px;
-  width: 56px;
-  height: 56px;
-  background: #0B66A9;
-  border-radius: 14px;
-  align-items: center;
-  justify-content: center;
+.ch-number {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0B66A9;
+  opacity: 0.15;
+  margin-bottom: 16px;
 }
 
-.wcu-card-title {
-  font-size: 18px;
+.ch-card-title {
+  font-size: 16px;
   font-weight: 700;
   color: #0f172a;
-  margin: 0 0 8px;
+  margin: 0 0 10px;
 }
 
-.wcu-card-desc {
+.ch-card-desc {
   font-size: 14px;
   color: #64748b;
   line-height: 1.6;
@@ -91,9 +85,9 @@
 }
 
 @media (max-width: 1024px) {
-  .wcu-grid { grid-template-columns: repeat(2, 1fr); }
+  .ch-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 640px) {
-  .wcu-grid { grid-template-columns: 1fr; }
-  .wcu-title { font-size: 26px; }
+  .ch-grid { grid-template-columns: 1fr; }
+  .ch-title { font-size: 26px; }
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { HiMagnifyingGlass, HiMapPin, HiBriefcase } from 'react-icons/hi2'
+import { HiMagnifyingGlass, HiMapPin, HiBriefcase, HiUserGroup, HiChartBar, HiGlobeAlt } from 'react-icons/hi2'
 import './Hero.css'
 
 function Hero() {
@@ -19,45 +19,55 @@ function Hero() {
   return (
     <section className="hero">
       <div className="hero-container">
-        <div className="hero-content">
-          <span className="hero-tag">Nepal's #1 Job Portal</span>
-          <h1 className="hero-title">
-            Find your <span className="hero-title-accent">dream job</span> in Nepal
-          </h1>
-          <p className="hero-subtitle">
-            Thousands of vacancies from top companies and NGOs — across all 7 provinces
-          </p>
+        <div className="hero-layout">
+          <div className="hero-content">
+            <span className="hero-tag">Nepal's #1 Job Portal</span>
+            <h1 className="hero-title">
+              Find your <span className="hero-title-accent">dream job</span> in Nepal
+            </h1>
+            <p className="hero-subtitle">
+              Thousands of vacancies from top companies and NGOs — across all 7 provinces
+            </p>
 
-          <form className="hero-form" onSubmit={handleSearch}>
-            <div className="hero-form-inner">
-              <div className="hero-input-group">
-                <span className="hero-input-icon"><HiBriefcase /></span>
-                <input type="text" placeholder="Job title, skill, or company" value={keyword} onChange={(e) => setKeyword(e.target.value)} className="hero-input" />
+            <form className="hero-form" onSubmit={handleSearch}>
+              <div className="hero-form-inner">
+                <div className="hero-input-group">
+                  <span className="hero-input-icon"><HiBriefcase /></span>
+                  <input type="text" placeholder="Job title, skill, or company" value={keyword} onChange={(e) => setKeyword(e.target.value)} className="hero-input" />
+                </div>
+                <div className="hero-divider" />
+                <div className="hero-input-group">
+                  <span className="hero-input-icon"><HiMapPin /></span>
+                  <input type="text" placeholder="Location" value={location} onChange={(e) => setLocation(e.target.value)} className="hero-input" />
+                </div>
+                <button type="submit" className="hero-btn" aria-label="Search Jobs">
+                  <HiMagnifyingGlass />
+                  <span>Search</span>
+                </button>
               </div>
-              <div className="hero-divider" />
-              <div className="hero-input-group">
-                <span className="hero-input-icon"><HiMapPin /></span>
-                <input type="text" placeholder="Location" value={location} onChange={(e) => setLocation(e.target.value)} className="hero-input" />
-              </div>
-              <button type="submit" className="hero-btn" aria-label="Search Jobs">
-                <HiMagnifyingGlass />
-                <span>Search</span>
-              </button>
-            </div>
-          </form>
+            </form>
 
-          <div className="hero-stats">
-            <div className="hero-stat">
-              <span className="hero-stat-number">10K+</span>
-              <span className="hero-stat-label">Active Jobs</span>
+            <div className="hero-stats">
+              <div className="hero-stat">
+                <span className="hero-stat-number">10K+</span>
+                <span className="hero-stat-label">Active Jobs</span>
+              </div>
+              <div className="hero-stat">
+                <span className="hero-stat-number">5K+</span>
+                <span className="hero-stat-label">Companies</span>
+              </div>
+              <div className="hero-stat">
+                <span className="hero-stat-number">50K+</span>
+                <span className="hero-stat-label">Job Seekers</span>
+              </div>
             </div>
-            <div className="hero-stat">
-              <span className="hero-stat-number">5K+</span>
-              <span className="hero-stat-label">Companies</span>
-            </div>
-            <div className="hero-stat">
-              <span className="hero-stat-number">50K+</span>
-              <span className="hero-stat-label">Job Seekers</span>
+          </div>
+          <div className="hero-visual">
+            <div className="hero-visual-grid">
+              <div className="hero-visual-card"><HiBriefcase /><span>IT & Software</span></div>
+              <div className="hero-visual-card"><HiUserGroup /><span>NGO / INGO</span></div>
+              <div className="hero-visual-card"><HiChartBar /><span>Accounting</span></div>
+              <div className="hero-visual-card"><HiGlobeAlt /><span>Hospitality</span></div>
             </div>
           </div>
         </div>
