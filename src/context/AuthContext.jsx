@@ -1,20 +1,21 @@
-import { createContext, useContext, useState, useEffect, useCallback } from 'react'
+import { createContext, useContext, useState, useCallback } from 'react'
 import { hashPassword, checkRateLimit, resetRateLimit } from '../utils/security.js'
 
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null)
-
-  useEffect(() => {
-    const stored = localStorage.getItem('user')
-    if (stored) {
-      try {
+  const [user, setUser] = useState(() => {
+    try {
+      const stored = localStorage.getItem('user')
+      if (stored) {
         const u = JSON.parse(stored)
-        setUser({ name: u.name, email: u.email })
-      } catch { localStorage.removeItem('user') }
+        return { name: u.name, email: u.email }
+      }
+    } catch {
+      localStorage.removeItem('user')
     }
-  }, [])
+    return null
+  })
 
   const login = useCallback(async (email, password) => {
     const rate = checkRateLimit(email)
