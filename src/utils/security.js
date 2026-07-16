@@ -1,4 +1,8 @@
 export async function hashPassword(password) {
+  if (!crypto.subtle) {
+    console.warn('crypto.subtle unavailable — running on HTTP, using fallback hash')
+    return btoa(password)
+  }
   const enc = new TextEncoder().encode(password)
   const buf = await crypto.subtle.digest('SHA-256', enc)
   return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('')

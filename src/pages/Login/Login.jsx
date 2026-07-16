@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../../context/AuthContext.jsx'
+import { useAuth } from '../../context/useAuth.js'
 import { sanitizeInput, validateEmail } from '../../utils/security.js'
 import { HiEnvelope, HiLockClosed, HiEye, HiEyeSlash } from 'react-icons/hi2'
 import './Login.css'
@@ -9,7 +9,6 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPw, setShowPw] = useState(false)
-  const [remember, setRemember] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const { login } = useAuth()
@@ -64,10 +63,6 @@ export default function Login() {
             </div>
 
             <div className="auth-row">
-              <label className="auth-checkbox">
-                <input type="checkbox" checked={remember} onChange={e => setRemember(e.target.checked)} />
-                <span>Remember me</span>
-              </label>
               <Link to="/forgot-password" className="auth-forgot">Forgot password?</Link>
             </div>
 

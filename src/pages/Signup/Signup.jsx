@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../../context/AuthContext.jsx'
+import { useAuth } from '../../context/useAuth.js'
 import { sanitizeInput, validateEmail, validatePassword } from '../../utils/security.js'
 import { HiUser, HiEnvelope, HiLockClosed, HiEye, HiEyeSlash, HiPhone } from 'react-icons/hi2'
 import './Signup.css'
@@ -48,7 +48,7 @@ export default function Signup() {
     if (pwErr) { setError(pwErr); return }
 
     setLoading(true)
-    const result = await signup(cleanName, cleanEmail, password)
+    const result = await signup(cleanName, cleanEmail, password, phone, category)
     setLoading(false)
 
     if (result.success) { navigate('/') }

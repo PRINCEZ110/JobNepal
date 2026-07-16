@@ -16,7 +16,12 @@ export default function HireForm() {
     const val = e.target.type === 'email' ? e.target.value.trim() : sanitizeInput(e.target.value)
     setForm({ ...form, [e.target.name]: val })
   }
-  const handleSubmit = (e) => { e.preventDefault() }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (!document.getElementById('h-agree').checked) return alert('Please confirm the agreement.')
+    localStorage.setItem('jobPost', JSON.stringify(form))
+    alert('Job posted successfully!')
+  }
 
   const perks = [
     { icon: <HiUserGroup />, title: '50K+ Job Seekers', desc: 'Reach active candidates across Nepal' },

@@ -22,7 +22,12 @@ export default function JobSeekerForm() {
     const val = e.target.type === 'email' ? e.target.value.trim() : sanitizeInput(e.target.value)
     setForm({ ...form, [e.target.name]: val })
   }
-  const handleSubmit = (e) => { e.preventDefault() }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const data = { ...form, createdAt: new Date().toISOString() }
+    localStorage.setItem('jobAlert', JSON.stringify(data))
+    alert('You are registered for job alerts!')
+  }
 
   const filteredJobs = useMemo(() => {
     return jobs.filter(job => {

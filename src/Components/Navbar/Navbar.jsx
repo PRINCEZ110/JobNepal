@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { HiChevronDown, HiBars3, HiXMark, HiUser } from 'react-icons/hi2'
-import { useAuth } from '../../context/AuthContext.jsx'
+import { useAuth } from '../../context/useAuth.js'
 import './Navbar.css'
 
 const navItems = [
