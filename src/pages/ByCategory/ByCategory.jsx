@@ -1,8 +1,20 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { HiBriefcase, HiArrowRight } from 'react-icons/hi2'
+import { HiArrowRight } from 'react-icons/hi2'
 import jobs from '../../data/jobs.js'
 import './ByCategory.css'
+
+const icons = {
+  'IT & Software': '💻',
+  'NGO / INGO': '🤝',
+  'Accounting & Finance': '📊',
+  'Sales': '📈',
+  'Hospitality': '🏨',
+  'Engineering': '⚙️',
+  'Teaching / Education': '📚',
+  'Admin / Management': '📋',
+  'Tender / EOI': '📄',
+}
 
 export default function ByCategory() {
   const grouped = useMemo(() => {
@@ -29,22 +41,18 @@ export default function ByCategory() {
           <div className="bcat-grid">
             {grouped.map(([category, categoryJobs]) => (
               <div key={category} className="bcat-card">
-                <div className="bcat-card-header">
-                  <HiBriefcase className="bcat-card-icon" />
-                  <h2 className="bcat-card-title">{category}</h2>
-                  <span className="bcat-card-count">{categoryJobs.length} jobs</span>
-                </div>
-                <ul className="bcat-job-list">
-                  {categoryJobs.slice(0, 4).map(job => (
+                <span className="bcat-emoji">{icons[category] || '📌'}</span>
+                <h2 className="bcat-card-title">{category}</h2>
+                <span className="bcat-count">{categoryJobs.length} open position{categoryJobs.length !== 1 ? 's' : ''}</span>
+                <ul className="bcat-list">
+                  {categoryJobs.slice(0, 3).map(job => (
                     <li key={job.id}>
-                      <Link to={`/job/${job.id}`} className="bcat-job-link">{job.title}</Link>
-                      <span className="bcat-job-company">{job.company}</span>
+                      <Link to={`/job/${job.id}`} className="bcat-link">{job.title}</Link>
+                      <span className="bcat-company">{job.company}</span>
                     </li>
                   ))}
                 </ul>
-                {categoryJobs.length > 4 && (
-                  <Link to="/find-job" className="bcat-view-more">View all {categoryJobs.length} jobs <HiArrowRight /></Link>
-                )}
+                <Link to="/find-job" className="bcat-cta">View Positions <HiArrowRight /></Link>
               </div>
             ))}
           </div>
