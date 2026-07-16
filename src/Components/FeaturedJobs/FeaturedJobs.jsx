@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { HiArrowRight } from 'react-icons/hi2'
+import { HiArrowRight, HiMapPin, HiBriefcase, HiCurrencyDollar } from 'react-icons/hi2'
 import jobs from '../../data/jobs.js'
 import './FeaturedJobs.css'
 
@@ -12,6 +12,9 @@ function FeaturedJobs() {
   const filtered = activeCategory === 'All'
     ? jobs.filter(j => j.featured)
     : jobs.filter(j => j.featured && j.category === activeCategory)
+
+  const spotlight = filtered[0]
+  const rest = filtered.slice(1)
 
   return (
     <section className="fj-section">
@@ -34,25 +37,48 @@ function FeaturedJobs() {
           ))}
         </div>
 
-        <div className="fj-list">
-          {filtered.map((job, idx) => (
-            <Link key={job.id} to={`/job/${job.id}`} className={`fj-row ${idx === 0 ? 'fj-row--top' : ''}`}>
-              <span className="fj-idx">0{idx + 1}</span>
-              <img src={job.logo} alt={job.company} className="fj-logo" />
-              <div className="fj-info">
-                <h3 className="fj-job-title">{job.title}</h3>
-                <p className="fj-company-name">{job.company}</p>
+        {spotlight && (
+          <Link to={`/job/${spotlight.id}`} className="fj-spotlight">
+            <div className="fj-spotlight-body">
+              <span className="fj-spotlight-badge">Featured Opportunity</span>
+              <h3 className="fj-spotlight-title">{spotlight.title}</h3>
+              <div className="fj-spotlight-company">
+                <img src={spotlight.logo} alt={spotlight.company} className="fj-spotlight-logo" />
+                <span>{spotlight.company}</span>
               </div>
-              <div className="fj-meta">
+              <p className="fj-spotlight-desc">{spotlight.description.slice(0, 140)}...</p>
+              <div className="fj-spotlight-meta">
+                <span><HiMapPin /> {spotlight.location}</span>
+                <span><HiBriefcase /> {spotlight.type}</span>
+                <span><HiCurrencyDollar /> {spotlight.salary}</span>
+              </div>
+              <span className="fj-spotlight-action">View Position <HiArrowRight /></span>
+            </div>
+            <div className="fj-spotlight-side">
+              <div className="fj-spotlight-stat">
+                <span className="fj-stat-value">{spotlight.deadline}</span>
+                <span className="fj-stat-label">Days Left</span>
+              </div>
+              <div className="fj-spotlight-stat">
+                <span className="fj-stat-value">{spotlight.category}</span>
+                <span className="fj-stat-label">Category</span>
+              </div>
+            </div>
+          </Link>
+        )}
+
+        <div className="fj-grid">
+          {rest.map((job) => (
+            <Link key={job.id} to={`/job/${job.id}`} className="fj-card">
+              <div className="fj-card-header">
+                <img src={job.logo} alt={job.company} className="fj-card-logo" />
+              </div>
+              <h4 className="fj-card-title">{job.title}</h4>
+              <p className="fj-card-company">{job.company}</p>
+              <div className="fj-card-meta">
                 <span>{job.location}</span>
-                <span className="fj-meta-dot" aria-hidden="true" />
+                <span className="fj-card-dot" />
                 <span>{job.type}</span>
-                <span className="fj-meta-dot" aria-hidden="true" />
-                <span>{job.salary}</span>
-              </div>
-              <div className="fj-right">
-                <span className="fj-deadline">{job.deadline}</span>
-                <span className="fj-arrow"><HiArrowRight /></span>
               </div>
             </Link>
           ))}
