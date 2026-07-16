@@ -67,117 +67,35 @@
   border-color: #0f172a;
 }
 
-.fj-layout {
-  display: flex;
-  gap: 28px;
-  align-items: flex-start;
-}
-
-.fj-sidebar {
-  width: 280px;
-  flex-shrink: 0;
-  background: #0f172a;
-  border-radius: 14px;
-  overflow: hidden;
-  position: sticky;
-  top: 90px;
-}
-
-.fj-hot-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 16px 18px;
-  font-size: 14px;
-  font-weight: 700;
-  color: #F89A1C;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-.fj-hot-icon {
-  font-size: 18px;
-}
-
-.fj-hot-viewport {
-  height: 400px;
-  overflow: hidden;
+.fj-carousel-wrap {
   position: relative;
-}
-
-.fj-hot-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.fj-hot-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 18px;
-  text-decoration: none;
-  color: #fff;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  transition: background 0.2s;
-}
-.fj-hot-item:hover {
-  background: rgba(255,255,255,0.06);
+  gap: 12px;
 }
 
-.fj-hot-logo {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-  border-radius: 4px;
-  flex-shrink: 0;
-}
-
-.fj-hot-info {
-  flex: 1;
-  min-width: 0;
+.fj-track {
   display: flex;
-  flex-direction: column;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 6px 0 10px;
+  scrollbar-width: none;
 }
-
-.fj-hot-title {
-  font-size: 12px;
-  font-weight: 600;
-  color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.fj-hot-company {
-  font-size: 11px;
-  color: #64748b;
-}
-
-.fj-hot-arrow {
-  font-size: 12px;
-  color: #475569;
-  flex-shrink: 0;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.fj-hot-item:hover .fj-hot-arrow {
-  opacity: 1;
-}
-
-.fj-grid {
-  flex: 1;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-  gap: 18px;
-  min-width: 0;
+.fj-track::-webkit-scrollbar {
+  display: none;
 }
 
 .fj-card {
+  flex: 0 0 calc((100% - 60px) / 4);
+  min-width: 240px;
+  scroll-snap-align: start;
   background: #fff;
   border-radius: 12px;
-  padding: 20px;
+  padding: 22px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   text-decoration: none;
   color: inherit;
   border: 1px solid #eaeef5;
@@ -185,11 +103,9 @@
 }
 .fj-card:hover {
   border-color: #cbd5e1;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.06);
 }
-
-.fj-card-top { min-height: 0; }
 
 .fj-card-header {
   display: flex;
@@ -230,13 +146,14 @@
 .fj-company-name {
   font-size: 13px;
   color: #64748b;
-  margin: 0 0 14px;
+  margin: 0 0 12px;
 }
 
 .fj-meta {
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
+  margin-bottom: auto;
 }
 .fj-meta span {
   display: flex;
@@ -246,11 +163,11 @@
   color: #94a3b8;
 }
 
-.fj-card-bottom {
+.fj-card-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 16px;
+  margin-top: 14px;
   padding-top: 14px;
   border-top: 1px solid #eaeef5;
 }
@@ -269,6 +186,28 @@
   font-weight: 500;
   color: #94a3b8;
   white-space: nowrap;
+}
+
+.fj-arrow {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #eaeef5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #64748b;
+  font-size: 20px;
+  transition: all 0.2s;
+  z-index: 2;
+}
+.fj-arrow:hover {
+  border-color: #0f172a;
+  color: #0f172a;
+  background: #f8fafc;
 }
 
 .fj-footer {
@@ -294,18 +233,17 @@
   gap: 10px;
 }
 
-@media (max-width: 900px) {
-  .fj-layout { flex-direction: column; }
-  .fj-sidebar {
-    width: 100%;
-    position: static;
-  }
-  .fj-hot-viewport {
-    height: 240px;
-  }
+@media (max-width: 1024px) {
+  .fj-card { flex: 0 0 calc((100% - 40px) / 3); }
+}
+@media (max-width: 768px) {
+  .fj-card { flex: 0 0 calc((100% - 20px) / 2); }
+  .fj-arrow { display: none; }
+}
+@media (max-width: 480px) {
+  .fj-card { flex: 0 0 85%; }
 }
 @media (max-width: 640px) {
   .fj-section { padding: 60px 0; }
   .fj-title { font-size: 24px; }
-  .fj-grid { grid-template-columns: 1fr; }
 }
