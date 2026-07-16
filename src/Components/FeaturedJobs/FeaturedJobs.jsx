@@ -1,18 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { HiMapPin, HiBriefcase, HiCurrencyDollar, HiArrowRight } from 'react-icons/hi2'
+import { HiArrowRight } from 'react-icons/hi2'
 import jobs from '../../data/jobs.js'
 import './FeaturedJobs.css'
 
 const categories = ['All', 'IT & Software', 'NGO / INGO', 'Accounting & Finance', 'Sales', 'Engineering']
-
-const catColors = {
-  'IT & Software': '#6366f1',
-  'NGO / INGO': '#0891b2',
-  'Accounting & Finance': '#059669',
-  'Sales': '#d97706',
-  'Engineering': '#dc2626',
-}
 
 function FeaturedJobs() {
   const [activeCategory, setActiveCategory] = useState('All')
@@ -42,25 +34,25 @@ function FeaturedJobs() {
           ))}
         </div>
 
-        <div className="fj-grid">
-          {filtered.map((job) => (
-            <Link key={job.id} to={`/job/${job.id}`} className="fj-card">
-              <div className="fj-card-accent" style={{ background: catColors[job.category] || '#64748b' }} />
-              <div className="fj-card-body">
-                <div className="fj-card-header">
-                  <img src={job.logo} alt={job.company} className="fj-logo" />
-                  <span className="fj-featured-badge">{job.deadline}</span>
-                </div>
+        <div className="fj-list">
+          {filtered.map((job, idx) => (
+            <Link key={job.id} to={`/job/${job.id}`} className={`fj-row ${idx === 0 ? 'fj-row--top' : ''}`}>
+              <span className="fj-idx">0{idx + 1}</span>
+              <img src={job.logo} alt={job.company} className="fj-logo" />
+              <div className="fj-info">
                 <h3 className="fj-job-title">{job.title}</h3>
                 <p className="fj-company-name">{job.company}</p>
-                <div className="fj-meta">
-                  <span><HiMapPin /> {job.location}</span>
-                  <span><HiBriefcase /> {job.type}</span>
-                </div>
-                <div className="fj-card-footer">
-                  <span className="fj-salary"><HiCurrencyDollar /> {job.salary}</span>
-                  <span className="fj-cat-pill" style={{ background: `${catColors[job.category] || '#64748b'}18`, color: catColors[job.category] || '#64748b' }}>{job.category}</span>
-                </div>
+              </div>
+              <div className="fj-meta">
+                <span>{job.location}</span>
+                <span className="fj-meta-dot" aria-hidden="true" />
+                <span>{job.type}</span>
+                <span className="fj-meta-dot" aria-hidden="true" />
+                <span>{job.salary}</span>
+              </div>
+              <div className="fj-right">
+                <span className="fj-deadline">{job.deadline}</span>
+                <span className="fj-arrow"><HiArrowRight /></span>
               </div>
             </Link>
           ))}
