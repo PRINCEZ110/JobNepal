@@ -45,9 +45,9 @@ export default function JobSeekerForm() {
         <div className="fj-hero-bg" />
         <div className="fj-container">
           <div className="fj-hero-content">
-            <span className="fj-hero-tag">Find Your Dream Job</span>
-            <h1 className="fj-hero-title">Discover <span className="fj-hero-accent">10,000+</span> Jobs in Nepal</h1>
-            <p className="fj-hero-subtitle">Browse opportunities from top companies and NGOs across all 7 provinces</p>
+            <span className="fj-hero-tag">Start Here</span>
+            <h1 className="fj-hero-title">Find Your <span className="fj-hero-accent">Dream Job</span> in Nepal</h1>
+            <p className="fj-hero-subtitle">Browse {jobs.length}+ opportunities from top companies and NGOs across all 7 provinces</p>
             <div className="fj-hero-search">
               <HiMagnifyingGlass className="fj-search-icon" />
               <input type="text" placeholder="Job title, skill, or company..." value={keyword} onChange={e => setKeyword(e.target.value)} className="fj-search-input" />

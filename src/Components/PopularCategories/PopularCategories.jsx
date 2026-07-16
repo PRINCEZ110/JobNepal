@@ -1,4 +1,5 @@
 import { HiArrowRight } from 'react-icons/hi2'
+import { Link } from 'react-router-dom'
 import './PopularCategories.css'
 
 const categories = [
@@ -57,25 +58,26 @@ function PopularCategories() {
     <section className="pc-section">
       <div className="pc-container">
         <div className="pc-header">
+          <span className="pc-label">Categories</span>
           <h2 className="pc-title">Browse jobs by category</h2>
           <p className="pc-subtitle">Explore opportunities across industries and find your perfect role</p>
         </div>
 
         <div className="pc-grid">
           {categories.map((cat) => (
-            <a key={cat.name} href="#" className="pc-card">
+            <Link key={cat.name} to="/find-job" className="pc-card">
               <div className="pc-card-top">
                 <img src={cat.icon} alt={cat.name} className="pc-icon" />
                 <span className="pc-count">{cat.count}</span>
               </div>
               <h3 className="pc-name">{cat.name}</h3>
               <p className="pc-desc">{cat.desc}</p>
-            </a>
+            </Link>
           ))}
         </div>
 
         <div className="pc-footer">
-          <a href="#" className="pc-view-all">View all categories <HiArrowRight /></a>
+          <Link to="/find-job" className="pc-view-all">View all categories <HiArrowRight /></Link>
         </div>
       </div>
     </section>

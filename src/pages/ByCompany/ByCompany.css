@@ -1,37 +1,54 @@
 .bcomp-page {
+  margin-top: 72px;
   min-height: 60vh;
 }
+.bcomp-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+.bcomp-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #F89A1C;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.bcomp-accent { color: #F89A1C; }
+
 .bcomp-hero {
-  background: linear-gradient(135deg, #0B66A9, #0a4f8a);
-  color: #fff;
+  background: #0f172a;
   padding: 60px 0;
   text-align: center;
 }
-.bcomp-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
 .bcomp-hero-title {
-  font-size: 2rem;
-  margin-bottom: 8px;
+  font-size: 36px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
 }
-.bcomp-hero-subtitle {
-  font-size: 1.1rem;
-  opacity: 0.9;
+.bcomp-hero-desc {
+  font-size: 16px;
+  color: #94a3b8;
+  margin: 0;
 }
+
+.bcomp-main { padding: 40px 0 60px; }
+
 .bcomp-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   gap: 24px;
-  padding: 40px 0;
 }
 .bcomp-card {
   background: #fff;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 24px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-  border: 1px solid #e2e8f0;
+  border: 1px solid #f1f5f9;
   transition: box-shadow 0.2s;
 }
 .bcomp-card:hover {
@@ -43,7 +60,7 @@
   gap: 16px;
   margin-bottom: 16px;
   padding-bottom: 16px;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid #f1f5f9;
 }
 .bcomp-logo {
   width: 48px;
@@ -69,9 +86,7 @@
   padding: 10px 0;
   border-bottom: 1px solid #f1f5f9;
 }
-.bcomp-job-list li:last-child {
-  border-bottom: none;
-}
+.bcomp-job-list li:last-child { border-bottom: none; }
 .bcomp-job-title {
   display: block;
   color: #0f172a;
@@ -79,9 +94,7 @@
   font-weight: 500;
   font-size: 0.95rem;
 }
-.bcomp-job-title:hover {
-  color: #0B66A9;
-}
+.bcomp-job-title:hover { color: #0B66A9; }
 .bcomp-job-meta {
   font-size: 0.8rem;
   color: #64748b;

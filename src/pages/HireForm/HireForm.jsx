@@ -37,7 +37,7 @@ export default function HireForm() {
         <div className="hire-container">
           <div className="hire-hero-content">
             <span className="hire-hero-tag">Employer Dashboard</span>
-            <h1 className="hire-hero-title">Post a Job & Find <span className="hire-hero-accent">Top Talent</span> in Nepal</h1>
+            <h1 className="hire-hero-title">Hire <span className="hire-hero-accent">Top Talent</span> in Nepal</h1>
             <p className="hire-hero-subtitle">Reach thousands of qualified candidates across all 7 provinces. Free job posting for verified employers.</p>
             <div className="hire-hero-stats">
               <div className="hire-hero-stat"><span className="hire-stat-num">50K+</span><span className="hire-stat-label">Job Seekers</span></div>

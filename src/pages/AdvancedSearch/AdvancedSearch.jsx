@@ -33,97 +33,101 @@ export default function AdvancedSearch() {
 
   return (
     <div className="as-page">
-      <div className="as-hero">
+      <section className="as-hero">
         <div className="as-container">
-          <h1 className="as-hero-title">Advanced Job Search</h1>
-          <p className="as-hero-subtitle">Find exactly what you're looking for with powerful filters</p>
+          <span className="as-tag">Find Jobs</span>
+          <h1 className="as-hero-title">Advanced <span className="as-accent">Job Search</span></h1>
+          <p className="as-hero-desc">Find exactly what you're looking for with powerful filters</p>
         </div>
-      </div>
-      <div className="as-container">
-        <div className="as-layout">
-          <aside className="as-sidebar">
-            <div className="as-sidebar-card">
-              <div className="as-sidebar-header">
-                <h3>Filters</h3>
-                <button className="as-clear-btn" onClick={clearAll}>Clear all</button>
-              </div>
+      </section>
 
-              <div className="as-filter-group">
-                <label>Keyword</label>
-                <div className="as-search-wrap">
-                  <HiMagnifyingGlass className="as-search-icon" />
-                  <input type="text" placeholder="Job title, skill, company..." value={keyword} onChange={e => setKeyword(e.target.value)} />
-                  {keyword && <HiXMark className="as-clear-icon" onClick={() => setKeyword('')} />}
+      <section className="as-main">
+        <div className="as-container">
+          <div className="as-layout">
+            <aside className="as-sidebar">
+              <div className="as-sidebar-card">
+                <div className="as-sidebar-header">
+                  <h3>Filters</h3>
+                  <button className="as-clear-btn" onClick={clearAll}>Clear all</button>
+                </div>
+
+                <div className="as-filter-group">
+                  <label>Keyword</label>
+                  <div className="as-search-wrap">
+                    <HiMagnifyingGlass className="as-search-icon" />
+                    <input type="text" placeholder="Job title, skill, company..." value={keyword} onChange={e => setKeyword(e.target.value)} />
+                    {keyword && <HiXMark className="as-clear-icon" onClick={() => setKeyword('')} />}
+                  </div>
+                </div>
+
+                <div className="as-filter-group">
+                  <label>Category</label>
+                  <select value={categoryFilter} onChange={e => setCategoryFilter(e.target.value)}>
+                    {categories.map(c => <option key={c} value={c}>{c}</option>)}
+                  </select>
+                </div>
+
+                <div className="as-filter-group">
+                  <label>Location</label>
+                  <select value={locationFilter} onChange={e => setLocationFilter(e.target.value)}>
+                    {locations.map(l => <option key={l} value={l}>{l}</option>)}
+                  </select>
+                </div>
+
+                <div className="as-filter-group">
+                  <label>Job Type</label>
+                  <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)}>
+                    {jobTypes.map(t => <option key={t} value={t}>{t}</option>)}
+                  </select>
                 </div>
               </div>
+            </aside>
 
-              <div className="as-filter-group">
-                <label>Category</label>
-                <select value={categoryFilter} onChange={e => setCategoryFilter(e.target.value)}>
-                  {categories.map(c => <option key={c} value={c}>{c}</option>)}
-                </select>
+            <div className="as-results-section">
+              <div className="as-toolbar">
+                <span className="as-result-count">{filteredJobs.length} job{filteredJobs.length !== 1 ? 's' : ''} found</span>
+                {(keyword || categoryFilter !== 'All' || typeFilter !== 'All' || locationFilter !== 'All') && (
+                  <button className="as-clear-all-btn" onClick={clearAll}>Clear filters</button>
+                )}
               </div>
 
-              <div className="as-filter-group">
-                <label>Location</label>
-                <select value={locationFilter} onChange={e => setLocationFilter(e.target.value)}>
-                  {locations.map(l => <option key={l} value={l}>{l}</option>)}
-                </select>
-              </div>
-
-              <div className="as-filter-group">
-                <label>Job Type</label>
-                <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)}>
-                  {jobTypes.map(t => <option key={t} value={t}>{t}</option>)}
-                </select>
-              </div>
-            </div>
-          </aside>
-
-          <div className="as-main">
-            <div className="as-toolbar">
-              <span className="as-result-count">{filteredJobs.length} job{filteredJobs.length !== 1 ? 's' : ''} found</span>
-              {(keyword || categoryFilter !== 'All' || typeFilter !== 'All' || locationFilter !== 'All') && (
-                <button className="as-clear-all-btn" onClick={clearAll}>Clear filters</button>
+              {filteredJobs.length === 0 ? (
+                <div className="as-empty">
+                  <HiBriefcase size={48} />
+                  <h3>No jobs match your criteria</h3>
+                  <p>Try adjusting your filters or search terms</p>
+                  <button className="as-clear-btn-lg" onClick={clearAll}>Clear All Filters</button>
+                </div>
+              ) : (
+                <div className="as-results">
+                  {filteredJobs.map(job => (
+                    <Link key={job.id} to={`/job/${job.id}`} className="as-card">
+                      <div className="as-card-header">
+                        <img src={job.logo} alt={job.company} className="as-logo" />
+                        <div className="as-card-header-info">
+                          <h3 className="as-job-title">{job.title}</h3>
+                          <p className="as-company-name">{job.company}</p>
+                        </div>
+                        {job.featured && <span className="as-featured">Featured</span>}
+                      </div>
+                      <p className="as-desc">{job.description.slice(0, 150)}...</p>
+                      <div className="as-meta">
+                        <span><HiMapPin /> {job.location}</span>
+                        <span><HiBriefcase /> {job.type}</span>
+                        <span><HiCurrencyDollar /> {job.salary}</span>
+                      </div>
+                      <div className="as-card-footer">
+                        <span className="as-category">{job.category}</span>
+                        <span className="as-deadline">{job.deadline} left</span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               )}
             </div>
-
-            {filteredJobs.length === 0 ? (
-              <div className="as-empty">
-                <HiBriefcase size={48} />
-                <h3>No jobs match your criteria</h3>
-                <p>Try adjusting your filters or search terms</p>
-                <button className="as-clear-btn-lg" onClick={clearAll}>Clear All Filters</button>
-              </div>
-            ) : (
-              <div className="as-results">
-                {filteredJobs.map(job => (
-                  <Link key={job.id} to={`/job/${job.id}`} className="as-card">
-                    <div className="as-card-header">
-                      <img src={job.logo} alt={job.company} className="as-logo" />
-                      <div className="as-card-header-info">
-                        <h3 className="as-job-title">{job.title}</h3>
-                        <p className="as-company-name">{job.company}</p>
-                      </div>
-                      {job.featured && <span className="as-featured">Featured</span>}
-                    </div>
-                    <p className="as-desc">{job.description.slice(0, 150)}...</p>
-                    <div className="as-meta">
-                      <span><HiMapPin /> {job.location}</span>
-                      <span><HiBriefcase /> {job.type}</span>
-                      <span><HiCurrencyDollar /> {job.salary}</span>
-                    </div>
-                    <div className="as-card-footer">
-                      <span className="as-category">{job.category}</span>
-                      <span className="as-deadline">{job.deadline} left</span>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
           </div>
         </div>
-      </div>
+      </section>
     </div>
   )
 }

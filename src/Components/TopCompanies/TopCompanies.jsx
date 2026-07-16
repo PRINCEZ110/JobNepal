@@ -13,9 +13,10 @@ const companies = [
 
 function TopCompanies() {
   return (
-    <section className="top-companies">
+    <section className="tc-section">
       <div className="tc-container">
         <div className="tc-header">
+          <span className="tc-label">Hiring Now</span>
           <h2 className="tc-title">Top Hiring Companies</h2>
           <p className="tc-subtitle">Leading organizations hiring on JobsNepal</p>
         </div>

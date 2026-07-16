@@ -17,3 +17,8 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+::selection {
+  background: #F89A1C;
+  color: #0f172a;
+}

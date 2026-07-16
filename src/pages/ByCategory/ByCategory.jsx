@@ -15,37 +15,41 @@ export default function ByCategory() {
   }, [])
 
   return (
-    <div className="bc-page">
-      <div className="bc-hero">
-        <div className="bc-container">
-          <h1 className="bc-hero-title">Browse Jobs by Category</h1>
-          <p className="bc-hero-subtitle">Find opportunities across {grouped.length} industries and sectors</p>
+    <div className="bcat-page">
+      <section className="bcat-hero">
+        <div className="bcat-container">
+          <span className="bcat-tag">Search Jobs</span>
+          <h1 className="bcat-hero-title">Browse by <span className="bcat-accent">Category</span></h1>
+          <p className="bcat-hero-desc">Find opportunities across {grouped.length} industries and sectors in Nepal</p>
         </div>
-      </div>
-      <div className="bc-container">
-        <div className="bc-grid">
-          {grouped.map(([category, categoryJobs]) => (
-            <div key={category} className="bc-card">
-              <div className="bc-card-header">
-                <HiBriefcase className="bc-card-icon" />
-                <h2 className="bc-card-title">{category}</h2>
-                <span className="bc-card-count">{categoryJobs.length} jobs</span>
+      </section>
+
+      <section className="bcat-main">
+        <div className="bcat-container">
+          <div className="bcat-grid">
+            {grouped.map(([category, categoryJobs]) => (
+              <div key={category} className="bcat-card">
+                <div className="bcat-card-header">
+                  <HiBriefcase className="bcat-card-icon" />
+                  <h2 className="bcat-card-title">{category}</h2>
+                  <span className="bcat-card-count">{categoryJobs.length} jobs</span>
+                </div>
+                <ul className="bcat-job-list">
+                  {categoryJobs.slice(0, 4).map(job => (
+                    <li key={job.id}>
+                      <Link to={`/job/${job.id}`} className="bcat-job-link">{job.title}</Link>
+                      <span className="bcat-job-company">{job.company}</span>
+                    </li>
+                  ))}
+                </ul>
+                {categoryJobs.length > 4 && (
+                  <Link to="/find-job" className="bcat-view-more">View all {categoryJobs.length} jobs <HiArrowRight /></Link>
+                )}
               </div>
-              <ul className="bc-job-list">
-                {categoryJobs.slice(0, 4).map(job => (
-                  <li key={job.id}>
-                    <Link to={`/job/${job.id}`} className="bc-job-link">{job.title}</Link>
-                    <span className="bc-job-company">{job.company}</span>
-                  </li>
-                ))}
-              </ul>
-              {categoryJobs.length > 4 && (
-                <Link to={`/find-job`} className="bc-view-more">View all {categoryJobs.length} jobs <HiArrowRight /></Link>
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   )
 }

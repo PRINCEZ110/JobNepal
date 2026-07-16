@@ -57,12 +57,10 @@
   cursor: pointer;
   transition: all 0.2s;
 }
-
 .fj-tab:hover {
   border-color: #cbd5e1;
   color: #0f172a;
 }
-
 .fj-tab--active {
   background: #0f172a;
   color: #fff;
@@ -88,16 +86,13 @@
   color: inherit;
   border: 1px solid #f1f5f9;
 }
-
 .fj-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.06);
   border-color: #e2e8f0;
 }
 
-.fj-card-top {
-  min-height: 0;
-}
+.fj-card-top { min-height: 0; }
 
 .fj-card-header {
   display: flex;
@@ -147,7 +142,6 @@
   gap: 14px;
   flex-wrap: wrap;
 }
-
 .fj-meta span {
   display: flex;
   align-items: center;
@@ -201,24 +195,14 @@
   text-decoration: none;
   transition: background 0.2s, gap 0.2s;
 }
-
 .fj-view-all:hover {
   background: #1e293b;
   gap: 10px;
 }
 
 @media (max-width: 640px) {
-  .fj-title {
-    font-size: 26px;
-  }
-  .fj-tabs {
-    gap: 6px;
-  }
-  .fj-tab {
-    padding: 6px 14px;
-    font-size: 13px;
-  }
-  .fj-grid {
-    grid-template-columns: 1fr;
-  }
+  .fj-title { font-size: 26px; }
+  .fj-tabs { gap: 6px; }
+  .fj-tab { padding: 6px 14px; font-size: 13px; }
+  .fj-grid { grid-template-columns: 1fr; }
 }

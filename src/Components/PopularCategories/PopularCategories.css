@@ -4,7 +4,7 @@
 }
 
 .pc-container {
-  max-width: 1280px;
+  max-width: 1120px;
   margin: 0 auto;
   padding: 0 30px;
 }
@@ -14,11 +14,21 @@
   margin-bottom: 48px;
 }
 
+.pc-label {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #0B66A9;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
 .pc-title {
   font-size: 32px;
   font-weight: 800;
   color: #0f172a;
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   letter-spacing: -0.02em;
 }
 
@@ -40,22 +50,19 @@
   border-radius: 14px;
   padding: 28px 24px;
   text-decoration: none;
-  display: flex;
-  flex-direction: column;
+  color: inherit;
   transition: transform 0.2s, box-shadow 0.2s;
 }
-
 .pc-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-  border-color: #e2e8f0;
 }
 
 .pc-card-top {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 16px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
 }
 
 .pc-icon {
@@ -66,26 +73,24 @@
 
 .pc-count {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   color: #0B66A9;
-  background: #eff6ff;
+  background: #eef6ff;
   padding: 3px 10px;
   border-radius: 20px;
-  white-space: nowrap;
+  margin-left: auto;
 }
 
 .pc-name {
   font-size: 16px;
-  font-weight: 600;
-  color: #0f172a;
-  margin: 0 0 6px;
+  font-weight: 700;
+  margin: 0 0 4px;
 }
 
 .pc-desc {
   font-size: 13px;
   color: #64748b;
   margin: 0;
-  line-height: 1.4;
 }
 
 .pc-footer {
@@ -97,14 +102,17 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #0B66A9;
+  padding: 12px 28px;
+  background: #0f172a;
+  color: #fff;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 14px;
+  border-radius: 8px;
   text-decoration: none;
-  transition: gap 0.2s;
+  transition: background 0.2s, gap 0.2s;
 }
-
 .pc-view-all:hover {
+  background: #1e293b;
   gap: 10px;
 }
 
