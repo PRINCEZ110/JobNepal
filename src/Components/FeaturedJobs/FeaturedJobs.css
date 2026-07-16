@@ -69,27 +69,40 @@
 .fj-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 16px;
+  gap: 20px;
 }
 
 .fj-card {
   background: #fff;
-  border-radius: 12px;
-  padding: 22px;
+  border-radius: 14px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   text-decoration: none;
   color: inherit;
   border: 1px solid #eaeef5;
-  transition: border-color 0.2s, background 0.2s;
+  overflow: hidden;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
 }
 .fj-card:hover {
   border-color: #cbd5e1;
-  background: #fafcff;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.06);
+  transform: translateY(-3px);
 }
 
-.fj-card-top { min-height: 0; }
+.fj-card-accent {
+  width: 5px;
+  flex-shrink: 0;
+  transition: width 0.25s;
+}
+.fj-card:hover .fj-card-accent {
+  width: 6px;
+}
+
+.fj-card-body {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
 
 .fj-card-header {
   display: flex;
@@ -105,7 +118,7 @@
   border-radius: 8px;
 }
 
-.fj-deadline {
+.fj-featured-badge {
   font-size: 11px;
   font-weight: 500;
   color: #94a3b8;
@@ -134,6 +147,7 @@
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
+  margin-bottom: 16px;
 }
 .fj-meta span {
   display: flex;
@@ -143,11 +157,11 @@
   color: #94a3b8;
 }
 
-.fj-card-bottom {
+.fj-card-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 16px;
+  margin-top: auto;
   padding-top: 14px;
   border-top: 1px solid #eaeef5;
 }
@@ -161,13 +175,11 @@
   color: #0f172a;
 }
 
-.fj-category {
+.fj-cat-pill {
   font-size: 11px;
-  font-weight: 500;
-  color: #94a3b8;
-  background: #f8fafc;
+  font-weight: 600;
   padding: 3px 10px;
-  border-radius: 4px;
+  border-radius: 20px;
 }
 
 .fj-footer {
@@ -178,18 +190,21 @@
 .fj-view-all {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  font-weight: 500;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
   color: #0f172a;
   text-decoration: none;
-  border-bottom: 1px solid #d1d5db;
-  padding-bottom: 2px;
-  transition: gap 0.2s, border-color 0.2s;
+  background: #f8fafc;
+  padding: 12px 28px;
+  border-radius: 10px;
+  border: 1px solid #eaeef5;
+  transition: gap 0.2s, background 0.2s, border-color 0.2s;
 }
 .fj-view-all:hover {
-  gap: 10px;
-  border-color: #0f172a;
+  gap: 14px;
+  background: #fff;
+  border-color: #cbd5e1;
 }
 
 @media (max-width: 640px) {

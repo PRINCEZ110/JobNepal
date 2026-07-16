@@ -6,6 +6,14 @@ import './FeaturedJobs.css'
 
 const categories = ['All', 'IT & Software', 'NGO / INGO', 'Accounting & Finance', 'Sales', 'Engineering']
 
+const catColors = {
+  'IT & Software': '#6366f1',
+  'NGO / INGO': '#0891b2',
+  'Accounting & Finance': '#059669',
+  'Sales': '#d97706',
+  'Engineering': '#dc2626',
+}
+
 function FeaturedJobs() {
   const [activeCategory, setActiveCategory] = useState('All')
 
@@ -37,10 +45,11 @@ function FeaturedJobs() {
         <div className="fj-grid">
           {filtered.map((job) => (
             <Link key={job.id} to={`/job/${job.id}`} className="fj-card">
-              <div className="fj-card-top">
+              <div className="fj-card-accent" style={{ background: catColors[job.category] || '#64748b' }} />
+              <div className="fj-card-body">
                 <div className="fj-card-header">
                   <img src={job.logo} alt={job.company} className="fj-logo" />
-                  <span className="fj-deadline">{job.deadline}</span>
+                  <span className="fj-featured-badge">{job.deadline}</span>
                 </div>
                 <h3 className="fj-job-title">{job.title}</h3>
                 <p className="fj-company-name">{job.company}</p>
@@ -48,10 +57,10 @@ function FeaturedJobs() {
                   <span><HiMapPin /> {job.location}</span>
                   <span><HiBriefcase /> {job.type}</span>
                 </div>
-              </div>
-              <div className="fj-card-bottom">
-                <span className="fj-salary"><HiCurrencyDollar /> {job.salary}</span>
-                <span className="fj-category">{job.category}</span>
+                <div className="fj-card-footer">
+                  <span className="fj-salary"><HiCurrencyDollar /> {job.salary}</span>
+                  <span className="fj-cat-pill" style={{ background: `${catColors[job.category] || '#64748b'}18`, color: catColors[job.category] || '#64748b' }}>{job.category}</span>
+                </div>
               </div>
             </Link>
           ))}
