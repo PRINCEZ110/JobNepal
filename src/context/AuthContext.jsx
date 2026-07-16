@@ -1,24 +1,86 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useState, useCallback } from 'react'
-import { hashPassword, checkRateLimit, resetRateLimit } from '../utils/security.js'
+import { createContext, useState, useCallback, useEffect, useRef } from 'react'
+import {
+  verifyPassword,
+  hashPassword,
+  generateToken,
+  checkRateLimit,
+  resetRateLimit,
+  STORAGE_KEYS,
+} from '../utils/security.js'
 
 export const AuthContext = createContext(null)
 
+const SESSION_DURATION = 24 * 60 * 60 * 1000
+const SESSION_CHECK_INTERVAL = 60000
+
+function getUserByEmail(email) {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.USERS)
+    if (!raw) return null
+    const users = JSON.parse(raw)
+    if (!Array.isArray(users)) return null
+    const u = users.find(u => u.email === email)
+    return u ? { name: u.name, email: u.email } : null
+  } catch {
+    return null
+  }
+}
+
+function loadSession() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.SESSION)
+    if (!raw) return null
+    const { t, e, m } = JSON.parse(raw)
+    if (!t || !e || !m) return null
+    if (Date.now() > e) {
+      localStorage.removeItem(STORAGE_KEYS.SESSION)
+      return null
+    }
+    const user = getUserByEmail(m)
+    return user ? { user, expiresAt: e } : null
+  } catch {
+    localStorage.removeItem(STORAGE_KEYS.SESSION)
+    return null
+  }
+}
+
+function saveSession(token, user) {
+  const expiresAt = Date.now() + SESSION_DURATION
+  localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify({ t: token, e: expiresAt, m: user.email }))
+}
+
+function clearSession() {
+  localStorage.removeItem(STORAGE_KEYS.SESSION)
+}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
-    try {
-      const stored = localStorage.getItem('user')
-      if (stored) {
-        const u = JSON.parse(stored)
-        if (u && u.name && u.email) {
-          return { name: u.name, email: u.email }
-        }
-      }
-    } catch {
-      localStorage.removeItem('user')
-    }
-    return null
+    const session = loadSession()
+    return session ? session.user : null
   })
+
+  const checkIntervalRef = useRef(null)
+
+  useEffect(() => {
+    const session = loadSession()
+    if (session) {
+      setUser(session.user)
+    } else {
+      setUser(null)
+    }
+
+    checkIntervalRef.current = setInterval(() => {
+      const s = loadSession()
+      if (!s && user) {
+        setUser(null)
+      }
+    }, SESSION_CHECK_INTERVAL)
+
+    return () => {
+      if (checkIntervalRef.current) clearInterval(checkIntervalRef.current)
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const login = useCallback(async (email, password) => {
     if (!email || !password) {
@@ -29,7 +91,7 @@ export function AuthProvider({ children }) {
     if (rate.blocked) return { success: false, error: rate.message }
 
     try {
-      const raw = localStorage.getItem('users')
+      const raw = localStorage.getItem(STORAGE_KEYS.USERS)
       if (!raw) return { success: false, error: 'No account found. Please sign up.' }
 
       const users = JSON.parse(raw)
@@ -38,9 +100,12 @@ export function AuthProvider({ children }) {
       const u = users.find(u => u.email === email)
       if (!u) return { success: false, error: 'No account found. Please sign up.' }
 
-      const hash = await hashPassword(password)
-      if (u.passwordHash === hash) {
-        setUser({ name: u.name, email: u.email })
+      const valid = await verifyPassword(password, u.passwordHash)
+      if (valid) {
+        const token = generateToken()
+        const userData = { name: u.name, email: u.email }
+        saveSession(token, userData)
+        setUser(userData)
         resetRateLimit(email)
         return { success: true }
       }
@@ -58,7 +123,7 @@ export function AuthProvider({ children }) {
     }
 
     try {
-      const raw = localStorage.getItem('users')
+      const raw = localStorage.getItem(STORAGE_KEYS.USERS)
       const users = raw ? JSON.parse(raw) : []
       if (!Array.isArray(users)) return { success: false, error: 'Signup error' }
 
@@ -69,9 +134,12 @@ export function AuthProvider({ children }) {
       const passwordHash = await hashPassword(password)
       const newUser = { name, email, passwordHash, phone, category, createdAt: Date.now() }
       users.push(newUser)
-      localStorage.setItem('users', JSON.stringify(users))
-      localStorage.setItem('user', JSON.stringify({ name, email }))
-      setUser({ name, email })
+      localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users))
+
+      const token = generateToken()
+      const userData = { name, email }
+      saveSession(token, userData)
+      setUser(userData)
       return { success: true }
     } catch (err) {
       console.error('Signup error:', err)
@@ -80,7 +148,7 @@ export function AuthProvider({ children }) {
   }, [])
 
   const logout = useCallback(() => {
-    localStorage.removeItem('user')
+    clearSession()
     setUser(null)
   }, [])
 
