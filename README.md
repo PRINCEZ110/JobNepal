@@ -7,8 +7,8 @@ A job portal frontend built with **React 19**, **Vite 8**, and **Tailwind CSS v4
 | Route | Page |
 |---|---|
 | `/` | Home — Hero, Featured Jobs, Categories, Why Choose Us, Top Companies, CTA |
-| `/login` | Login with rate-limited auth |
-| `/signup` | Signup with password strength validation |
+| `/login` | Login with rate-limited auth, sliding overlay toggle |
+| `/signup` | Signup with password strength validation, sliding overlay toggle |
 | `/hire` | Post a job (employer form) |
 | `/find-job` | Submit application (job seeker form) |
 | `/job/:id` | Job detail page |
@@ -17,12 +17,22 @@ A job portal frontend built with **React 19**, **Vite 8**, and **Tailwind CSS v4
 
 - **Auth context** with localStorage persistence
 - **Passwords SHA-256 hashed** before storage (never plaintext)
-- **Login rate limiting** — 5 attempts per 60s per email
-- **Password strength** — min 8 chars, uppercase, lowercase, number
-- **Input sanitization** — HTML special chars stripped on all form fields
+- **Login rate limiting** — 5 attempts per 60s per email, 10-attempt client lockout
+- **Password strength** — min 8 chars, uppercase, lowercase, number, meter + rule checklist
+- **Input sanitization** — HTML special chars stripped, maxLength enforced on all fields
 - **CSP headers** — Content-Security-Policy, X-Frame-Options, X-Content-Type-Options, Referrer-Policy
 - **Session timeout** — auto-logout after 30 min inactivity
 - **SPA routing** — no full page reloads (useNavigate throughout)
+
+## Auth Page
+
+- Full-screen layout (Navbar/Footer hidden on `/login`, `/signup`)
+- Background image with dark gradient overlay
+- Sliding overlay panel with team photo + blue tint
+- Combined Auth component — same component renders for both routes
+- Premium UI: rounded inputs with focus ring, pill gradient buttons, brand accents, social circles
+- Mobile (≤1024px): overlay hidden, forms stack vertically, bottom nav tabs (Sign In / Sign Up)
+- Remember me checkbox + forgot password link
 
 ## Tech Stack
 
