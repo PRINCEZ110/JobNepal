@@ -101,12 +101,6 @@ export default function Auth() {
     else { setSignupError(result.error) }
   }
 
-  const togglePanel = (toSignUp) => {
-    setIsSignUp(toSignUp)
-    setLoginError('')
-    setSignupError('')
-  }
-
   return (
     <div className="auth-page">
       <div className={`auth-container ${isSignUp ? 'auth-container--signup' : ''}`}>
@@ -257,7 +251,7 @@ export default function Auth() {
               </div>
               <h1>Welcome Back!</h1>
               <p>To keep connected with us please login with your personal info</p>
-              <button className="auth-ghost" onClick={() => togglePanel(false)}>Sign In</button>
+              <button className="auth-ghost" onClick={() => { setLoginError(''); setSignupError(''); navigate('/login') }}>Sign In</button>
             </div>
             <div className="auth-overlay-panel auth-overlay-panel--right">
               <div className="auth-overlay-brand">
@@ -266,18 +260,24 @@ export default function Auth() {
               </div>
               <h1>Hello, Job Seeker!</h1>
               <p>Enter your personal details and start your journey with us</p>
-              <button className="auth-ghost" onClick={() => togglePanel(true)}>Sign Up</button>
+              <button className="auth-ghost" onClick={() => { setLoginError(''); setSignupError(''); navigate('/signup') }}>Sign Up</button>
             </div>
           </div>
         </div>
 
-        <div className="auth-mobile-toggle">
-          <p>
-            {isSignUp ? "Already have an account? " : "Don't have an account? "}
-            <button onClick={() => togglePanel(!isSignUp)}>
-              {isSignUp ? 'Sign In' : 'Sign Up'}
-            </button>
-          </p>
+        <div className="auth-mobile-nav">
+          <button
+            className={`auth-mobile-nav-btn${!isSignUp ? ' auth-mobile-nav-btn--active' : ''}`}
+            onClick={() => { setLoginError(''); setSignupError(''); navigate('/login') }}
+          >
+            Sign In
+          </button>
+          <button
+            className={`auth-mobile-nav-btn${isSignUp ? ' auth-mobile-nav-btn--active' : ''}`}
+            onClick={() => { setLoginError(''); setSignupError(''); navigate('/signup') }}
+          >
+            Sign Up
+          </button>
         </div>
 
       </div>
