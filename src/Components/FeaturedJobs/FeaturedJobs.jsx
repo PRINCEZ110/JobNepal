@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { HiArrowRight, HiMapPin, HiBriefcase, HiCurrencyDollar } from 'react-icons/hi2'
+import { HiMapPin, HiBriefcase, HiCurrencyDollar, HiArrowRight, HiFire } from 'react-icons/hi2'
 import jobs from '../../data/jobs.js'
 import './FeaturedJobs.css'
 
@@ -8,13 +8,29 @@ const categories = ['All', 'IT & Software', 'NGO / INGO', 'Accounting & Finance'
 
 function FeaturedJobs() {
   const [activeCategory, setActiveCategory] = useState('All')
+  const listRef = useRef(null)
 
   const filtered = activeCategory === 'All'
     ? jobs.filter(j => j.featured)
     : jobs.filter(j => j.featured && j.category === activeCategory)
 
-  const spotlight = filtered[0]
-  const rest = filtered.slice(1)
+  const hotJobs = jobs.filter(j => j.featured).slice(0, 8)
+
+  useEffect(() => {
+    const el = listRef.current
+    if (!el) return
+    let pos = 0
+    const step = () => {
+      pos += 0.5
+      if (pos >= el.scrollHeight / 2) {
+        pos = 0
+      }
+      el.style.transform = `translateY(-${pos}px)`
+      raf = requestAnimationFrame(step)
+    }
+    let raf = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(raf)
+  }, [])
 
   return (
     <section className="fj-section">
@@ -37,51 +53,50 @@ function FeaturedJobs() {
           ))}
         </div>
 
-        {spotlight && (
-          <Link to={`/job/${spotlight.id}`} className="fj-spotlight">
-            <div className="fj-spotlight-body">
-              <span className="fj-spotlight-badge">Featured Opportunity</span>
-              <h3 className="fj-spotlight-title">{spotlight.title}</h3>
-              <div className="fj-spotlight-company">
-                <img src={spotlight.logo} alt={spotlight.company} className="fj-spotlight-logo" />
-                <span>{spotlight.company}</span>
-              </div>
-              <p className="fj-spotlight-desc">{spotlight.description.slice(0, 140)}...</p>
-              <div className="fj-spotlight-meta">
-                <span><HiMapPin /> {spotlight.location}</span>
-                <span><HiBriefcase /> {spotlight.type}</span>
-                <span><HiCurrencyDollar /> {spotlight.salary}</span>
-              </div>
-              <span className="fj-spotlight-action">View Position <HiArrowRight /></span>
+        <div className="fj-layout">
+          <aside className="fj-sidebar">
+            <div className="fj-hot-header">
+              <HiFire className="fj-hot-icon" />
+              <span>Hot Jobs</span>
             </div>
-            <div className="fj-spotlight-side">
-              <div className="fj-spotlight-stat">
-                <span className="fj-stat-value">{spotlight.deadline}</span>
-                <span className="fj-stat-label">Days Left</span>
-              </div>
-              <div className="fj-spotlight-stat">
-                <span className="fj-stat-value">{spotlight.category}</span>
-                <span className="fj-stat-label">Category</span>
+            <div className="fj-hot-viewport">
+              <div className="fj-hot-list" ref={listRef}>
+                {[...hotJobs, ...hotJobs].map((job, i) => (
+                  <Link key={`${job.id}-${i}`} to={`/job/${job.id}`} className="fj-hot-item">
+                    <img src={job.logo} alt={job.company} className="fj-hot-logo" />
+                    <div className="fj-hot-info">
+                      <span className="fj-hot-title">{job.title}</span>
+                      <span className="fj-hot-company">{job.company}</span>
+                    </div>
+                    <HiArrowRight className="fj-hot-arrow" />
+                  </Link>
+                ))}
               </div>
             </div>
-          </Link>
-        )}
+          </aside>
 
-        <div className="fj-grid">
-          {rest.map((job) => (
-            <Link key={job.id} to={`/job/${job.id}`} className="fj-card">
-              <div className="fj-card-header">
-                <img src={job.logo} alt={job.company} className="fj-card-logo" />
-              </div>
-              <h4 className="fj-card-title">{job.title}</h4>
-              <p className="fj-card-company">{job.company}</p>
-              <div className="fj-card-meta">
-                <span>{job.location}</span>
-                <span className="fj-card-dot" />
-                <span>{job.type}</span>
-              </div>
-            </Link>
-          ))}
+          <div className="fj-grid">
+            {filtered.map((job) => (
+              <Link key={job.id} to={`/job/${job.id}`} className="fj-card">
+                <div className="fj-card-top">
+                  <div className="fj-card-header">
+                    <img src={job.logo} alt={job.company} className="fj-logo" />
+                    <span className="fj-cat-label">{job.category}</span>
+                  </div>
+                  <h3 className="fj-job-title">{job.title}</h3>
+                  <p className="fj-company-name">{job.company}</p>
+                  <div className="fj-meta">
+                    <span><HiMapPin /> {job.location}</span>
+                    <span><HiBriefcase /> {job.type}</span>
+                  </div>
+                </div>
+                <div className="fj-card-bottom">
+                  <span className="fj-salary"><HiCurrencyDollar /> {job.salary}</span>
+                  <span className="fj-deadline">{job.deadline}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
 
         <div className="fj-footer">

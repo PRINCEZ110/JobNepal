@@ -4,7 +4,7 @@
 }
 
 .fj-container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 30px;
 }
@@ -67,157 +67,156 @@
   border-color: #0f172a;
 }
 
-.fj-spotlight {
+.fj-layout {
   display: flex;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  border-radius: 16px;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+.fj-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  background: #0f172a;
+  border-radius: 14px;
   overflow: hidden;
-  text-decoration: none;
-  color: #fff;
-  margin-bottom: 28px;
-  transition: transform 0.25s;
-}
-.fj-spotlight:hover {
-  transform: translateY(-3px);
+  position: sticky;
+  top: 90px;
 }
 
-.fj-spotlight-body {
-  flex: 1;
-  padding: 36px;
-}
-
-.fj-spotlight-badge {
-  display: inline-block;
-  font-size: 11px;
+.fj-hot-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 18px;
+  font-size: 14px;
   font-weight: 700;
   color: #F89A1C;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-.fj-spotlight-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0 0 12px;
-  line-height: 1.3;
+.fj-hot-icon {
+  font-size: 18px;
 }
 
-.fj-spotlight-company {
+.fj-hot-viewport {
+  height: 400px;
+  overflow: hidden;
+  position: relative;
+}
+
+.fj-hot-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.fj-hot-item {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 14px;
-  color: #94a3b8;
-  margin-bottom: 14px;
+  padding: 12px 18px;
+  text-decoration: none;
+  color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.2s;
+}
+.fj-hot-item:hover {
+  background: rgba(255,255,255,0.06);
 }
 
-.fj-spotlight-logo {
+.fj-hot-logo {
   width: 28px;
   height: 28px;
   object-fit: contain;
-  border-radius: 6px;
-}
-
-.fj-spotlight-desc {
-  font-size: 14px;
-  color: #94a3b8;
-  line-height: 1.6;
-  margin: 0 0 18px;
-}
-
-.fj-spotlight-meta {
-  display: flex;
-  gap: 18px;
-  flex-wrap: wrap;
-  margin-bottom: 22px;
-}
-.fj-spotlight-meta span {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 13px;
-  color: #94a3b8;
-}
-
-.fj-spotlight-action {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #F89A1C;
-  transition: gap 0.2s;
-}
-.fj-spotlight:hover .fj-spotlight-action {
-  gap: 14px;
-}
-
-.fj-spotlight-side {
-  width: 180px;
-  background: rgba(255,255,255,0.04);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 32px;
-  padding: 36px 24px;
-  text-align: center;
+  border-radius: 4px;
   flex-shrink: 0;
 }
 
-.fj-spotlight-stat {
+.fj-hot-info {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
 }
 
-.fj-stat-value {
-  font-size: 14px;
+.fj-hot-title {
+  font-size: 12px;
   font-weight: 600;
   color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.fj-stat-label {
+.fj-hot-company {
   font-size: 11px;
-  font-weight: 600;
   color: #64748b;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+}
+
+.fj-hot-arrow {
+  font-size: 12px;
+  color: #475569;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.fj-hot-item:hover .fj-hot-arrow {
+  opacity: 1;
 }
 
 .fj-grid {
+  flex: 1;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 18px;
+  min-width: 0;
 }
 
 .fj-card {
   background: #fff;
   border-radius: 12px;
-  padding: 22px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   text-decoration: none;
   color: inherit;
   border: 1px solid #eaeef5;
-  transition: border-color 0.2s, transform 0.2s;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 .fj-card:hover {
   border-color: #cbd5e1;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
 }
 
+.fj-card-top { min-height: 0; }
+
 .fj-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-bottom: 14px;
 }
 
-.fj-card-logo {
-  width: 40px;
-  height: 40px;
+.fj-logo {
+  width: 44px;
+  height: 44px;
   object-fit: contain;
   border-radius: 8px;
 }
 
-.fj-card-title {
-  font-size: 14px;
+.fj-cat-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #0B66A9;
+  background: #eff6ff;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.fj-job-title {
+  font-size: 15px;
   font-weight: 600;
   color: #0f172a;
   margin: 0 0 3px;
@@ -228,25 +227,48 @@
   overflow: hidden;
 }
 
-.fj-card-company {
-  font-size: 12px;
+.fj-company-name {
+  font-size: 13px;
   color: #64748b;
-  margin: 0 0 12px;
+  margin: 0 0 14px;
 }
 
-.fj-card-meta {
+.fj-meta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.fj-meta span {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   font-size: 12px;
   color: #94a3b8;
 }
 
-.fj-card-dot {
-  width: 3px;
-  height: 3px;
-  background: #cbd5e1;
-  border-radius: 50%;
+.fj-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #eaeef5;
+}
+
+.fj-salary {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.fj-deadline {
+  font-size: 11px;
+  font-weight: 500;
+  color: #94a3b8;
+  white-space: nowrap;
 }
 
 .fj-footer {
@@ -272,19 +294,18 @@
   gap: 10px;
 }
 
-@media (max-width: 768px) {
-  .fj-spotlight { flex-direction: column; }
-  .fj-spotlight-side {
+@media (max-width: 900px) {
+  .fj-layout { flex-direction: column; }
+  .fj-sidebar {
     width: 100%;
-    flex-direction: row;
-    padding: 20px 36px;
-    gap: 24px;
+    position: static;
   }
-  .fj-grid { grid-template-columns: repeat(2, 1fr); }
+  .fj-hot-viewport {
+    height: 240px;
+  }
 }
 @media (max-width: 640px) {
   .fj-section { padding: 60px 0; }
   .fj-title { font-size: 24px; }
   .fj-grid { grid-template-columns: 1fr; }
-  .fj-spotlight-body { padding: 24px; }
 }
