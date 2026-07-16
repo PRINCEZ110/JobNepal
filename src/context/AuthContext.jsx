@@ -32,7 +32,7 @@ export function AuthProvider({ children }) {
         resetRateLimit(email)
         return { success: true }
       }
-    } catch { }
+    } catch (err) { console.error('Auth error:', err) }
 
     return { success: false, error: 'Invalid email or password' }
   }, [])
@@ -45,7 +45,7 @@ export function AuthProvider({ children }) {
         if (u.email === email) {
           return { success: false, error: 'An account with this email already exists' }
         }
-      } catch { }
+      } catch (err) { console.error('Auth error:', err) }
     }
 
     const passwordHash = await hashPassword(password)
