@@ -4,92 +4,89 @@
 }
 
 .fj-container {
-  max-width: 1280px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 0 30px;
 }
 
 .fj-header {
   text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .fj-label {
   display: inline-block;
-  font-size: 12px;
-  font-weight: 700;
-  color: #0B66A9;
-  letter-spacing: 0.06em;
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .fj-title {
-  font-size: 32px;
-  font-weight: 800;
+  font-size: 30px;
+  font-weight: 700;
   color: #0f172a;
   margin: 0 0 10px;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.015em;
 }
 
 .fj-subtitle {
-  font-size: 16px;
-  color: #64748b;
-  margin: 0 0 32px;
+  font-size: 15px;
+  color: #94a3b8;
+  margin: 0 0 28px;
 }
 
 .fj-tabs {
   display: flex;
   justify-content: center;
-  gap: 8px;
-  margin-bottom: 36px;
+  gap: 4px;
+  margin-bottom: 40px;
   flex-wrap: wrap;
 }
 
 .fj-tab {
-  padding: 7px 18px;
-  background: #f8fafc;
-  border: 1px solid #f1f5f9;
-  border-radius: 8px;
-  font-size: 14px;
+  padding: 6px 16px;
+  background: none;
+  border: none;
+  font-size: 13px;
   font-weight: 500;
-  color: #64748b;
+  color: #94a3b8;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: color 0.2s;
+  border-radius: 6px;
 }
 .fj-tab:hover {
-  border-color: #cbd5e1;
   color: #0f172a;
 }
 .fj-tab--active {
-  background: #0f172a;
-  color: #fff;
-  border-color: #0f172a;
+  color: #0f172a;
+  font-weight: 600;
+  background: #f1f5f9;
 }
 
 .fj-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
 }
 
 .fj-card {
   background: #fff;
-  border-radius: 14px;
-  padding: 24px;
+  border-radius: 12px;
+  padding: 22px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-  transition: transform 0.2s, box-shadow 0.2s;
   text-decoration: none;
   color: inherit;
-  border: 1px solid #f1f5f9;
+  border: 1px solid #eaeef5;
+  transition: border-color 0.2s, background 0.2s;
 }
 .fj-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-  border-color: #e2e8f0;
+  border-color: #cbd5e1;
+  background: #fafcff;
 }
 
 .fj-card-top { min-height: 0; }
@@ -102,20 +99,16 @@
 }
 
 .fj-logo {
-  width: 52px;
-  height: 52px;
+  width: 44px;
+  height: 44px;
   object-fit: contain;
-  border-radius: 10px;
-  border: 1px solid #f1f5f9;
+  border-radius: 8px;
 }
 
 .fj-deadline {
   font-size: 11px;
-  font-weight: 600;
-  color: #dc2626;
-  background: #fef2f2;
-  padding: 4px 10px;
-  border-radius: 4px;
+  font-weight: 500;
+  color: #94a3b8;
   white-space: nowrap;
 }
 
@@ -123,7 +116,7 @@
   font-size: 16px;
   font-weight: 600;
   color: #0f172a;
-  margin: 0 0 4px;
+  margin: 0 0 3px;
   line-height: 1.35;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -132,9 +125,9 @@
 }
 
 .fj-company-name {
-  font-size: 14px;
+  font-size: 13px;
   color: #64748b;
-  margin: 0 0 12px;
+  margin: 0 0 14px;
 }
 
 .fj-meta {
@@ -145,64 +138,64 @@
 .fj-meta span {
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 13px;
-  color: #64748b;
+  gap: 4px;
+  font-size: 12px;
+  color: #94a3b8;
 }
 
 .fj-card-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 18px;
-  padding-top: 16px;
-  border-top: 1px solid #f1f5f9;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #eaeef5;
 }
 
 .fj-salary {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
-  color: #059669;
+  color: #0f172a;
 }
 
 .fj-category {
-  font-size: 12px;
-  font-weight: 600;
-  color: #0B66A9;
-  background: #eff6ff;
-  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #94a3b8;
+  background: #f8fafc;
+  padding: 3px 10px;
   border-radius: 4px;
 }
 
 .fj-footer {
   text-align: center;
-  margin-top: 44px;
+  margin-top: 48px;
 }
 
 .fj-view-all {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 12px 28px;
-  background: #0f172a;
-  color: #fff;
-  font-weight: 600;
   font-size: 14px;
-  border-radius: 8px;
+  font-weight: 500;
+  color: #0f172a;
   text-decoration: none;
-  transition: background 0.2s, gap 0.2s;
+  border-bottom: 1px solid #d1d5db;
+  padding-bottom: 2px;
+  transition: gap 0.2s, border-color 0.2s;
 }
 .fj-view-all:hover {
-  background: #1e293b;
   gap: 10px;
+  border-color: #0f172a;
 }
 
 @media (max-width: 640px) {
-  .fj-title { font-size: 26px; }
-  .fj-tabs { gap: 6px; }
-  .fj-tab { padding: 6px 14px; font-size: 13px; }
+  .fj-section { padding: 60px 0; }
+  .fj-title { font-size: 24px; }
+  .fj-tabs { gap: 2px; }
+  .fj-tab { padding: 5px 12px; font-size: 12px; }
   .fj-grid { grid-template-columns: 1fr; }
 }
