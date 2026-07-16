@@ -1,0 +1,103 @@
+.bc-page {
+  min-height: 60vh;
+}
+.bc-hero {
+  background: linear-gradient(135deg, #0B66A9, #0a4f8a);
+  color: #fff;
+  padding: 60px 0;
+  text-align: center;
+}
+.bc-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.bc-hero-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+.bc-hero-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+.bc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+  padding: 40px 0;
+}
+.bc-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  border: 1px solid #e2e8f0;
+  transition: box-shadow 0.2s;
+}
+.bc-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.bc-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.bc-card-icon {
+  font-size: 1.5rem;
+  color: #0B66A9;
+}
+.bc-card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  flex: 1;
+}
+.bc-card-count {
+  font-size: 0.85rem;
+  color: #0B66A9;
+  font-weight: 600;
+  background: #eef6ff;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+.bc-job-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.bc-job-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+.bc-job-list li:last-child {
+  border-bottom: none;
+}
+.bc-job-link {
+  display: block;
+  color: #0f172a;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+.bc-job-link:hover {
+  color: #0B66A9;
+}
+.bc-job-company {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+.bc-view-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 12px;
+  color: #0B66A9;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+.bc-view-more:hover {
+  text-decoration: underline;
+}

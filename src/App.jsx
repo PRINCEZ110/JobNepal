@@ -7,6 +7,9 @@ import Login from './pages/Login/Login.jsx'
 import Signup from './pages/Signup/Signup.jsx'
 import HireForm from './pages/HireForm/HireForm.jsx'
 import JobSeekerForm from './pages/JobSeekerForm/JobSeekerForm.jsx'
+import ByCategory from './pages/ByCategory/ByCategory.jsx'
+import ByCompany from './pages/ByCompany/ByCompany.jsx'
+import AdvancedSearch from './pages/AdvancedSearch/AdvancedSearch.jsx'
 import './App.css'
 
 function App() {
@@ -20,6 +23,9 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/hire" element={<HireForm />} />
         <Route path="/find-job" element={<JobSeekerForm />} />
+        <Route path="/jobs/category" element={<ByCategory />} />
+        <Route path="/jobs/company" element={<ByCompany />} />
+        <Route path="/search" element={<AdvancedSearch />} />
       </Routes>
       <Footer />
     </>
