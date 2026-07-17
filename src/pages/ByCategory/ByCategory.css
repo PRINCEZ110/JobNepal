@@ -126,3 +126,25 @@
   .bcat-grid { grid-template-columns: 1fr; }
   .bcat-card { padding: 24px; }
 }
+
+.dark .bcat-main {
+  background: #0b1120;
+}
+.dark .bcat-card {
+  background: #0f172a;
+}
+.dark .bcat-card:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+.dark .bcat-card-title {
+  color: #f1f5f9;
+}
+.dark .bcat-list li {
+  border-bottom-color: #334155;
+}
+.dark .bcat-link {
+  color: #f1f5f9;
+}
+.dark .bcat-company {
+  color: #64748b;
+}

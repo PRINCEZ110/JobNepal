@@ -143,3 +143,20 @@
 @media (max-width: 640px) {
   .re-hero-title { font-size: 30px; }
 }
+
+.dark .re-features {
+  background: #0b1120;
+}
+.dark .re-section-header h2 {
+  color: #f1f5f9;
+}
+.dark .re-card {
+  background: #0f172a;
+  border-color: #334155;
+}
+.dark .re-card h3 {
+  color: #f1f5f9;
+}
+.dark .re-card p {
+  color: #94a3b8;
+}

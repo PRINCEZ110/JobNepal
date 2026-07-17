@@ -20,7 +20,7 @@ function getUserByEmail(email) {
     if (!raw) return null
     const users = JSON.parse(raw)
     if (!Array.isArray(users)) return null
-    const u = users.find(u => u.email === email)
+    const u = users.find(u => u.email.toLowerCase() === email.toLowerCase())
     return u ? { name: u.name, email: u.email } : null
   } catch {
     return null
@@ -90,7 +90,7 @@ export function AuthProvider({ children }) {
       const users = JSON.parse(raw)
       if (!Array.isArray(users)) return { success: false, error: 'Authentication error' }
 
-      const u = users.find(u => u.email === email)
+      const u = users.find(u => u.email.toLowerCase() === email.toLowerCase())
       if (!u) return { success: false, error: 'No account found. Please sign up.' }
 
       const valid = await verifyPassword(password, u.passwordHash)
@@ -120,7 +120,7 @@ export function AuthProvider({ children }) {
       const users = raw ? JSON.parse(raw) : []
       if (!Array.isArray(users)) return { success: false, error: 'Signup error' }
 
-      if (users.find(u => u.email === email)) {
+      if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
         return { success: false, error: 'An account with this email already exists' }
       }
 

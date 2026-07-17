@@ -8,7 +8,7 @@ export default function Solutions() {
       <section className="sl-hero">
         <div className="sl-container">
           <h1 className="sl-hero-title">Recruitment <span className="sl-accent">Solutions</span></h1>
-          <p className="sl-hero-desc">Comend-to-end recruitment solutions tailored for Nepali businesses — from startups to enterprises.</p>
+          <p className="sl-hero-desc">End-to-end recruitment solutions tailored for Nepali businesses — from startups to enterprises.</p>
         </div>
       </section>
 

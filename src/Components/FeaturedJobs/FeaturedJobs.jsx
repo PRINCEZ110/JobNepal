@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useMemo, memo } from 'react'
 import { Link } from 'react-router-dom'
 import { HiMapPin, HiBriefcase, HiCurrencyDollar, HiArrowRight, HiChevronLeft, HiChevronRight, HiClock } from 'react-icons/hi2'
 import jobs from '../../data/jobs.js'
@@ -10,9 +10,11 @@ function FeaturedJobs() {
   const [activeCategory, setActiveCategory] = useState('All')
   const scrollRef = useRef(null)
 
-  const filtered = activeCategory === 'All'
-    ? jobs.filter(j => j.featured)
-    : jobs.filter(j => j.featured && j.category === activeCategory)
+  const filtered = useMemo(() => {
+    return activeCategory === 'All'
+      ? jobs.filter(j => j.featured)
+      : jobs.filter(j => j.featured && j.category === activeCategory)
+  }, [activeCategory])
 
   const scroll = (dir) => {
     const el = scrollRef.current
@@ -89,4 +91,4 @@ function FeaturedJobs() {
   )
 }
 
-export default FeaturedJobs
+export default memo(FeaturedJobs)

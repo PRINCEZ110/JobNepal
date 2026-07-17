@@ -523,3 +523,88 @@
     gap: 10px;
   }
 }
+
+.dark .fj-main {
+  background: #0b1120;
+}
+.dark .fj-section-title {
+  color: #f1f5f9;
+}
+.dark .fj-filter-toggle {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+.dark .fj-filter-toggle:hover {
+  border-color: #0B66A9;
+}
+.dark .fj-filters {
+  background: #0f172a;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.dark .fj-filter-group label {
+  color: #94a3b8;
+}
+.dark .fj-filter-group select {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+.dark .fj-filter-group select:focus {
+  border-color: #0B66A9;
+}
+.dark .fj-empty {
+  color: #64748b;
+}
+.dark .fj-empty h3 {
+  color: #94a3b8;
+}
+.dark .fj-card {
+  background: #0f172a;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.dark .fj-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+}
+.dark .fj-job-title {
+  color: #f1f5f9;
+}
+.dark .fj-company-name {
+  color: #94a3b8;
+}
+.dark .fj-desc {
+  color: #94a3b8;
+}
+.dark .fj-card-meta span {
+  color: #94a3b8;
+}
+.dark .fj-card-bottom {
+  border-top-color: #334155;
+}
+.dark .fj-sidebar-card {
+  background: #0f172a;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.dark .fj-sidebar-title {
+  color: #f1f5f9;
+}
+.dark .fj-sidebar-subtitle {
+  color: #94a3b8;
+}
+.dark .fj-field label {
+  color: #f1f5f9;
+}
+.dark .fj-field input,
+.dark .fj-field select {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+.dark .fj-field input:focus,
+.dark .fj-field select:focus {
+  border-color: #0B66A9;
+}
+.dark .fj-tips li {
+  color: #94a3b8;
+  border-bottom-color: #334155;
+}

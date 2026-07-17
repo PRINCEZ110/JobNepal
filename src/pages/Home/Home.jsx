@@ -16,6 +16,21 @@ export default function Home() {
         <meta name="description" content="Browse 10,000+ jobs from top companies and NGOs across all 7 provinces of Nepal. Free job portal for job seekers and employers." />
         <meta property="og:title" content="JobNepal — Find Jobs in Nepal" />
         <meta property="og:description" content="Nepal's #1 job portal with 10K+ active jobs across all 7 provinces." />
+        <link rel="canonical" href="https://jobsnepal.com" />
+        <script type="application/ld+json">{`
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "JobNepal",
+            "url": "https://jobsnepal.com",
+            "description": "Nepal's #1 job portal. Browse thousands of jobs from top companies.",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://jobsnepal.com/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          }
+        `}</script>
       </Helmet>
       <Hero />
       <FeaturedJobs />

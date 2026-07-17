@@ -1,9 +1,11 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, memo } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useAuth } from '../../context/useAuth.js'
+import { useToast } from '../../context/ToastContext.jsx'
 import { sanitizeInput, validateEmail, validatePassword } from '../../utils/security.js'
-import { HiEnvelope, HiLockClosed, HiEye, HiEyeSlash, HiArrowRight, HiUser, HiCheck } from 'react-icons/hi2'
+import { HiEnvelope, HiLockClosed, HiEye, HiEyeSlash, HiArrowRight, HiUser, HiCheck, HiXMark } from 'react-icons/hi2'
+import { FaGoogle, FaLinkedin } from 'react-icons/fa6'
 import './Auth.css'
 
 const strengthLabels = ['Weak', 'Fair', 'Good', 'Strong']
@@ -25,18 +27,23 @@ const signupRules = [
   { text: 'One number', test: (pw) => /[0-9]/.test(pw) },
 ]
 
-export default function Auth() {
+function Auth() {
   const location = useLocation()
   const isSignUp = location.pathname === '/signup'
   const navigate = useNavigate()
   const { login, signup } = useAuth()
+
+  const { addToast } = useToast()
+
+  const handleSocialLogin = (provider) => {
+    addToast('info', `${provider} login coming soon — stay tuned!`)
+  }
 
   const [loginEmail, setLoginEmail] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
   const [loginShowPw, setLoginShowPw] = useState(false)
   const [loginError, setLoginError] = useState('')
   const [loginLoading, setLoginLoading] = useState(false)
-  const [loginAttempts, setLoginAttempts] = useState(0)
 
   const [signupName, setSignupName] = useState('')
   const [signupEmail, setSignupEmail] = useState('')
@@ -46,6 +53,9 @@ export default function Auth() {
   const [signupAgree, setSignupAgree] = useState(false)
   const [signupError, setSignupError] = useState('')
   const [signupLoading, setSignupLoading] = useState(false)
+  const [showOTP, setShowOTP] = useState(false)
+  const [otp, setOtp] = useState(['', '', '', '', '', ''])
+  const [otpError, setOtpError] = useState('')
 
   const strength = useMemo(() => getStrength(signupPassword), [signupPassword])
   const strengthLabel = strength === 0 ? '' : strengthLabels[strength - 1]
@@ -53,11 +63,6 @@ export default function Auth() {
   const handleLogin = async (e) => {
     e.preventDefault()
     setLoginError('')
-
-    if (loginAttempts >= 10) {
-      setLoginError('Account temporarily locked due to too many attempts. Try again later.')
-      return
-    }
 
     const cleanEmail = sanitizeInput(loginEmail.trim())
     if (!validateEmail(cleanEmail)) { setLoginError('Please enter a valid email address'); return }
@@ -69,10 +74,8 @@ export default function Auth() {
     setLoginLoading(false)
 
     if (result.success) {
-      setLoginAttempts(0)
       navigate('/')
     } else {
-      setLoginAttempts(prev => prev + 1)
       setLoginError(result.error)
     }
   }
@@ -104,8 +107,39 @@ export default function Auth() {
     const result = await signup(cleanName, cleanEmail, signupPassword)
     setSignupLoading(false)
 
-    if (result.success) { navigate('/') }
+    if (result.success) { setShowOTP(true); setSignupError('') }
     else { setSignupError(result.error) }
+  }
+
+  const handleOTPChange = (index, value) => {
+    if (value && !/^\d$/.test(value)) return
+    const next = [...otp]
+    next[index] = value
+    setOtp(next)
+    setOtpError('')
+    if (value && index < 5) {
+      const nextInput = document.getElementById(`otp-${index + 1}`)
+      nextInput?.focus()
+    }
+  }
+
+  const handleOTPKeyDown = (index, e) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      const prevInput = document.getElementById(`otp-${index - 1}`)
+      prevInput?.focus()
+    }
+  }
+
+  const handleOTPVerify = () => {
+    const code = otp.join('')
+    if (code.length !== 6) { setOtpError('Please enter the full 6-digit code'); return }
+    navigate('/')
+  }
+
+  const handleOTPResend = () => {
+    setOtp(['', '', '', '', '', ''])
+    setOtpError('')
+    document.getElementById('otp-0')?.focus()
   }
 
   return (
@@ -159,11 +193,20 @@ export default function Auth() {
                 <input type="checkbox" defaultChecked />
                 Remember me
               </label>
-              <span className="auth-forgot-disabled">Forgot password?</span>
+              <Link to="/forgot-password" className="auth-forgot">Forgot password?</Link>
             </div>
-            <button type="submit" className="auth-btn" disabled={loginLoading || loginAttempts >= 10}>
+            <button type="submit" className="auth-btn" disabled={loginLoading}>
               {loginLoading ? <span className="auth-spinner" /> : <><HiArrowRight /> Sign In</>}
             </button>
+            <div className="auth-or">or continue with</div>
+            <div className="auth-social-row">
+              <button type="button" className="auth-social-btn auth-social-btn--google" aria-label="Sign in with Google" onClick={() => handleSocialLogin('Google')}>
+                <FaGoogle />
+              </button>
+              <button type="button" className="auth-social-btn auth-social-btn--linkedin" aria-label="Sign in with LinkedIn" onClick={() => handleSocialLogin('LinkedIn')}>
+                <FaLinkedin />
+              </button>
+            </div>
           </form>
         </div>
 
@@ -245,6 +288,15 @@ export default function Auth() {
             <button type="submit" className="auth-btn" disabled={signupLoading}>
               {signupLoading ? <span className="auth-spinner" /> : <><HiArrowRight /> Sign Up</>}
             </button>
+            <div className="auth-or">or sign up with</div>
+            <div className="auth-social-row">
+              <button type="button" className="auth-social-btn auth-social-btn--google" aria-label="Sign up with Google" onClick={() => handleSocialLogin('Google')}>
+                <FaGoogle />
+              </button>
+              <button type="button" className="auth-social-btn auth-social-btn--linkedin" aria-label="Sign up with LinkedIn" onClick={() => handleSocialLogin('LinkedIn')}>
+                <FaLinkedin />
+              </button>
+            </div>
           </form>
         </div>
 
@@ -286,7 +338,55 @@ export default function Auth() {
           </button>
         </div>
 
+        {showOTP && (
+          <div className="auth-otp-overlay">
+            <div className="auth-otp-modal">
+              <button type="button" className="auth-otp-close" onClick={() => setShowOTP(false)} aria-label="Close">
+                <HiXMark />
+              </button>
+              <div className="auth-otp-icon">
+                <HiEnvelope />
+              </div>
+              <h2>Verify Your Email</h2>
+              <p className="auth-otp-text">We&apos;ve sent a 6-digit code to <strong>{signupEmail}</strong></p>
+
+              {otpError && <div className="auth-error" role="alert">{otpError}</div>}
+
+              <div className="auth-otp-inputs">
+                {otp.map((digit, i) => (
+                  <input
+                    key={i}
+                    id={`otp-${i}`}
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={1}
+                    value={digit}
+                    onChange={e => handleOTPChange(i, e.target.value)}
+                    onKeyDown={e => handleOTPKeyDown(i, e)}
+                    className="auth-otp-digit"
+                    autoFocus={i === 0}
+                    aria-label={`Digit ${i + 1}`}
+                  />
+                ))}
+              </div>
+
+              <button type="button" className="auth-btn" onClick={handleOTPVerify}>
+                Verify Email
+              </button>
+
+              <p className="auth-otp-resend">
+                Didn&apos;t receive it?{' '}
+                <button type="button" className="auth-otp-resend-btn" onClick={handleOTPResend}>
+                  Resend code
+                </button>
+              </p>
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   )
 }
+
+export default memo(Auth)

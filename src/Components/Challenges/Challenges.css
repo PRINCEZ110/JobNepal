@@ -137,3 +137,25 @@
 
   .ch-title { font-size: 26px; }
 }
+
+.dark .ch-section {
+  background: #0b1120;
+}
+.dark .ch-title {
+  color: #f1f5f9;
+}
+.dark .ch-subtitle {
+  color: #94a3b8;
+}
+.dark .ch-item {
+  background: #0f172a;
+}
+.dark .ch-item:hover {
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+}
+.dark .ch-card-title {
+  color: #f1f5f9;
+}
+.dark .ch-card-desc {
+  color: #94a3b8;
+}

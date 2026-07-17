@@ -30,3 +30,13 @@
   line-height: 1.7;
   margin: 0;
 }
+
+.dark .privacy-content {
+  background: #0b1120;
+}
+.dark .privacy-section h2 {
+  color: #f1f5f9;
+}
+.dark .privacy-section p {
+  color: #94a3b8;
+}

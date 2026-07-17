@@ -36,7 +36,7 @@ export default function Blog() {
                   <img src={post.image} alt={post.title} className="bl-img" loading="lazy" />
                   <span className="bl-category">{post.category}</span>
                 </div>
-                <div className="bl-body" onClick={() => setExpanded(expanded === post.id ? null : post.id)}>
+                <div className="bl-body" onClick={() => setExpanded(expanded === post.id ? null : post.id)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setExpanded(expanded === post.id ? null : post.id) } }}>
                   <h3 className="bl-title">{post.title}</h3>
                   <div className="bl-meta">
                     <span><HiUser /> {post.author}</span>

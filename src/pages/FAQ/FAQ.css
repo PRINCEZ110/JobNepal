@@ -62,3 +62,17 @@
   line-height: 1.7;
   margin: 0;
 }
+
+.dark .faq-list-section {
+  background: #0b1120;
+}
+.dark .faq-item {
+  background: #0f172a;
+  border-color: #334155;
+}
+.dark .faq-question {
+  color: #f1f5f9;
+}
+.dark .faq-chevron {
+  color: #64748b;
+}

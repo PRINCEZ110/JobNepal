@@ -190,3 +190,38 @@
   .ct-layout { grid-template-columns: 1fr; }
   .ct-hero-title { font-size: 32px; }
 }
+
+.dark .ct-form-card {
+  background: #0f172a;
+  border-color: #334155;
+}
+.dark .ct-field label {
+  color: #94a3b8;
+}
+.dark .ct-field input,
+.dark .ct-field textarea,
+.dark .ct-field select {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+.dark .ct-field input:focus,
+.dark .ct-field textarea:focus,
+.dark .ct-field select:focus {
+  border-color: #0B66A9;
+}
+.dark .ct-success p {
+  color: #94a3b8;
+}
+.dark .ct-info h2 {
+  color: #f1f5f9;
+}
+.dark .ct-step p {
+  color: #94a3b8;
+}
+.dark .ct-step h4 {
+  color: #f1f5f9;
+}
+.dark .ct-contact-item span:first-child {
+  color: #f1f5f9;
+}

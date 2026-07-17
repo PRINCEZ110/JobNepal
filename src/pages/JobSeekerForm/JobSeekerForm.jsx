@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { sanitizeInput } from '../../utils/security.js'
 import { HiMagnifyingGlass, HiMapPin, HiBriefcase, HiCurrencyDollar, HiFunnel } from 'react-icons/hi2'
+import { useToast } from '../../context/ToastContext.jsx'
 import jobs from '../../data/jobs.js'
 import './JobSeekerForm.css'
 
@@ -10,6 +11,7 @@ const jobTypes = ['All', 'Full Time', 'Part Time', 'Contract', 'Internship']
 const locations = ['All', 'Kathmandu', 'Lalitpur', 'Pokhara', 'Biratnagar', 'Chitwan', 'Surkhet', 'Panchthar District', 'Kupondole, Lalitpur']
 
 export default function JobSeekerForm() {
+  const { addToast } = useToast()
   const [keyword, setKeyword] = useState('')
   const [locationFilter, setLocationFilter] = useState('All')
   const [categoryFilter, setCategoryFilter] = useState('All')
@@ -24,9 +26,10 @@ export default function JobSeekerForm() {
   }
   const handleSubmit = (e) => {
     e.preventDefault()
-    const data = { ...form, createdAt: new Date().toISOString() }
-    localStorage.setItem('jobAlert', JSON.stringify(data))
-    alert('You are registered for job alerts!')
+    const stored = { ...form, resume: form.resume ? form.resume.name : '' }
+    stored.createdAt = new Date().toISOString()
+    localStorage.setItem('jobAlert', JSON.stringify(stored))
+    addToast('success', 'You are registered for job alerts!')
   }
 
   const filteredJobs = useMemo(() => {

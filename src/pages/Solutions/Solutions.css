@@ -52,3 +52,17 @@
 .sl-btn--primary:hover { background: #e0890f; gap: 12px; }
 
 @media (max-width: 768px) { .sl-grid { grid-template-columns: 1fr; } }
+
+.dark .sl-grid-section {
+  background: #0b1120;
+}
+.dark .sl-card {
+  background: #0f172a;
+  border-color: #334155;
+}
+.dark .sl-card h3 {
+  color: #f1f5f9;
+}
+.dark .sl-card p {
+  color: #94a3b8;
+}

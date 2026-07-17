@@ -99,3 +99,27 @@
   font-size: 0.8rem;
   color: #64748b;
 }
+
+.dark .bcomp-card {
+  background: #0f172a;
+  border-color: #334155;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.dark .bcomp-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+.dark .bcomp-card-top {
+  border-bottom-color: #334155;
+}
+.dark .bcomp-name {
+  color: #f1f5f9;
+}
+.dark .bcomp-job-list li {
+  border-bottom-color: #334155;
+}
+.dark .bcomp-job-title {
+  color: #f1f5f9;
+}
+.dark .bcomp-job-meta {
+  color: #94a3b8;
+}

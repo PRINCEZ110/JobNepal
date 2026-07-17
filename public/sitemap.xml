@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://jobsnepal.com/</loc><priority>1.0</priority><changefreq>daily</changefreq></url>
+  <url><loc>https://jobsnepal.com/login</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://jobsnepal.com/signup</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://jobsnepal.com/find-job</loc><priority>0.8</priority><changefreq>daily</changefreq></url>
+  <url><loc>https://jobsnepal.com/hire</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://jobsnepal.com/jobs/category</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://jobsnepal.com/jobs/company</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://jobsnepal.com/search</loc><priority>0.6</priority><changefreq>daily</changefreq></url>
+  <url><loc>https://jobsnepal.com/about</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://jobsnepal.com/contact</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://jobsnepal.com/blog</loc><priority>0.6</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://jobsnepal.com/pricing</loc><priority>0.4</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://jobsnepal.com/faq</loc><priority>0.4</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://jobsnepal.com/privacy</loc><priority>0.3</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://jobsnepal.com/terms</loc><priority>0.3</priority><changefreq>yearly</changefreq></url>
+</urlset>

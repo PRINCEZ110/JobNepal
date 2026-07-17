@@ -13,7 +13,7 @@ function ResourcePromo() {
               Learn how to craft a winning CV, ace your interviews, and land your dream job in Nepal's competitive market.
             </p>
             <a href="/blog" className="rp-btn">
-              Download Free Guide <HiArrowRight />
+              Read Our Blog <HiArrowRight />
             </a>
           </div>
           <div className="rp-visual">

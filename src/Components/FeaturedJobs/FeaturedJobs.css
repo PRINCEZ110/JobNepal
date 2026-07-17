@@ -305,3 +305,59 @@
   .fj-section { padding: 60px 0; }
   .fj-title { font-size: 24px; }
 }
+
+.dark .fj-section {
+  background: #0b1120;
+}
+.dark .fj-title {
+  color: #f1f5f9;
+}
+.dark .fj-tab {
+  background: #1e293b;
+  border-color: #334155;
+  color: #94a3b8;
+}
+.dark .fj-tab:hover {
+  border-color: #475569;
+  color: #f1f5f9;
+}
+.dark .fj-tab--active {
+  background: #0f172a;
+  color: #fff;
+  border-color: #0f172a;
+}
+.dark .fj-card {
+  background: #0f172a;
+  border-color: #334155;
+}
+.dark .fj-card:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+.dark .fj-card-img {
+  background: #1e293b;
+}
+.dark .fj-job-title {
+  color: #f1f5f9;
+}
+.dark .fj-company-name {
+  color: #94a3b8;
+}
+.dark .fj-meta-item {
+  color: #64748b;
+}
+.dark .fj-card-footer {
+  border-top-color: #334155;
+}
+.dark .fj-salary {
+  color: #f1f5f9;
+}
+.dark .fj-arrow {
+  background: #1e293b;
+  border-color: #334155;
+  color: #94a3b8;
+}
+.dark .fj-arrow:hover {
+  border-color: #f1f5f9;
+  color: #f1f5f9;
+  background: #0f172a;
+}

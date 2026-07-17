@@ -127,3 +127,26 @@
   .wcu-grid { grid-template-columns: 1fr; }
   .wcu-title { font-size: 26px; }
 }
+
+.dark .wcu-section {
+  background: #0b1120;
+}
+.dark .wcu-title {
+  color: #f1f5f9;
+}
+.dark .wcu-subtitle {
+  color: #94a3b8;
+}
+.dark .wcu-card {
+  background: #0f172a;
+  border-color: #334155;
+}
+.dark .wcu-card:hover {
+  box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+}
+.dark .wcu-card-title {
+  color: #f1f5f9;
+}
+.dark .wcu-card-desc {
+  color: #94a3b8;
+}

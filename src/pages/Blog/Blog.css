@@ -154,3 +154,26 @@
   .bl-img-wrap { height: 180px; }
   .bl-body { padding: 18px 20px; }
 }
+
+.dark .bl-card {
+  background: #0f172a;
+  border-color: #334155;
+}
+.dark .bl-card:hover {
+  box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+}
+.dark .bl-img-wrap {
+  background: #1e293b;
+}
+.dark .bl-title {
+  color: #f1f5f9;
+}
+.dark .bl-meta {
+  color: #64748b;
+}
+.dark .bl-excerpt {
+  border-top-color: #334155;
+}
+.dark .bl-excerpt p {
+  color: #94a3b8;
+}

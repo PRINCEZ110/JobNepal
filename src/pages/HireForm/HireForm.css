@@ -410,3 +410,70 @@
     padding: 12px 0;
   }
 }
+
+.dark .hire-perks {
+  background: #0b1120;
+  border-bottom-color: #334155;
+}
+.dark .hire-perk-title {
+  color: #f1f5f9;
+}
+.dark .hire-perk-desc {
+  color: #94a3b8;
+}
+.dark .hire-main {
+  background: #0b1120;
+}
+.dark .hire-card {
+  background: #0f172a;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.dark .hire-card-title {
+  color: #f1f5f9;
+}
+.dark .hire-card-subtitle {
+  color: #94a3b8;
+}
+.dark .hire-section-label {
+  color: #f1f5f9;
+  border-bottom-color: #334155;
+}
+.dark .hire-field label {
+  color: #f1f5f9;
+}
+.dark .hire-field input,
+.dark .hire-field select,
+.dark .hire-field textarea {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+.dark .hire-field input:focus,
+.dark .hire-field select:focus,
+.dark .hire-field textarea:focus {
+  border-color: #0B66A9;
+  box-shadow: 0 0 0 3px rgba(11,102,169,0.15);
+}
+.dark .hire-agreement label {
+  color: #94a3b8;
+}
+.dark .hire-sidebar-card {
+  background: #0f172a;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.dark .hire-sidebar-title {
+  color: #f1f5f9;
+}
+.dark .hire-sidebar-list li {
+  color: #94a3b8;
+  border-bottom-color: #334155;
+}
+.dark .hire-tips li {
+  color: #94a3b8;
+}
+.dark .hire-sidebar-cta p {
+  color: #94a3b8;
+}
+.dark .hire-support-phone {
+  color: #94a3b8 !important;
+}

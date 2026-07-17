@@ -245,3 +245,76 @@
   .as-layout { grid-template-columns: 1fr; }
   .as-sidebar-card { position: static; }
 }
+
+.dark .as-main {
+  background: #0b1120;
+}
+.dark .as-sidebar-card {
+  background: #0f172a;
+  border-color: #334155;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.dark .as-filter-group label {
+  color: #94a3b8;
+}
+.dark .as-filter-group input,
+.dark .as-filter-group select {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+.dark .as-filter-group input:focus,
+.dark .as-filter-group select:focus {
+  border-color: #0B66A9;
+}
+.dark .as-search-icon {
+  color: #64748b;
+}
+.dark .as-clear-icon {
+  color: #64748b;
+}
+.dark .as-result-count {
+  color: #94a3b8;
+}
+.dark .as-clear-all-btn {
+  border-color: #334155;
+  color: #94a3b8;
+}
+.dark .as-clear-all-btn:hover {
+  background: #1e293b;
+}
+.dark .as-empty {
+  color: #64748b;
+}
+.dark .as-empty h3 {
+  color: #f1f5f9;
+}
+.dark .as-card {
+  background: #0f172a;
+  border-color: #334155;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.dark .as-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+.dark .as-job-title {
+  color: #f1f5f9;
+}
+.dark .as-company-name {
+  color: #94a3b8;
+}
+.dark .as-desc {
+  color: #94a3b8;
+}
+.dark .as-meta {
+  color: #64748b;
+}
+.dark .as-card-footer {
+  border-top-color: #334155;
+}
+.dark .as-deadline {
+  color: #64748b;
+}
+.dark .as-sidebar-header h3 {
+  color: #f1f5f9;
+}

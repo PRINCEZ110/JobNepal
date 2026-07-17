@@ -1,11 +1,24 @@
+import { useState, memo } from 'react'
 import { Link } from 'react-router-dom'
 import { HiMapPin, HiPhone, HiEnvelope, HiArrowSmallUp } from 'react-icons/hi2'
 import { FaFacebook, FaTwitter, FaLinkedin, FaYoutube } from 'react-icons/fa6'
 import './Footer.css'
 
 function Footer() {
+  const [email, setEmail] = useState('')
+  const [subscribed, setSubscribed] = useState(false)
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleSubscribe = (e) => {
+    e.preventDefault()
+    if (email) {
+      setSubscribed(true)
+      setEmail('')
+      setTimeout(() => setSubscribed(false), 3000)
+    }
   }
 
   return (
@@ -17,9 +30,7 @@ function Footer() {
           <div className="footer-col footer-col--brand">
             <Link to="/" className="footer-logo">
               <span className="footer-logo-icon">JN</span>
-              <span className="footer-logo-text">
-                <strong>Jobs</strong>Nepal
-              </span>
+              <span className="footer-logo-text"><strong>Jobs</strong>Nepal</span>
             </Link>
             <p className="footer-tagline">
               Nepal&apos;s trusted job platform connecting talent with opportunity since 2000.
@@ -61,21 +72,33 @@ function Footer() {
           <div className="footer-col">
             <h3 className="footer-heading">Quick Links</h3>
             <ul className="footer-links">
-              <li><Link to="/">Home</Link></li>
               <li><Link to="/about">About Us</Link></li>
               <li><Link to="/contact">Contact Us</Link></li>
               <li><Link to="/blog">Blog</Link></li>
               <li><Link to="/faq">FAQ</Link></li>
+              <li><Link to="/privacy">Privacy Policy</Link></li>
+              <li><Link to="/terms">Terms of Service</Link></li>
             </ul>
           </div>
 
           <div className="footer-col footer-col--newsletter">
             <h3 className="footer-heading">Stay Updated</h3>
             <p className="footer-newsletter-text">Get the latest jobs delivered to your inbox.</p>
-            <form className="footer-newsletter" onSubmit={e => e.preventDefault()}>
-              <input type="email" placeholder="Your email address" className="footer-newsletter-input" />
-              <button type="submit" className="footer-newsletter-btn">Subscribe</button>
+            <form className="footer-newsletter" onSubmit={handleSubscribe}>
+              <input
+                type="email"
+                placeholder="Your email address"
+                className="footer-newsletter-input"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+                aria-label="Email for newsletter"
+              />
+              <button type="submit" className="footer-newsletter-btn">
+                {subscribed ? 'Subscribed!' : 'Subscribe'}
+              </button>
             </form>
+            {subscribed && <p className="footer-newsletter-success">Thanks for subscribing!</p>}
           </div>
         </div>
       </div>
@@ -86,6 +109,7 @@ function Footer() {
           <div className="footer-bottom-links">
             <Link to="/privacy">Privacy Policy</Link>
             <Link to="/terms">Terms of Service</Link>
+            <a href="/sitemap.xml">Sitemap</a>
           </div>
         </div>
       </div>
@@ -97,4 +121,4 @@ function Footer() {
   )
 }
 
-export default Footer
+export default memo(Footer)

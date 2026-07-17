@@ -85,3 +85,20 @@
 @media (max-width: 768px) {
   .pr-plans-grid { grid-template-columns: 1fr; }
 }
+
+.dark .pr-plans {
+  background: #0b1120;
+}
+.dark .pr-plan-card {
+  background: #0f172a;
+  border-color: #334155;
+}
+.dark .pr-plan-name {
+  color: #f1f5f9;
+}
+.dark .pr-plan-period {
+  color: #94a3b8;
+}
+.dark .pr-plan-features li {
+  color: #94a3b8;
+}

@@ -65,7 +65,7 @@ function PopularCategories() {
 
         <div className="pc-grid">
           {categories.map((cat) => (
-            <Link key={cat.name} to="/find-job" className="pc-card" style={{ backgroundImage: `url(${cat.image})` }}>
+            <Link key={cat.name} to={`/find-job?category=${encodeURIComponent(cat.name)}`} className="pc-card" style={{ backgroundImage: `url(${cat.image})` }}>
               <div className="pc-card-overlay" />
               <div className="pc-card-content">
                 <span className="pc-count">{cat.count}</span>

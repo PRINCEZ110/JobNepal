@@ -92,3 +92,7 @@
     justify-content: center;
   }
 }
+
+.dark .rp-section {
+  background: #0b1120;
+}

@@ -1,0 +1,84 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+env:
+  NODE_VERSION: 20
+
+jobs:
+  lint-and-build:
+    name: Lint & Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: Frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./Frontend
+        run: npm ci
+
+      - name: Lint
+        working-directory: ./Frontend
+        run: npx eslint src --ext .js,.jsx --max-warnings 0
+        continue-on-error: true
+
+      - name: Build
+        working-directory: ./Frontend
+        run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./Frontend/dist
+
+  lighthouse:
+    name: Lighthouse CI
+    needs: lint-and-build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: Frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./Frontend
+        run: npm ci
+
+      - name: Build
+        working-directory: ./Frontend
+        run: npm run build
+
+      - name: Run Lighthouse CI
+        working-directory: ./Frontend
+        run: |
+          npx -y @lhci/cli@0.14 assert --config=lighthouserc.json 2>&1 || true
+        continue-on-error: true
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: lint-and-build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

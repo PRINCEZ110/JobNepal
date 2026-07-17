@@ -80,6 +80,13 @@
   top: 0;
 }
 
+.dark .not-found-title {
+  color: #f1f5f9;
+}
+.dark .not-found-desc {
+  color: #94a3b8;
+}
+
 .page-loader {
   display: flex;
   align-items: center;

@@ -379,3 +379,70 @@
   .ab-hero-img { height: 200px; }
   .ab-story-img { height: 280px; }
 }
+
+.dark .ab-stats-section {
+  background: #0b1120;
+}
+.dark .ab-stat-card {
+  border-color: #334155;
+}
+.dark .ab-stat-label {
+  color: #94a3b8;
+}
+.dark .ab-story {
+  background: #0b1120;
+}
+.dark .ab-story-text h2 {
+  color: #f1f5f9;
+}
+.dark .ab-story-text p {
+  color: #94a3b8;
+}
+.dark .ab-highlight {
+  background: #0f172a;
+  border-color: #334155;
+}
+.dark .ab-values {
+  background: #0b1120;
+}
+.dark .ab-values-header h2 {
+  color: #f1f5f9;
+}
+.dark .ab-value-card {
+  background: #0f172a;
+  border-color: #334155;
+}
+.dark .ab-value-card h3 {
+  color: #f1f5f9;
+}
+.dark .ab-value-card p {
+  color: #94a3b8;
+}
+.dark .ab-challenges {
+  background: #0b1120;
+}
+.dark .ab-challenges-header h2 {
+  color: #f1f5f9;
+}
+.dark .ab-challenge-item {
+  background: #0f172a;
+  border-color: #334155;
+  color: #94a3b8;
+}
+.dark .ab-cta {
+  background: #0b1120;
+}
+.dark .ab-cta-content h2 {
+  color: #f1f5f9;
+}
+.dark .ab-cta-content p {
+  color: #94a3b8;
+}
+.dark .ab-cta-btns .ab-btn--secondary {
+  color: #f1f5f9;
+  border-color: #334155;
+}
+.dark .ab-cta-btns .ab-btn--secondary:hover {
+  border-color: #475569;
+  background: #1e293b;
+}

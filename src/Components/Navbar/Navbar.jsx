@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { HiChevronDown, HiBars3, HiXMark, HiUser } from 'react-icons/hi2'
+import { useState, useEffect, useRef, useCallback, memo, startTransition } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { HiChevronDown, HiBars3, HiXMark, HiUser, HiBell, HiMoon, HiSun, HiMagnifyingGlass } from 'react-icons/hi2'
 import { useAuth } from '../../context/useAuth.js'
+import { useTheme } from '../../context/ThemeContext.jsx'
 import './Navbar.css'
 
 const navItems = [
@@ -35,18 +36,20 @@ function Navbar() {
   const dropdownRef = useRef(null)
   const userMenuRef = useRef(null)
   const { user, logout } = useAuth()
+  const { dark, toggleTheme } = useTheme()
   const navigate = useNavigate()
+  const location = useLocation()
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     logout()
     setUserMenuOpen(false)
     setMobileOpen(false)
-    navigate('/')
-  }
+    navigate('/login')
+  }, [logout, navigate])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
-    window.addEventListener('scroll', onScroll)
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
@@ -59,110 +62,196 @@ function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') {
+        setMobileOpen(false)
+        setOpenDropdown(null)
+        setUserMenuOpen(false)
+      }
+    }
+    document.addEventListener('keydown', handleEsc)
+    return () => document.removeEventListener('keydown', handleEsc)
+  }, [])
+
+  useEffect(() => {
+    startTransition(() => {
+      setMobileOpen(false)
+      setOpenDropdown(null)
+    })
+  }, [location.pathname])
+
+  const isActive = (path) => location.pathname === path
+
   return (
-    <header className={`header ${scrolled ? 'scrolled' : ''}`}>
-      <div className="container">
-        <Link to="/" className="logo-block">
-          <span className="logo-icon">JN</span>
-          <div>
-            <span className="logo-text">JobsNepal</span>
-            <span className="logo-subtitle">Nepal's #1 job portal</span>
+    <header className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
+      <div className="navbar-inner">
+        <Link to="/" className="navbar-logo">
+          <span className="navbar-logo-icon">JN</span>
+          <div className="navbar-logo-text">
+            <span className="navbar-logo-name"><strong>Jobs</strong>Nepal</span>
+            <span className="navbar-logo-sub">Nepal's #1 job portal</span>
           </div>
         </Link>
 
-        <nav className="nav-desktop" ref={dropdownRef}>
+        <nav className="navbar-nav" ref={dropdownRef} aria-label="Main navigation">
           {navItems.map((item) => (
-            <div key={item.label} className="nav-item-wrapper">
+            <div key={item.label} className="navbar-nav-item">
               {item.children ? (
                 <>
-                  <button className="nav-item" onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}>
+                  <button
+                    className="navbar-nav-link navbar-nav-link--dropdown"
+                    onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}
+                    aria-expanded={openDropdown === item.label}
+                    aria-haspopup="true"
+                  >
                     {item.label}
-                    <HiChevronDown className={`arrow ${openDropdown === item.label ? 'open' : ''}`} />
+                    <HiChevronDown className={`navbar-arrow ${openDropdown === item.label ? 'navbar-arrow--open' : ''}`} />
                   </button>
                   {openDropdown === item.label && (
-                    <div className="dropdown-menu">
+                    <div className="navbar-dropdown" role="menu">
                       {item.children.map((child) => (
-                        <Link key={child.label} to={child.path} className="dropdown-item" onClick={() => setOpenDropdown(null)}>{child.label}</Link>
+                        <Link
+                          key={child.label}
+                          to={child.path}
+                          className={`navbar-dropdown-item ${isActive(child.path) ? 'navbar-dropdown-item--active' : ''}`}
+                          onClick={() => setOpenDropdown(null)}
+                          role="menuitem"
+                        >
+                          {child.label}
+                        </Link>
                       ))}
                     </div>
                   )}
                 </>
               ) : (
-                <Link to={item.path} className="nav-item">{item.label}</Link>
+                <Link
+                  to={item.path}
+                  className={`navbar-nav-link ${isActive(item.path) ? 'navbar-nav-link--active' : ''}`}
+                >
+                  {item.label}
+                </Link>
               )}
             </div>
           ))}
         </nav>
 
-        <div className="btn-group" ref={userMenuRef}>
+        <div className="navbar-actions">
+          <button className="navbar-icon-btn" onClick={toggleTheme} aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'} title={dark ? 'Light mode' : 'Dark mode'}>
+            {dark ? <HiSun /> : <HiMoon />}
+          </button>
+
           {user ? (
-            <div className="user-menu">
-              <button className="btn-user" onClick={() => setUserMenuOpen(!userMenuOpen)}>
-                <HiUser className="user-icon" />
-                <span className="user-name">{user.name.split(' ')[0]}</span>
-                <HiChevronDown className={`arrow ${userMenuOpen ? 'open' : ''}`} />
+            <div className="navbar-user" ref={userMenuRef}>
+              <button className="navbar-icon-btn navbar-icon-btn--notif" aria-label="Notifications">
+                <HiBell />
+                <span className="navbar-notif-dot" />
+              </button>
+              <button
+                className="navbar-user-btn"
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                aria-expanded={userMenuOpen}
+                aria-haspopup="true"
+              >
+                <HiUser className="navbar-user-icon" />
+                <span className="navbar-user-name">{user.name?.split(' ')[0]}</span>
+                <HiChevronDown className={`navbar-arrow ${userMenuOpen ? 'navbar-arrow--open' : ''}`} />
               </button>
               {userMenuOpen && (
-                <div className="user-dropdown">
-                  <span className="user-dropdown-name">{user.name}</span>
-                  <span className="user-dropdown-email">{user.email}</span>
-                  <button className="user-dropdown-logout" onClick={handleLogout}>Log Out</button>
+                <div className="navbar-user-dropdown" role="menu">
+                  <div className="navbar-user-header">
+                    <span className="navbar-user-header-name">{user.name}</span>
+                    <span className="navbar-user-header-email">{user.email}</span>
+                  </div>
+                  <Link to="/dashboard" className="navbar-user-item" onClick={() => setUserMenuOpen(false)} role="menuitem">Dashboard</Link>
+                  <Link to="/dashboard/saved" className="navbar-user-item" onClick={() => setUserMenuOpen(false)} role="menuitem">Saved Jobs</Link>
+                  <Link to="/dashboard/applications" className="navbar-user-item" onClick={() => setUserMenuOpen(false)} role="menuitem">Applications</Link>
+                  <div className="navbar-user-divider" />
+                  <button className="navbar-user-item navbar-user-item--danger" onClick={handleLogout} role="menuitem">Log Out</button>
                 </div>
               )}
             </div>
           ) : (
-            <>
-              <Link to="/login" className="btn-login">Log In</Link>
-              <Link to="/signup" className="btn-signup">Sign Up</Link>
-            </>
+            <div className="navbar-auth">
+              <Link to="/login" className="navbar-btn navbar-btn--ghost">Log In</Link>
+              <Link to="/signup" className="navbar-btn navbar-btn--primary">Sign Up</Link>
+            </div>
           )}
-        </div>
 
-        <button className="hamburger" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? 'Close menu' : 'Open menu'} aria-expanded={mobileOpen}>
-          {mobileOpen ? <HiXMark /> : <HiBars3 />}
-        </button>
+          <button
+            className="navbar-hamburger"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileOpen}
+          >
+            {mobileOpen ? <HiXMark /> : <HiBars3 />}
+          </button>
+        </div>
       </div>
 
-      <div className={`mobile-menu-wrapper ${mobileOpen ? 'open' : ''}`}>
-        <nav className="mobile-nav">
+      <div className={`navbar-mobile ${mobileOpen ? 'navbar-mobile--open' : ''}`} aria-hidden={!mobileOpen}>
+        <nav className="navbar-mobile-nav" aria-label="Mobile navigation">
+          <Link to="/search" className="navbar-mobile-search" onClick={() => setMobileOpen(false)}>
+            <HiMagnifyingGlass />
+            <span>Search jobs...</span>
+          </Link>
           {navItems.map((item) => (
             <div key={item.label}>
               {item.children ? (
                 <>
-                  <button className="mobile-nav-item" onClick={() => setMobileSubOpen(mobileSubOpen === item.label ? null : item.label)}>
+                  <button
+                    className="navbar-mobile-item"
+                    onClick={() => setMobileSubOpen(mobileSubOpen === item.label ? null : item.label)}
+                    aria-expanded={mobileSubOpen === item.label}
+                  >
                     {item.label}
-                    <HiChevronDown className={`arrow ${mobileSubOpen === item.label ? 'open' : ''}`} />
+                    <HiChevronDown className={`navbar-arrow ${mobileSubOpen === item.label ? 'navbar-arrow--open' : ''}`} />
                   </button>
                   {mobileSubOpen === item.label && (
-                    <div className="mobile-submenu">
+                    <div className="navbar-mobile-sub">
                       {item.children.map((child) => (
-                        <Link key={child.label} to={child.path} className="mobile-sub-item" onClick={() => { setMobileOpen(false); setMobileSubOpen(null) }}>{child.label}</Link>
+                        <Link
+                          key={child.label}
+                          to={child.path}
+                          className={`navbar-mobile-sub-item ${isActive(child.path) ? 'navbar-mobile-sub-item--active' : ''}`}
+                          onClick={() => { setMobileOpen(false); setMobileSubOpen(null) }}
+                        >
+                          {child.label}
+                        </Link>
                       ))}
                     </div>
                   )}
                 </>
               ) : (
-                <Link to={item.path} className="mobile-nav-item mobile-nav-link" onClick={() => setMobileOpen(false)}>{item.label}</Link>
+                <Link
+                  to={item.path}
+                  className={`navbar-mobile-item ${isActive(item.path) ? 'navbar-mobile-item--active' : ''}`}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {item.label}
+                </Link>
               )}
             </div>
           ))}
-          <div className="mobile-btn-group">
-            {user ? (
-              <>
-                <span className="mobile-user-name">{user.name}</span>
-                <button className="mobile-btn-logout" onClick={handleLogout}>Log Out</button>
-              </>
-            ) : (
-              <>
-                <Link to="/login" className="mobile-btn-login" onClick={() => setMobileOpen(false)}>Log In</Link>
-                <Link to="/signup" className="mobile-btn-signup" onClick={() => setMobileOpen(false)}>Sign Up</Link>
-              </>
-            )}
-          </div>
+          <div className="navbar-mobile-divider" />
+          <button className="navbar-mobile-theme" onClick={toggleTheme}>
+            {dark ? <HiSun /> : <HiMoon />} {dark ? 'Light Mode' : 'Dark Mode'}
+          </button>
+          {user ? (
+            <div className="navbar-mobile-user">
+              <span className="navbar-mobile-user-name">{user.name}</span>
+              <button className="navbar-mobile-logout" onClick={handleLogout}>Log Out</button>
+            </div>
+          ) : (
+            <div className="navbar-mobile-auth">
+              <Link to="/login" className="navbar-btn navbar-btn--ghost navbar-btn--mobile" onClick={() => setMobileOpen(false)}>Log In</Link>
+              <Link to="/signup" className="navbar-btn navbar-btn--primary navbar-btn--mobile" onClick={() => setMobileOpen(false)}>Sign Up</Link>
+            </div>
+          )}
         </nav>
       </div>
     </header>
   )
 }
 
-export default Navbar
+export default memo(Navbar)

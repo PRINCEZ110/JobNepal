@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { sanitizeInput } from '../../utils/security.js'
 import { HiBuildingOffice, HiUserGroup, HiGlobeAlt, HiShieldCheck, HiBolt } from 'react-icons/hi2'
+import { useToast } from '../../context/ToastContext.jsx'
 import './HireForm.css'
 
 export default function HireForm() {
+  const { addToast } = useToast()
   const [form, setForm] = useState({
     company: '', name: '', email: '', phone: '',
     title: '', type: '', category: '', location: '',
@@ -18,9 +20,13 @@ export default function HireForm() {
   }
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (!document.getElementById('h-agree').checked) return alert('Please confirm the agreement.')
-    localStorage.setItem('jobPost', JSON.stringify(form))
-    alert('Job posted successfully!')
+    if (!document.getElementById('h-agree').checked) {
+      addToast('error', 'Please confirm the agreement.')
+      return
+    }
+    const stored = { ...form, logo: form.logo ? form.logo.name : '' }
+    localStorage.setItem('jobPost', JSON.stringify(stored))
+    addToast('success', 'Job posted successfully!')
   }
 
   const perks = [

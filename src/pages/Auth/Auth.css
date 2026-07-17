@@ -267,40 +267,31 @@
 .auth-social-row {
   margin: 0 0 16px;
   display: flex;
-  gap: 14px;
+  gap: 12px;
 }
 
-.auth-social-circle {
-  border: 1px solid #e2e8f0;
-  border-radius: 50%;
-  display: inline-flex;
-  justify-content: center;
+.auth-social-btn {
+  flex: 1;
+  display: flex;
   align-items: center;
-  width: 44px;
-  height: 44px;
-  cursor: pointer;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px;
+  border-radius: 10px;
+  border: 1.5px solid #e2e8f0;
   background: #fff;
-  transition: all 0.25s ease;
-  font-size: 20px;
+  font-size: 16px;
   color: #64748b;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: inherit;
 }
-
-.auth-social-circle svg {
-  display: block;
+.auth-social-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
-
-.auth-social-circle:hover:not(:disabled) {
-  border-color: #0B66A9;
-  background: #f8faff;
-  color: #0B66A9;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(11, 102, 169, 0.12);
-}
-
-.auth-social-circle:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
+.auth-social-btn--google:hover { border-color: #ea4335; color: #ea4335; background: #fff5f4; }
+.auth-social-btn--linkedin:hover { border-color: #0a66c2; color: #0a66c2; background: #f0f7ff; }
 
 .auth-or {
   display: flex;
@@ -672,4 +663,251 @@
   height: 3px;
   background: #0B66A9;
   border-radius: 0 0 3px 3px;
+}
+
+/* OTP Overlay */
+.auth-otp-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  animation: fadeIn 0.2s ease;
+}
+
+.auth-otp-modal {
+  background: #fff;
+  border-radius: 24px;
+  padding: 40px 36px;
+  width: 400px;
+  max-width: 100%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+  animation: scaleIn 0.25s ease;
+}
+
+.auth-otp-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: #f1f5f9;
+  border-radius: 8px;
+  color: #64748b;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.auth-otp-close:hover { background: #e2e8f0; color: #0f172a; }
+
+.auth-otp-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0B66A9, #0a4f82);
+  border-radius: 16px;
+  color: #fff;
+  font-size: 24px;
+  margin: 0 auto 16px;
+}
+
+.auth-otp-modal h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 8px;
+}
+
+.auth-otp-text {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0 0 20px;
+}
+.auth-otp-text strong { color: #0f172a; }
+
+.auth-otp-inputs {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.auth-otp-digit {
+  width: 46px;
+  height: 52px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  color: #0f172a;
+  outline: none;
+  background: #f8fafc;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.auth-otp-digit:focus {
+  border-color: #0B66A9;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(11,102,169,0.1);
+}
+
+.auth-otp-resend {
+  font-size: 13px;
+  color: #64748b;
+  margin: 16px 0 0;
+}
+.auth-otp-resend-btn {
+  background: none;
+  border: none;
+  color: #0B66A9;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  text-decoration: underline;
+}
+
+.dark .auth-page::before {
+  background: linear-gradient(135deg, rgba(11,17,32,0.85) 0%, rgba(15,23,42,0.7) 100%);
+}
+.dark .auth-container {
+  background: #0f172a;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+}
+.dark .auth-form form {
+  background: #0f172a;
+}
+.dark .auth-form h1 {
+  color: #f1f5f9;
+}
+.dark .auth-form-sub {
+  color: #94a3b8;
+}
+.dark .auth-social-btn {
+  background: #1e293b;
+  border-color: #334155;
+  color: #94a3b8;
+}
+.dark .auth-social-btn:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.dark .auth-social-btn--google:hover { background: rgba(234,67,53,0.1); border-color: #ea4335; color: #ea4335; }
+.dark .auth-social-btn--linkedin:hover { background: rgba(10,102,194,0.1); border-color: #0a66c2; color: #0a66c2; }
+.dark .auth-or {
+  color: #64748b;
+}
+.dark .auth-or::before,
+.dark .auth-or::after {
+  background: #334155;
+}
+.dark .auth-input-icon {
+  color: #64748b;
+}
+.dark .auth-input-wrap input {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+.dark .auth-input-wrap input:focus {
+  background: #0f172a;
+  border-color: #0B66A9;
+  box-shadow: 0 0 0 3px rgba(11,102,169,0.15);
+}
+.dark .auth-input-wrap input::placeholder {
+  color: #64748b;
+}
+.dark .auth-input-wrap input.error {
+  border-color: #ef4444;
+  background: rgba(220,38,38,0.1);
+}
+.dark .auth-toggle-pw {
+  color: #64748b;
+}
+.dark .auth-toggle-pw:hover {
+  color: #94a3b8;
+  background: #334155;
+}
+.dark .auth-options {
+  color: #94a3b8;
+}
+.dark .auth-remember {
+  color: #94a3b8;
+}
+.dark .auth-checkbox {
+  color: #94a3b8;
+}
+.dark .auth-rules li {
+  color: #64748b;
+}
+.dark .auth-strength-bar {
+  background: #334155;
+}
+.dark .auth-error {
+  background: rgba(220,38,38,0.1);
+  color: #fca5a5;
+  border-color: rgba(220,38,38,0.3);
+}
+.dark .auth-field-error {
+  background: rgba(220,38,38,0.1);
+  color: #fca5a5;
+  border-color: rgba(220,38,38,0.3);
+}
+.dark .auth-mobile-nav {
+  background: #0f172a;
+  border-top-color: #334155;
+}
+.dark .auth-mobile-nav-btn {
+  background: #1e293b;
+  color: #64748b;
+}
+.dark .auth-mobile-nav-btn:first-child {
+  border-right-color: #334155;
+}
+.dark .auth-mobile-nav-btn--active {
+  background: #0f172a;
+  color: #0B66A9;
+}
+.dark .auth-otp-modal {
+  background: #0f172a;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+}
+.dark .auth-otp-close {
+  background: #1e293b;
+  color: #94a3b8;
+}
+.dark .auth-otp-close:hover {
+  background: #334155;
+  color: #f1f5f9;
+}
+.dark .auth-otp-modal h2 {
+  color: #f1f5f9;
+}
+.dark .auth-otp-text {
+  color: #94a3b8;
+}
+.dark .auth-otp-text strong {
+  color: #f1f5f9;
+}
+.dark .auth-otp-digit {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+.dark .auth-otp-digit:focus {
+  background: #0f172a;
+  border-color: #0B66A9;
+  box-shadow: 0 0 0 3px rgba(11,102,169,0.15);
 }

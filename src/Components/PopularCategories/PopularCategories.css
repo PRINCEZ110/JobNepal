@@ -137,3 +137,10 @@
   .pc-grid { grid-template-columns: 1fr; }
   .pc-title { font-size: 26px; }
 }
+
+.dark .pc-section {
+  background: #0b1120;
+}
+.dark .pc-title {
+  color: #f1f5f9;
+}
