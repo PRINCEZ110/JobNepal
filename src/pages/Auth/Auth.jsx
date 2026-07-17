@@ -1,10 +1,9 @@
-import { useState, useMemo, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useState, useMemo } from 'react'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import { useAuth } from '../../context/useAuth.js'
 import { sanitizeInput, validateEmail, validatePassword } from '../../utils/security.js'
 import { HiEnvelope, HiLockClosed, HiEye, HiEyeSlash, HiArrowRight, HiUser, HiCheck } from 'react-icons/hi2'
-import { FcGoogle } from 'react-icons/fc'
-import { FaLinkedin, FaFacebook } from 'react-icons/fa6'
 import './Auth.css'
 
 const strengthLabels = ['Weak', 'Fair', 'Good', 'Strong']
@@ -28,7 +27,7 @@ const signupRules = [
 
 export default function Auth() {
   const location = useLocation()
-  const [isSignUp, setIsSignUp] = useState(location.pathname === '/signup')
+  const isSignUp = location.pathname === '/signup'
   const navigate = useNavigate()
   const { login, signup } = useAuth()
 
@@ -41,14 +40,12 @@ export default function Auth() {
 
   const [signupName, setSignupName] = useState('')
   const [signupEmail, setSignupEmail] = useState('')
+  const [signupEmailError, setSignupEmailError] = useState('')
   const [signupPassword, setSignupPassword] = useState('')
   const [signupShowPw, setSignupShowPw] = useState(false)
+  const [signupAgree, setSignupAgree] = useState(false)
   const [signupError, setSignupError] = useState('')
   const [signupLoading, setSignupLoading] = useState(false)
-
-  useEffect(() => {
-    setIsSignUp(location.pathname === '/signup')
-  }, [location.pathname])
 
   const strength = useMemo(() => getStrength(signupPassword), [signupPassword])
   const strengthLabel = strength === 0 ? '' : strengthLabels[strength - 1]
@@ -80,6 +77,14 @@ export default function Auth() {
     }
   }
 
+  const handleSignupEmailBlur = () => {
+    if (signupEmail && !validateEmail(signupEmail.trim())) {
+      setSignupEmailError('Please enter a valid email address')
+    } else {
+      setSignupEmailError('')
+    }
+  }
+
   const handleSignup = async (e) => {
     e.preventDefault()
     setSignupError('')
@@ -93,6 +98,8 @@ export default function Auth() {
     if (pwErr) { setSignupError(pwErr); return }
     if (signupPassword.length > 128) { setSignupError('Password too long'); return }
 
+    if (!signupAgree) { setSignupError('You must agree to the Terms & Conditions'); return }
+
     setSignupLoading(true)
     const result = await signup(cleanName, cleanEmail, signupPassword)
     setSignupLoading(false)
@@ -103,6 +110,10 @@ export default function Auth() {
 
   return (
     <div className="auth-page">
+      <Helmet>
+        <title>{isSignUp ? 'Sign Up — Create Your JobNepal Account' : 'Sign In — JobNepal'}</title>
+        <meta name="description" content={isSignUp ? 'Create your free JobNepal account and start applying to thousands of jobs across Nepal.' : 'Sign in to your JobNepal account to manage your job search.'} />
+      </Helmet>
       <div className={`auth-container ${isSignUp ? 'auth-container--signup' : ''}`}>
 
         <div className="auth-form auth-form--signin">
@@ -113,12 +124,6 @@ export default function Auth() {
             </div>
             <h1>Welcome Back</h1>
             <p className="auth-form-sub">Sign in to continue your job search</p>
-            <div className="auth-social-row">
-              <button type="button" className="auth-social-circle" disabled aria-label="Google"><FcGoogle /></button>
-              <button type="button" className="auth-social-circle" disabled aria-label="Facebook"><FaFacebook /></button>
-              <button type="button" className="auth-social-circle" disabled aria-label="LinkedIn"><FaLinkedin /></button>
-            </div>
-            <span className="auth-or">or use your account</span>
 
             {loginError && <div className="auth-error" role="alert">{loginError}</div>}
 
@@ -154,7 +159,7 @@ export default function Auth() {
                 <input type="checkbox" defaultChecked />
                 Remember me
               </label>
-              <a href="/forgot-password" className="auth-forgot" onClick={e => e.preventDefault()}>Forgot password?</a>
+              <span className="auth-forgot-disabled">Forgot password?</span>
             </div>
             <button type="submit" className="auth-btn" disabled={loginLoading || loginAttempts >= 10}>
               {loginLoading ? <span className="auth-spinner" /> : <><HiArrowRight /> Sign In</>}
@@ -170,12 +175,6 @@ export default function Auth() {
             </div>
             <h1>Create Account</h1>
             <p className="auth-form-sub">Join thousands of job seekers today</p>
-            <div className="auth-social-row">
-              <button type="button" className="auth-social-circle" disabled aria-label="Google"><FcGoogle /></button>
-              <button type="button" className="auth-social-circle" disabled aria-label="Facebook"><FaFacebook /></button>
-              <button type="button" className="auth-social-circle" disabled aria-label="LinkedIn"><FaLinkedin /></button>
-            </div>
-            <span className="auth-or">or use your email for registration</span>
 
             {signupError && <div className="auth-error" role="alert">{signupError}</div>}
 
@@ -197,12 +196,14 @@ export default function Auth() {
                 type="email"
                 placeholder="Email"
                 value={signupEmail}
-                onChange={e => setSignupEmail(e.target.value)}
+                onChange={e => { setSignupEmail(e.target.value); setSignupEmailError('') }}
+                onBlur={handleSignupEmailBlur}
                 autoComplete="email"
                 maxLength={254}
                 required
               />
             </div>
+            {signupEmailError && <div className="auth-field-error" role="alert">{signupEmailError}</div>}
             <div className="auth-input-wrap">
               <HiLockClosed className="auth-input-icon" />
               <input
@@ -235,6 +236,11 @@ export default function Auth() {
                 </li>
               ))}
             </ul>
+
+            <label className="auth-checkbox auth-checkbox--terms">
+              <input type="checkbox" checked={signupAgree} onChange={e => setSignupAgree(e.target.checked)} />
+              <span>I agree to the <Link to="/terms" target="_blank">Terms &amp; Conditions</Link></span>
+            </label>
 
             <button type="submit" className="auth-btn" disabled={signupLoading}>
               {signupLoading ? <span className="auth-spinner" /> : <><HiArrowRight /> Sign Up</>}

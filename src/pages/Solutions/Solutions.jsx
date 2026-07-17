@@ -1,4 +1,4 @@
-import { HiBriefcase, HiUserGroup, HiGlobeAlt, HiAcademicCap, HiShieldCheck, HiArrowRight } from 'react-icons/hi2'
+import { HiBriefcase, HiUserGroup, HiAcademicCap, HiArrowRight } from 'react-icons/hi2'
 import { Link } from 'react-router-dom'
 import './Solutions.css'
 

@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { HiMagnifyingGlass, HiMapPin, HiBriefcase } from 'react-icons/hi2'
+import { useNavigate, Link } from 'react-router-dom'
+import { HiMagnifyingGlass, HiMapPin, HiBriefcase, HiArrowRight } from 'react-icons/hi2'
 import './Hero.css'
 
 function Hero() {
@@ -47,6 +47,15 @@ function Hero() {
               </div>
             </form>
 
+            <div className="hero-action-row">
+              <Link to="/find-job" className="hero-action-btn hero-action-btn--primary">
+                Browse Jobs <HiArrowRight />
+              </Link>
+              <Link to="/hire" className="hero-action-btn hero-action-btn--secondary">
+                Post a Job
+              </Link>
+            </div>
+
             <div className="hero-stats">
               <div className="hero-stat">
                 <span className="hero-stat-number">10K+</span>
@@ -63,7 +72,7 @@ function Hero() {
             </div>
           </div>
           <div className="hero-visual">
-            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=560&h=480&fit=crop&auto=format" alt="Professionals collaborating" className="hero-img" />
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=560&h=480&fit=crop&auto=format" alt="Professionals collaborating" className="hero-img" width="560" height="480" loading="eager" />
             <div className="hero-img-badge">
               <HiBriefcase />
               <span>10K+ jobs available</span>

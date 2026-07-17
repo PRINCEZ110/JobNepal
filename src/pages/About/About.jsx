@@ -18,7 +18,7 @@ export default function About() {
               </div>
             </div>
             <div className="ab-hero-visual">
-              <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=560&h=400&fit=crop" alt="JobsNepal team office" className="ab-hero-img" />
+              <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=560&h=400&fit=crop" alt="JobsNepal team office" className="ab-hero-img" loading="lazy" width="560" height="400" />
             </div>
           </div>
         </div>
@@ -71,7 +71,7 @@ export default function About() {
               </div>
             </div>
             <div className="ab-story-visual">
-              <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=540&h=640&fit=crop" alt="Team collaboration at JobsNepal" className="ab-story-img" />
+              <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=540&h=640&fit=crop" alt="Team collaboration at JobsNepal" className="ab-story-img" loading="lazy" width="540" height="640" />
             </div>
           </div>
         </div>

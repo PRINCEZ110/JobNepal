@@ -63,16 +63,9 @@ export function AuthProvider({ children }) {
   const checkIntervalRef = useRef(null)
 
   useEffect(() => {
-    const session = loadSession()
-    if (session) {
-      setUser(session.user)
-    } else {
-      setUser(null)
-    }
-
     checkIntervalRef.current = setInterval(() => {
       const s = loadSession()
-      if (!s && user) {
+      if (!s) {
         setUser(null)
       }
     }, SESSION_CHECK_INTERVAL)
@@ -80,7 +73,7 @@ export function AuthProvider({ children }) {
     return () => {
       if (checkIntervalRef.current) clearInterval(checkIntervalRef.current)
     }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [setUser])
 
   const login = useCallback(async (email, password) => {
     if (!email || !password) {

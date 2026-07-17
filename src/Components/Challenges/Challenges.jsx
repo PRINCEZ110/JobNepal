@@ -49,7 +49,7 @@ function Challenges() {
           {challenges.map((item, i) => (
             <div key={i} className={`ch-item ${i % 2 === 1 ? 'ch-item--reverse' : ''}`}>
               <div className="ch-item-image">
-                <img src={item.image} alt={item.title} />
+                <img src={item.image} alt={item.title} loading="lazy" />
               </div>
               <div className="ch-item-content">
                 <span className="ch-number">{String(i + 1).padStart(2, '0')}</span>

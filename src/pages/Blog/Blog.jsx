@@ -33,7 +33,7 @@ export default function Blog() {
                 className={`bl-card ${expanded === post.id ? 'bl-card--expanded' : ''}`}
               >
                 <div className="bl-img-wrap">
-                  <img src={post.image} alt={post.title} className="bl-img" />
+                  <img src={post.image} alt={post.title} className="bl-img" loading="lazy" />
                   <span className="bl-category">{post.category}</span>
                 </div>
                 <div className="bl-body" onClick={() => setExpanded(expanded === post.id ? null : post.id)}>

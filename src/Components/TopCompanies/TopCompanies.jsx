@@ -25,7 +25,7 @@ function TopCompanies() {
         <div className="tc-grid">
           {companies.map((c, i) => (
             <div key={i} className="tc-card">
-              <img src={c.logo} alt={c.name} className="tc-logo" />
+              <img src={c.logo} alt={c.name} className="tc-logo" loading="lazy" />
             </div>
           ))}
         </div>

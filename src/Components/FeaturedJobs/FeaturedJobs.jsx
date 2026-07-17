@@ -55,7 +55,7 @@ function FeaturedJobs() {
             {filtered.map((job) => (
               <Link key={job.id} to={`/job/${job.id}`} className="fj-card">
                 <div className="fj-card-img">
-                  <img src={job.logo} alt={job.company} />
+                  <img src={job.logo} alt={job.company} loading="lazy" />
                 </div>
                 <div className="fj-card-body">
                   <div className="fj-card-top">

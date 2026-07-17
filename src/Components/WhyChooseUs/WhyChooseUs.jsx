@@ -56,7 +56,7 @@ function WhyChooseUs() {
           {features.map((feature, i) => (
             <div key={i} className="wcu-card">
               <div className="wcu-card-image">
-                <img src={feature.image} alt={feature.title} />
+                <img src={feature.image} alt={feature.title} loading="lazy" />
                 <div className="wcu-card-image-overlay" />
                 <span className="wcu-card-icon">{feature.icon}</span>
               </div>
