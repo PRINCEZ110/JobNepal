@@ -184,13 +184,18 @@ function Hero() {
             </div>
           </div>
           <div className="hero-visual">
-            <img
-              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=560&h=480&fit=crop&auto=format"
-              alt="Professionals collaborating"
+            <video
+              src="/videos/hero-office.mp4"
+              poster="https://i.pinimg.com/736x/f9/59/7c/f9597c028fe95a4f6645ee09877b3a27.jpg"
               className="hero-img"
-              width="560"
-              height="480"
-              loading="eager"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              disablePictureInPicture
+              controlsList="nodownload noremoteplayback"
+              aria-hidden="true"
             />
             <div className="hero-img-badge">
               <HiBriefcase />
