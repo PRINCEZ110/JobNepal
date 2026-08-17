@@ -1,5 +1,5 @@
-import { lazy, Suspense } from 'react'
-import { Navigate, Routes, Route, useLocation } from 'react-router-dom'
+import { lazy, Suspense, useEffect } from 'react'
+import { Navigate, Routes, Route, useLocation, useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useAuth } from './context/useAuth.js'
 import Navbar from './Components/Navbar/Navbar.jsx'
@@ -37,43 +37,46 @@ function PageLoader() {
   return <div className="page-loader" />
 }
 
+function ScrollToTop() {
+  const { pathname, search } = useLocation()
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }, [pathname, search])
+  return null
+}
+
+function RequireAuth({ children }) {
+  const { user } = useAuth()
+  const location = useLocation()
+  if (!user) {
+    return <Navigate to="/login" state={{ from: location.pathname }} replace />
+  }
+  return children
+}
+
+function JobDetailRoute() {
+  const { id } = useParams()
+  return <JobDetail key={id} />
+}
+
 function App() {
   const { user } = useAuth()
   const location = useLocation()
   const onAuthPage = location.pathname === '/login' || location.pathname === '/signup'
 
-  if (!user) {
-    return (
-      <>
-        <Helmet>
-          <title>JobNepal — Find Jobs in Nepal | Nepal's #1 Job Portal</title>
-          <meta name="description" content="Browse thousands of jobs from top companies and NGOs across all 7 provinces of Nepal. Free job portal for job seekers and employers." />
-        </Helmet>
-        <Routes>
-          <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route path="/login" element={<Auth />} />
-          <Route path="/signup" element={<Auth />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="*" element={<Navigate to="/login" replace />} />
-        </Routes>
-      </>
-    )
-  }
-
   return (
     <>
       <Helmet>
-        <title>JobNepal — Find Jobs in Nepal | Nepal's #1 Job Portal</title>
-        <meta name="description" content="Browse thousands of jobs from top companies and NGOs across all 7 provinces of Nepal." />
+        <title>JobNepal — Find Jobs in Nepal | Job Portal</title>
+        <meta name="description" content="Browse jobs from companies and NGOs across all 7 provinces of Nepal. Free job portal for job seekers and employers." />
         <meta property="og:title" content="JobNepal — Find Jobs in Nepal" />
-        <meta property="og:description" content="Nepal's #1 job portal with 10K+ active jobs across all 7 provinces." />
+        <meta property="og:description" content="Job portal connecting talent with opportunity across Nepal." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://jobsnepal.com" />
         <meta property="og:locale" content="ne_NP" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="JobNepal — Find Jobs in Nepal" />
-        <meta name="twitter:description" content="Nepal's #1 job portal with 10K+ active jobs across all 7 provinces." />
+        <meta name="twitter:description" content="Job portal connecting talent with opportunity across Nepal." />
         <link rel="canonical" href="https://jobsnepal.com" />
         <script type="application/ld+json">{`
           {
@@ -81,7 +84,7 @@ function App() {
             "@type": "Organization",
             "name": "JobNepal",
             "url": "https://jobsnepal.com",
-            "description": "Nepal's #1 job portal connecting talent with opportunity.",
+            "description": "Job portal connecting talent with opportunity across Nepal.",
             "address": {
               "@type": "PostalAddress",
               "addressLocality": "Lalitpur",
@@ -90,21 +93,22 @@ function App() {
           }
         `}</script>
       </Helmet>
+      <ScrollToTop />
       <a href="#main-content" className="skip-link">Skip to content</a>
       {!onAuthPage && <Navbar />}
       <main id="main-content">
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/job/:id" element={<JobDetail />} />
-            <Route path="/login" element={<Navigate to="/" replace />} />
-            <Route path="/signup" element={<Navigate to="/" replace />} />
+            <Route path="/job/:id" element={<JobDetailRoute />} />
+            <Route path="/login" element={user ? <Navigate to="/" replace /> : <Auth />} />
+            <Route path="/signup" element={user ? <Navigate to="/" replace /> : <Auth />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard/saved" element={<Dashboard />} />
-            <Route path="/dashboard/applications" element={<Dashboard />} />
-            <Route path="/dashboard/profile" element={<Dashboard />} />
+            <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
+            <Route path="/dashboard/saved" element={<RequireAuth><Dashboard /></RequireAuth>} />
+            <Route path="/dashboard/applications" element={<RequireAuth><Dashboard /></RequireAuth>} />
+            <Route path="/dashboard/profile" element={<RequireAuth><Dashboard /></RequireAuth>} />
             <Route path="/hire" element={<HireForm />} />
             <Route path="/find-job" element={<JobSeekerForm />} />
             <Route path="/jobs/category" element={<ByCategory />} />

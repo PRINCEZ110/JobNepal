@@ -3,23 +3,21 @@ import { HiSignalSlash, HiArrowPath } from 'react-icons/hi2'
 
 export default function Offline() {
   return (
-    <div className="not-found-page">
+    <div className="status-page">
       <Helmet>
         <title>Offline — No Internet Connection | JobNepal</title>
         <meta name="robots" content="noindex" />
       </Helmet>
-      <div className="not-found-content">
-        <HiSignalSlash style={{ fontSize: 48, color: '#64748b', marginBottom: 16 }} />
-        <span className="not-found-code" style={{ color: '#64748b' }}>Offline</span>
-        <h1 className="not-found-title">No Internet Connection</h1>
-        <p className="not-found-desc">You appear to be offline. Please check your connection and try again.</p>
-        <button
-          className="not-found-btn"
-          onClick={() => window.location.reload()}
-          style={{ border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
-        >
-          <HiArrowPath /> Try Again
-        </button>
+      <div className="status-content">
+        <span className="status-icon status-icon--muted" aria-hidden="true"><HiSignalSlash /></span>
+        <span className="status-code">Offline</span>
+        <h1 className="status-title">No Internet Connection</h1>
+        <p className="status-desc">You appear to be offline. Please check your connection and try again.</p>
+        <div className="status-actions">
+          <button type="button" className="btn btn--primary" onClick={() => window.location.reload()}>
+            <HiArrowPath aria-hidden="true" /> Try Again
+          </button>
+        </div>
       </div>
     </div>
   )

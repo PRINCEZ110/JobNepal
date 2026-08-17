@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { HiCalendarDays, HiUser, HiChevronDown } from 'react-icons/hi2'
+import { Helmet } from 'react-helmet-async'
 import './Blog.css'
 
 const posts = [
@@ -16,6 +17,11 @@ export default function Blog() {
 
   return (
     <div className="bl-page">
+      <Helmet>
+        <title>Blog — Career Advice & Job Search Tips | JobNepal</title>
+        <meta name="description" content="Expert career advice and job search tips for Nepal — in-demand jobs, CV writing, interview preparation, and more." />
+        <link rel="canonical" href="https://jobsnepal.com/blog" />
+      </Helmet>
       <section className="bl-hero">
         <div className="bl-container">
           <span className="bl-tag">Our Blog</span>

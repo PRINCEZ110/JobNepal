@@ -1,5 +1,6 @@
 import { HiChevronDown } from 'react-icons/hi2'
 import { useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import './FAQ.css'
 
 const faqs = [
@@ -18,6 +19,11 @@ export default function FAQ() {
 
   return (
     <div className="faq-page">
+      <Helmet>
+        <title>FAQ — Frequently Asked Questions | JobNepal</title>
+        <meta name="description" content="Answers to common questions about JobNepal — accounts, applying for jobs, posting vacancies, pricing, and security." />
+        <link rel="canonical" href="https://jobsnepal.com/faq" />
+      </Helmet>
       <section className="faq-hero">
         <div className="faq-container">
           <h1 className="faq-hero-title">Frequently Asked <span className="faq-accent">Questions</span></h1>

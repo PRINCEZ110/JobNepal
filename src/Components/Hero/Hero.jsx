@@ -1,8 +1,12 @@
 import { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { HiMagnifyingGlass, HiMapPin, HiBriefcase, HiArrowRight, HiXMark } from 'react-icons/hi2'
+import {
+  HiMagnifyingGlass, HiMapPin, HiBriefcase, HiArrowRight, HiXMark,
+  HiChevronDown, HiBuildingOffice, HiSquares2X2, HiGlobeAsiaAustralia,
+} from 'react-icons/hi2'
 import { useDebounce } from '../../hooks/useDebounce.js'
-import { useIntersectionObserver } from '../../hooks/useIntersectionObserver.js'
+import { getStats, getCategories } from '../../data/jobsStore.js'
+import { Skeleton } from '../ui/Skeleton.jsx'
 import './Hero.css'
 
 const suggestions = {
@@ -10,43 +14,24 @@ const suggestions = {
   locations: ['Kathmandu', 'Lalitpur', 'Pokhara', 'Biratnagar', 'Chitwan', 'Surkhet'],
 }
 
-function AnimatedNumber({ target, suffix = '' }) {
-  const [count, setCount] = useState(0)
-  const [ref, isVisible] = useIntersectionObserver()
-
-  useEffect(() => {
-    if (!isVisible) return
-    let start = 0
-    const duration = 2000
-    const step = Math.max(1, Math.floor(target / 60))
-    const interval = setInterval(() => {
-      start += step
-      if (start >= target) {
-        setCount(target)
-        clearInterval(interval)
-      } else {
-        setCount(start)
-      }
-    }, duration / 60)
-    return () => clearInterval(interval)
-  }, [isVisible, target])
-
-  const format = (n) => {
-    if (n >= 1000) return (n / 1000).toFixed(1).replace('.0', '') + 'K+'
-    return n + '+'
-  }
-
-  return <span ref={ref}>{format(count)}{suffix}</span>
-}
-
 function Hero() {
   const navigate = useNavigate()
   const [keyword, setKeyword] = useState('')
   const [location, setLocation] = useState('')
+  const [category, setCategory] = useState('')
+  const [categories, setCategories] = useState([])
+  const [stats, setStats] = useState(null)
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [suggestionType, setSuggestionType] = useState('jobs')
   const searchRef = useRef(null)
   const debouncedKeyword = useDebounce(keyword, 200)
+
+  useEffect(() => {
+    let mounted = true
+    getCategories().then((c) => { if (mounted) setCategories(c) })
+    getStats().then((s) => { if (mounted) setStats(s) })
+    return () => { mounted = false }
+  }, [])
 
   const filteredSuggestions = useMemo(() => {
     return debouncedKeyword
@@ -57,11 +42,12 @@ function Hero() {
   const handleSearch = useCallback((e) => {
     e?.preventDefault()
     const params = new URLSearchParams()
-    if (keyword) params.set('q', keyword)
-    if (location) params.set('l', location)
-    navigate(`/search?${params.toString()}`)
+    if (keyword) params.set('keyword', keyword)
+    if (location) params.set('location', location)
+    if (category) params.set('category', category)
+    navigate(`/search${params.toString() ? `?${params.toString()}` : ''}`)
     setShowSuggestions(false)
-  }, [keyword, location, navigate])
+  }, [keyword, location, category, navigate])
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -71,31 +57,34 @@ function Hero() {
     return () => document.removeEventListener('mousedown', handleClick)
   }, [])
 
-  const stats = [
-    { target: 15000, label: 'Active Jobs' },
-    { target: 1200, label: 'Companies' },
-    { target: 50000, label: 'Candidates' },
-    { value: '98%', label: 'Hiring Success' },
+  const statItems = [
+    { icon: HiBriefcase, value: stats?.jobs, label: 'Live jobs' },
+    { icon: HiBuildingOffice, value: stats?.companies, label: 'Hiring companies' },
+    { icon: HiSquares2X2, value: stats?.categories, label: 'Job categories' },
+    { icon: HiGlobeAsiaAustralia, value: stats?.provinces, label: 'Provinces covered' },
   ]
 
   return (
     <section className="hero">
-      <div className="hero-bg-grid" />
+      <div className="hero-bg-grid" aria-hidden="true" />
+      <div className="hero-glow hero-glow--one" aria-hidden="true" />
+      <div className="hero-glow hero-glow--two" aria-hidden="true" />
+
       <div className="hero-container">
         <div className="hero-layout">
           <div className="hero-content">
-            <span className="hero-tag">Nepal's #1 Job Portal</span>
+            <span className="hero-tag">JobNepal — Jobs across Nepal</span>
             <h1 className="hero-title">
-              Find your <span className="hero-title-accent">dream job</span> in Nepal
+              Find the right <span className="hero-title-accent">opportunity</span> in Nepal
             </h1>
             <p className="hero-subtitle">
-              Thousands of vacancies from top companies and NGOs — across all 7 provinces
+              Discover jobs, connect with employers, and take the next step in your career.
             </p>
 
-            <form className="hero-form" onSubmit={handleSearch} ref={searchRef}>
+            <form className="hero-form" onSubmit={handleSearch} ref={searchRef} role="search">
               <div className="hero-form-inner">
                 <div className="hero-input-group">
-                  <span className="hero-input-icon"><HiBriefcase /></span>
+                  <span className="hero-input-icon" aria-hidden="true"><HiBriefcase /></span>
                   <input
                     type="text"
                     placeholder="Job title, skill, or company"
@@ -113,9 +102,9 @@ function Hero() {
                     </button>
                   )}
                 </div>
-                <div className="hero-divider" />
+                <div className="hero-divider" aria-hidden="true" />
                 <div className="hero-input-group">
-                  <span className="hero-input-icon"><HiMapPin /></span>
+                  <span className="hero-input-icon" aria-hidden="true"><HiMapPin /></span>
                   <input
                     type="text"
                     placeholder="Location"
@@ -132,9 +121,23 @@ function Hero() {
                     </button>
                   )}
                 </div>
-                <button type="submit" className="hero-btn" aria-label="Search Jobs">
-                  <HiMagnifyingGlass />
-                  <span>Search</span>
+                <div className="hero-input-group hero-input-group--select">
+                  <select
+                    className="hero-select"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    aria-label="Job category"
+                  >
+                    <option value="">All categories</option>
+                    {categories.map((c) => (
+                      <option key={c.name} value={c.name}>{c.name}</option>
+                    ))}
+                  </select>
+                  <HiChevronDown className="hero-select-arrow" aria-hidden="true" />
+                </div>
+                <button type="submit" className="hero-btn" aria-label="Search jobs">
+                  <HiMagnifyingGlass aria-hidden="true" />
+                  <span>Search Jobs</span>
                 </button>
               </div>
 
@@ -163,43 +166,70 @@ function Hero() {
               )}
             </form>
 
-            <div className="hero-action-row">
-              <Link to="/find-job" className="hero-action-btn hero-action-btn--primary">
-                Browse Jobs <HiArrowRight />
-              </Link>
-              <Link to="/hire" className="hero-action-btn hero-action-btn--secondary">
-                Post a Job
-              </Link>
+            <div className="hero-popular">
+              <span className="hero-popular-label">Popular:</span>
+              {['Laravel Developer', 'Accountant', 'Sales Executive', 'HR Manager'].map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  className="hero-chip"
+                  onClick={() => { setKeyword(s); navigate('/search?keyword=' + encodeURIComponent(s)) }}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+
+            <div className="hero-actions">
+              <Link to="/search" className="btn btn--primary btn--lg">Browse Jobs <HiArrowRight aria-hidden="true" /></Link>
+              <Link to="/hire" className="btn btn--outline btn--lg">Post a Job</Link>
             </div>
 
             <div className="hero-stats">
-              {stats.map((stat, i) => (
-                <div key={i} className="hero-stat" style={{ animationDelay: `${i * 0.1}s` }}>
-                  <span className="hero-stat-number">
-                    {stat.value || <AnimatedNumber target={stat.target} />}
-                  </span>
-                  <span className="hero-stat-label">{stat.label}</span>
+              {statItems.map((stat) => (
+                <div key={stat.label} className="hero-stat">
+                  <span className="hero-stat-icon" aria-hidden="true"><stat.icon /></span>
+                  <div>
+                    <span className="hero-stat-number">
+                      {stats ? stat.value : <Skeleton width={36} height={18} />}
+                    </span>
+                    <span className="hero-stat-label">{stat.label}</span>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
-          <div className="hero-visual">
-            <video
-              src="/videos/hero-office.mp4"
-              poster="https://i.pinimg.com/736x/f9/59/7c/f9597c028fe95a4f6645ee09877b3a27.jpg"
-              className="hero-img"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              disablePictureInPicture
-              controlsList="nodownload noremoteplayback"
-              aria-hidden="true"
-            />
-            <div className="hero-img-badge">
+
+          <div className="hero-visual" aria-hidden="true">
+            <div className="hero-visual-card hero-visual-card--main">
+              <div className="hero-visual-card-top">
+                <span className="hero-visual-badge">Featured</span>
+                <span className="hero-visual-deadline">4 days left</span>
+              </div>
+              <div className="hero-visual-card-title">Laravel Developer — CMS & ERP Integration</div>
+              <div className="hero-visual-card-company">Doublard Design Pvt. Ltd</div>
+              <div className="hero-visual-card-meta">
+                <span><HiMapPin /> Kathmandu</span>
+                <span><HiBriefcase /> Full Time</span>
+              </div>
+              <div className="hero-visual-card-foot">
+                <span className="hero-visual-salary">Rs. 60,000 – 90,000</span>
+                <span className="hero-visual-apply">Apply now <HiArrowRight /></span>
+              </div>
+            </div>
+            <div className="hero-visual-card hero-visual-card--sm hero-visual-card--sm1">
+              <div className="hero-visual-card-title">Branch Manager</div>
+              <div className="hero-visual-card-company">NMB Bank Limited · Biratnagar</div>
+              <div className="hero-visual-salary">Rs. 100,000 – 150,000</div>
+            </div>
+            <div className="hero-visual-card hero-visual-card--sm hero-visual-card--sm2">
+              <div className="hero-visual-card-title">React Frontend Developer</div>
+              <div className="hero-visual-card-company">TechInnovate · Remote</div>
+              <div className="hero-visual-salary">Rs. 50,000 – 80,000</div>
+            </div>
+            <div className="hero-visual-stamp">
               <HiBriefcase />
-              <span>10K+ jobs available</span>
+              <span>Live opportunities updated daily</span>
             </div>
           </div>
         </div>

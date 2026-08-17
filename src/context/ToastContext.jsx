@@ -11,10 +11,10 @@ const icons = {
 }
 
 const colors = {
-  success: { bg: '#ecfdf5', border: '#a7f3d0', text: '#065f46', icon: '#059669' },
-  error: { bg: '#fef2f2', border: '#fecaca', text: '#991b1b', icon: '#dc2626' },
-  warning: { bg: '#fffbeb', border: '#fde68a', text: '#92400e', icon: '#d97706' },
-  info: { bg: '#eff6ff', border: '#bfdbfe', text: '#1e40af', icon: '#0B66A9' },
+  success: { bg: 'var(--success-soft)', border: 'var(--success-200)', text: 'var(--success-600)', icon: 'var(--success-500)' },
+  error: { bg: 'var(--error-soft)', border: 'var(--error-200)', text: 'var(--error-700)', icon: 'var(--error-500)' },
+  warning: { bg: 'var(--warning-soft)', border: 'var(--warning-200)', text: 'var(--warning-600)', icon: 'var(--warning-500)' },
+  info: { bg: 'var(--info-soft)', border: 'var(--info-100)', text: 'var(--brand-700)', icon: 'var(--brand-500)' },
 }
 
 function ToastItem({ id, type, message, onRemove }) {

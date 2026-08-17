@@ -1,0 +1,90 @@
+.trust-section {
+  padding: 72px 0;
+}
+@media (max-width: 640px) {
+  .trust-section { padding: 48px 0; }
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 56px;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .trust-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+
+.trust-stat-list {
+  margin: 0 0 20px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.trust-stat {
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+}
+.trust-stat-value {
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--brand-600);
+  line-height: 1.1;
+  margin: 0 0 4px;
+}
+body.dark .trust-stat-value { color: var(--brand-300); }
+.trust-stat-num { font-size: inherit; }
+.trust-stat-label {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.trust-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+.trust-note svg { color: var(--success); flex-shrink: 0; }
+
+.trust-features {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.trust-feature {
+  display: flex;
+  gap: 14px;
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  transition: all var(--dur-fast) var(--ease);
+}
+.trust-feature:hover {
+  border-color: var(--brand-200);
+  box-shadow: var(--shadow-card-hover);
+}
+body.dark .trust-feature:hover { border-color: var(--brand-800); }
+.trust-feature-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--r-md);
+  background: var(--accent-100);
+  color: var(--accent-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  flex-shrink: 0;
+}
+body.dark .trust-feature-icon { background: var(--warning-soft); color: var(--accent-300); }
+.trust-feature-title { font-size: var(--text-md); font-weight: 700; margin-bottom: 3px; }
+.trust-feature-desc { font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.55; }

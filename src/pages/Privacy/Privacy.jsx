@@ -1,8 +1,15 @@
+import { Helmet } from 'react-helmet-async'
 import './Privacy.css'
 
 export default function Privacy() {
   return (
     <div className="privacy-page">
+      <Helmet>
+        <title>Privacy Policy — JobNepal</title>
+        <meta name="description" content="How JobNepal collects, uses, and protects your personal information." />
+        <meta name="robots" content="noindex" />
+        <link rel="canonical" href="https://jobsnepal.com/privacy" />
+      </Helmet>
       <section className="privacy-hero">
         <div className="privacy-container">
           <h1 className="privacy-hero-title">Privacy <span className="privacy-accent">Policy</span></h1>

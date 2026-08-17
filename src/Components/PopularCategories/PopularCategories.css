@@ -1,146 +1,97 @@
 .pc-section {
-  padding: 80px 0;
-  background: #f8fafc;
+  padding: 72px 0;
+  background: var(--bg-subtle);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
-
-.pc-container {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 30px;
-}
-
-.pc-header {
-  text-align: center;
-  margin-bottom: 48px;
-}
-
-.pc-label {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 700;
-  color: #0B66A9;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-
-.pc-title {
-  font-size: 32px;
-  font-weight: 800;
-  color: #0f172a;
-  margin: 0 0 10px;
-  letter-spacing: -0.02em;
-}
-
-.pc-subtitle {
-  font-size: 16px;
-  color: #64748b;
-  margin: 0;
+@media (max-width: 640px) {
+  .pc-section { padding: 48px 0; }
 }
 
 .pc-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 900px) {
+  .pc-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .pc-grid { grid-template-columns: 1fr; }
 }
 
 .pc-card {
-  position: relative;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  min-height: 240px;
-  padding: 24px;
-  border-radius: 16px;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
   text-decoration: none;
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.pc-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
-}
-
-.pc-card-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.75) 100%);
-  transition: opacity 0.3s ease;
-}
-
-.pc-card:hover .pc-card-overlay {
-  opacity: 0.9;
-}
-
-.pc-card-content {
+  transition: all var(--dur-fast) var(--ease);
   position: relative;
-  z-index: 1;
 }
+.pc-card:hover {
+  border-color: var(--brand-200);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+body.dark .pc-card:hover { border-color: var(--brand-800); }
 
-.pc-count {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  color: #fff;
-  background: rgba(11, 102, 169, 0.9);
-  padding: 3px 10px;
-  border-radius: 20px;
-  margin-bottom: 10px;
-  letter-spacing: 0.03em;
+.pc-card-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--r-md);
+  background: var(--brand-50);
+  color: var(--brand-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+  flex-shrink: 0;
+  transition: all var(--dur-fast) var(--ease);
 }
+.pc-card:hover .pc-card-icon {
+  background: var(--brand-600);
+  color: #fff;
+}
+body.dark .pc-card-icon { background: var(--info-soft); color: var(--brand-300); }
 
 .pc-name {
-  font-size: 18px;
-  font-weight: 700;
-  color: #fff;
-  margin: 0 0 4px;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  font-size: var(--text-md);
+  font-weight: 650;
+  color: var(--text);
+  display: block;
+}
+.pc-count {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  display: block;
+  margin-top: 2px;
+}
+.pc-arrow {
+  margin-left: auto;
+  color: var(--text-muted);
+  font-size: 16px;
+  transition: all var(--dur-fast) var(--ease);
+  opacity: 0;
+  transform: translateX(-6px);
+}
+.pc-card:hover .pc-arrow {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--brand-600);
 }
 
-.pc-desc {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+.pc-card--skeleton {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
 }
 
 .pc-footer {
-  text-align: center;
-  margin-top: 40px;
-}
-
-.pc-view-all {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 12px 28px;
-  background: #0f172a;
-  color: #fff;
-  font-weight: 600;
-  font-size: 14px;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background 0.2s, gap 0.2s;
-}
-.pc-view-all:hover {
-  background: #1e293b;
-  gap: 10px;
-}
-
-@media (max-width: 1024px) {
-  .pc-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 640px) {
-  .pc-grid { grid-template-columns: 1fr; }
-  .pc-title { font-size: 26px; }
-}
-
-.dark .pc-section {
-  background: #0b1120;
-}
-.dark .pc-title {
-  color: #f1f5f9;
+  display: flex;
+  justify-content: center;
+  margin-top: 36px;
 }

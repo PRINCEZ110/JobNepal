@@ -1,5 +1,6 @@
 import { HiCheckBadge } from 'react-icons/hi2'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import './Pricing.css'
 
 const plans = [
@@ -32,18 +33,25 @@ const plans = [
 export default function Pricing() {
   return (
     <div className="pr-page">
+      <Helmet>
+        <title>Pricing — JobNepal for Employers</title>
+        <meta name="description" content="Simple, transparent pricing for employers on JobNepal. Choose the plan that fits your hiring needs — no hidden fees." />
+        <link rel="canonical" href="https://jobsnepal.com/pricing" />
+      </Helmet>
+
       <section className="pr-hero">
-        <div className="pr-container">
+        <div className="container-main">
+          <span className="section-eyebrow">For Employers</span>
           <h1 className="pr-hero-title">Simple, transparent <span className="pr-accent">pricing</span></h1>
           <p className="pr-hero-desc">Choose the plan that fits your hiring needs. No hidden fees, no surprises.</p>
         </div>
       </section>
 
       <section className="pr-plans">
-        <div className="pr-container">
+        <div className="container-main">
           <div className="pr-plans-grid">
             {plans.map((plan) => (
-              <div key={plan.name} className={`pr-plan-card ${plan.popular ? 'pr-plan-card--popular' : ''}`}>
+              <div key={plan.name} className={`pr-plan-card card ${plan.popular ? 'pr-plan-card--popular' : ''}`}>
                 {plan.popular && <span className="pr-plan-badge">Most Popular</span>}
                 <h3 className="pr-plan-name">{plan.name}</h3>
                 <div className="pr-plan-price">
@@ -52,13 +60,15 @@ export default function Pricing() {
                 </div>
                 <ul className="pr-plan-features">
                   {plan.features.map((f) => (
-                    <li key={f}><HiCheckBadge /> {f}</li>
+                    <li key={f}><HiCheckBadge aria-hidden="true" /> {f}</li>
                   ))}
                 </ul>
-                <Link to="/signup" className="pr-plan-cta">{plan.cta}</Link>
+                <Link to="/signup" className={`btn btn--block ${plan.popular ? 'btn--primary' : 'btn--outline'}`}>{plan.cta}</Link>
               </div>
             ))}
           </div>
+
+          <p className="pr-note">All plans are free for job seekers — pricing applies to employers only.</p>
         </div>
       </section>
     </div>

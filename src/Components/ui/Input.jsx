@@ -1,74 +1,55 @@
-import { forwardRef, useState } from 'react'
-import { HiEye, HiEyeSlash } from 'react-icons/hi2'
+import { forwardRef, useState, useId } from 'react'
+import { HiEye, HiEyeSlash, HiExclamationCircle } from 'react-icons/hi2'
 
 const Input = forwardRef(function Input({
-  label, error, icon: Icon, type = 'text', helperText,
-  className = '', style, ...props
+  label,
+  error,
+  icon: Icon,
+  type = 'text',
+  helperText,
+  required,
+  className = '',
+  ...props
 }, ref) {
   const [showPw, setShowPw] = useState(false)
+  const id = useId()
   const isPassword = type === 'password'
   const inputType = isPassword ? (showPw ? 'text' : 'password') : type
 
   return (
-    <div style={{ width: '100%', marginBottom: 4 }}>
+    <div className="field">
       {label && (
-        <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#475569', marginBottom: 6 }}>
+        <label className="field-label" htmlFor={id}>
           {label}
-          {props.required && <span style={{ color: '#dc2626', marginLeft: 2 }}>*</span>}
+          {required && <span className="req" aria-hidden="true">*</span>}
         </label>
       )}
       <div style={{ position: 'relative' }}>
         {Icon && (
-          <span style={{
-            position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)',
-            color: '#94a3b8', fontSize: 17, display: 'flex', pointerEvents: 'none',
-            transition: 'color 0.2s',
-          }}>
+          <span className="field-icon" aria-hidden="true">
             <Icon />
           </span>
         )}
         <input
           ref={ref}
+          id={id}
           type={inputType}
-          className={className}
+          required={required}
+          className={['input', error ? 'input--error' : '', className].filter(Boolean).join(' ')}
           style={{
-            width: '100%',
-            padding: Icon ? '13px 14px 13px 44px' : '13px 14px',
+            paddingLeft: Icon ? 42 : undefined,
             paddingRight: isPassword ? 44 : undefined,
-            background: '#f8fafc',
-            border: `1.5px solid ${error ? '#dc2626' : '#e2e8f0'}`,
-            borderRadius: 10,
-            fontSize: 14,
-            color: '#0f172a',
-            outline: 'none',
-            transition: 'all 0.2s',
-            fontFamily: 'inherit',
-            boxSizing: 'border-box',
-            ...style,
           }}
-          onFocus={e => {
-            if (!error) e.currentTarget.style.borderColor = '#0B66A9'
-            e.currentTarget.style.background = '#fff'
-            e.currentTarget.style.boxShadow = '0 0 0 3px rgba(11,102,169,0.1)'
-          }}
-          onBlur={e => {
-            if (!error) e.currentTarget.style.borderColor = '#e2e8f0'
-            e.currentTarget.style.background = '#f8fafc'
-            e.currentTarget.style.boxShadow = 'none'
-          }}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? `${id}-error` : helperText ? `${id}-help` : undefined}
           {...props}
         />
         {isPassword && (
           <button
             type="button"
-            onClick={() => setShowPw(!showPw)}
+            onClick={() => setShowPw((s) => !s)}
             aria-label={showPw ? 'Hide password' : 'Show password'}
-            style={{
-              position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)',
-              background: 'none', border: 'none', cursor: 'pointer',
-              color: '#94a3b8', padding: 6, display: 'flex', fontSize: 18,
-              borderRadius: 6, transition: 'all 0.2s',
-            }}
+            className="field-append"
             tabIndex={-1}
           >
             {showPw ? <HiEyeSlash /> : <HiEye />}
@@ -76,12 +57,12 @@ const Input = forwardRef(function Input({
         )}
       </div>
       {error && (
-        <p style={{ fontSize: 12, color: '#dc2626', margin: '4px 0 0', display: 'flex', alignItems: 'center', gap: 4 }}>
-          {error}
+        <p className="field-error" id={`${id}-error`} role="alert">
+          <HiExclamationCircle /> {error}
         </p>
       )}
       {helperText && !error && (
-        <p style={{ fontSize: 12, color: '#94a3b8', margin: '4px 0 0' }}>{helperText}</p>
+        <p className="field-help" id={`${id}-help`}>{helperText}</p>
       )}
     </div>
   )

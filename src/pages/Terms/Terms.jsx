@@ -1,8 +1,15 @@
+import { Helmet } from 'react-helmet-async'
 import './Terms.css'
 
 export default function Terms() {
   return (
     <div className="terms-page">
+      <Helmet>
+        <title>Terms of Service — JobNepal</title>
+        <meta name="description" content="The terms and conditions governing the use of JobNepal." />
+        <meta name="robots" content="noindex" />
+        <link rel="canonical" href="https://jobsnepal.com/terms" />
+      </Helmet>
       <section className="terms-hero">
         <div className="terms-container">
           <h1 className="terms-hero-title">Terms of <span className="terms-accent">Service</span></h1>

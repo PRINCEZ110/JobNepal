@@ -1,0 +1,212 @@
+.jobcard {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+  transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
+  position: relative;
+}
+
+.jobcard:hover {
+  border-color: var(--brand-200);
+  box-shadow: var(--shadow-card-hover);
+}
+body.dark .jobcard:hover {
+  border-color: var(--brand-800);
+}
+
+.jobcard--featured::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-500), transparent);
+  border-radius: 0 0 2px 2px;
+  opacity: 0.85;
+}
+
+.jobcard-logo {
+  flex-shrink: 0;
+}
+.jobcard-logo-img {
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border);
+  object-fit: cover;
+  background: var(--surface-2);
+}
+
+.jobcard-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.jobcard-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.jobcard-title {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.jobcard-title-link {
+  color: var(--text);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease);
+}
+.jobcard-title-link:hover {
+  color: var(--brand-600);
+}
+body.dark .jobcard-title-link:hover {
+  color: var(--brand-300);
+}
+
+.jobcard-badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.jobcard-company {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0;
+}
+.jobcard-company svg {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.jobcard-category {
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.jobcard-meta {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+.jobcard-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.jobcard-meta-item svg {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.jobcard-meta-item--salary {
+  font-weight: 600;
+  color: var(--text);
+}
+.jobcard-posted {
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.jobcard-deadline--urgent { color: var(--error); font-weight: 600; }
+.jobcard-deadline--soon { color: var(--warning); font-weight: 600; }
+.jobcard-deadline--normal { color: var(--success); }
+
+.jobcard-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.jobcard-save {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 14px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease);
+}
+.jobcard-save:hover {
+  border-color: var(--brand-500);
+  color: var(--brand-600);
+  background: var(--brand-50);
+}
+body.dark .jobcard-save:hover {
+  color: var(--brand-300);
+  background: var(--info-soft);
+}
+.jobcard-save--saved {
+  border-color: var(--accent-400);
+  color: var(--accent-600);
+  background: var(--accent-50);
+}
+body.dark .jobcard-save--saved {
+  background: var(--warning-soft);
+  color: var(--accent-300);
+}
+
+.jobcard-view {
+  text-decoration: none;
+}
+
+/* Skeleton variant */
+.jobcard--skeleton {
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .jobcard {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+  }
+  .jobcard-head {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .jobcard-actions {
+    flex-direction: row;
+    width: 100%;
+  }
+  .jobcard-save {
+    flex: 1;
+  }
+  .jobcard-actions .btn {
+    flex: 1;
+  }
+  .jobcard-meta {
+    gap: 12px;
+  }
+  .jobcard-posted {
+    margin-left: 0;
+  }
+}

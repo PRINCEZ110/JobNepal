@@ -1,40 +1,66 @@
-import { HiArrowRight } from 'react-icons/hi2'
+import { useEffect, useState, memo } from 'react'
 import { Link } from 'react-router-dom'
+import { HiArrowRight, HiMapPin, HiBuildingOffice } from 'react-icons/hi2'
+import { getCompanies } from '../../data/jobsStore.js'
+import Avatar from '../ui/Avatar.jsx'
+import { Skeleton } from '../ui/Skeleton.jsx'
 import './TopCompanies.css'
 
-const companies = [
-  { name: 'World Vision International Nepal', logo: 'https://img.jobsnepal.com/x-small/3cj9yfF3ofeMAfb3WtRwyYz3MxHetIh9SmNcxhbC.jpeg' },
-  { name: 'Caritas Nepal', logo: 'https://img.jobsnepal.com/x-small/moiJjFWeCf0D2R1Uj0VrMCAQBOywSnQf15Z8Fgk4.jpg' },
-  { name: 'People in Need', logo: 'https://img.jobsnepal.com/x-small/UCewfnoD3dsYjZ0mzwfG5rdXkGtHpk0w8ugz5jDO.jpeg' },
-  { name: 'Mercy Corps', logo: 'https://img.jobsnepal.com/x-small/7YRawoHo40pxuyrF6yMltf5IH8F0pb2OulmZqG9U.jpeg' },
-  { name: 'Oxfam in Nepal', logo: 'https://img.jobsnepal.com/x-small/Fkte0tOB8c5CgiCS8FGRVbjUVOIjKMyF4bqOfHUQ.jpeg' },
-  { name: 'Heifer International Nepal', logo: 'https://img.jobsnepal.com/x-small/acILJlY5IQqSsdu3LADgmpvq7E1vNdtgdTFgvQEm.jpeg' },
-  { name: "SOS Children's Villages Nepal", logo: 'https://img.jobsnepal.com/x-small/hucDz77iTzpQ1xiSYBbmhKnLVuRSvzL89PTLu4tB.jpeg' },
-  { name: 'DanChurchAid (DCA)', logo: 'https://img.jobsnepal.com/x-small/JoDlGdYGWNLf3jt3WbimDkIzY2RYtbeUPrdLqJe7.png' },
-]
-
 function TopCompanies() {
+  const [companies, setCompanies] = useState(null)
+
+  useEffect(() => {
+    let mounted = true
+    getCompanies().then((c) => { if (mounted) setCompanies(c) })
+    return () => { mounted = false }
+  }, [])
+
+  const shown = companies?.slice(0, 8) || []
+
   return (
     <section className="tc-section">
-      <div className="tc-container">
-        <div className="tc-header">
-          <span className="tc-label">Hiring Now</span>
-          <h2 className="tc-title">Top Hiring Companies</h2>
-          <p className="tc-subtitle">Leading organizations hiring on JobsNepal</p>
+      <div className="container-main">
+        <div className="section-head">
+          <span className="section-eyebrow">Hiring now</span>
+          <h2 className="section-title">Top hiring companies</h2>
+          <p className="section-subtitle">Organizations with open roles on JobNepal right now</p>
         </div>
+
         <div className="tc-grid">
-          {companies.map((c, i) => (
-            <div key={i} className="tc-card">
-              <img src={c.logo} alt={c.name} className="tc-logo" loading="lazy" />
-            </div>
-          ))}
-        </div>
-        <div className="tc-footer">
-          <Link to="/jobs/company" className="tc-view-all">View All Companies <HiArrowRight /></Link>
+          {!companies ? (
+            Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="tc-card">
+                <Skeleton width={52} height={52} borderRadius={10} />
+                <Skeleton width="70%" height={15} />
+                <Skeleton width="55%" height={12} />
+              </div>
+            ))
+          ) : shown.length === 0 ? (
+            <p className="text-muted">No companies hiring yet.</p>
+          ) : (
+            shown.map((c) => (
+              <Link key={c.name} to="/jobs/company" className="tc-card">
+                <div className="tc-card-top">
+                  {c.logo ? (
+                    <img src={c.logo} alt="" className="tc-logo" loading="lazy" />
+                  ) : (
+                    <Avatar name={c.name} size={52} borderRadius={10} />
+                  )}
+                  <span className="tc-count badge badge--brand">{c.jobs.length} job{c.jobs.length !== 1 ? 's' : ''}</span>
+                </div>
+                <div className="tc-name">{c.name}</div>
+                <div className="tc-meta">
+                  <span><HiMapPin aria-hidden="true" /> {c.location}</span>
+                  <span><HiBuildingOffice aria-hidden="true" /> {c.industry}</span>
+                </div>
+                <span className="tc-view">View Company <HiArrowRight aria-hidden="true" /></span>
+              </Link>
+            ))
+          )}
         </div>
       </div>
     </section>
   )
 }
 
-export default TopCompanies
+export default memo(TopCompanies)
