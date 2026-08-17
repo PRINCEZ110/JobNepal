@@ -105,88 +105,6 @@
   right: 15%;
 }
 
-/* ---------- z3 profile cards ---------- */
-
-.hero-cards {
-  position: absolute;
-  left: 50%;
-  bottom: 7%;
-  transform: translateX(-50%);
-  z-index: 3;
-  display: flex;
-  align-items: flex-end;
-  pointer-events: none;
-}
-
-.hero-card-slot {
-  margin: 0 -14px;
-  transform: translate3d(calc(var(--px, 0) * 5px), calc(var(--py, 0) * 4px), 0);
-  will-change: transform;
-}
-.hero-card-slot:nth-child(1) { z-index: 1; }
-.hero-card-slot:nth-child(2) { z-index: 2; }
-.hero-card-slot:nth-child(3) { z-index: 3; }
-.hero-card-slot:nth-child(4) { z-index: 2; }
-.hero-card-slot:nth-child(5) { z-index: 1; }
-
-.hero-card {
-  transform: rotate(var(--rot, 0deg));
-  animation: card-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: var(--d, 0s);
-  will-change: transform;
-}
-
-.hero-card-float {
-  animation: card-float 6s ease-in-out infinite;
-  animation-delay: var(--fd, 0s);
-  will-change: transform;
-}
-
-.hero-card-inner {
-  position: relative;
-  width: 196px;
-  height: 246px;
-  border: 3px solid #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 16px 36px rgba(9, 14, 28, 0.32);
-  overflow: hidden;
-}
-
-.hero-card-inner > svg,
-.hero-card-photo {
-  position: absolute;
-  top: -15%;
-  left: 50%;
-  width: 124%;
-  height: auto;
-  transform: translateX(-50%);
-  filter: saturate(0) contrast(1.06);
-}
-
-.hero-card-caption {
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  bottom: 12px;
-  text-align: center;
-  line-height: 1.25;
-}
-
-.hero-card-name {
-  display: block;
-  font-size: 13px;
-  font-weight: 750;
-  letter-spacing: -0.01em;
-}
-
-.hero-card-role {
-  display: block;
-  font-size: 11px;
-  font-weight: 550;
-  opacity: 0.8;
-  margin-top: 1px;
-}
-
 /* ---------- z4 arrows ---------- */
 
 .hero-arrows {
@@ -547,16 +465,6 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes card-up {
-  from { opacity: 0; transform: translateY(52px) rotate(calc(var(--rot, 0deg) - 10deg)); }
-  to { opacity: 1; transform: translateY(0) rotate(var(--rot, 0deg)); }
-}
-
-@keyframes card-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
-}
-
 @keyframes label-pop {
   from { opacity: 0; transform: translateY(18px) scale(0.92) rotate(var(--rot, 0deg)); }
   to { opacity: 1; transform: translateY(0) scale(1) rotate(var(--rot, 0deg)); }
@@ -585,15 +493,11 @@
 /* ---------- Responsive ---------- */
 
 @media (max-width: 1100px) {
-  .hero-card-inner { width: 168px; height: 210px; }
-  .hero-card-slot { margin: 0 -11px; }
   .hero-arrow-slot--tl { left: 6%; }
   .hero-arrow-slot--br { right: 5%; }
 }
 
 @media (max-width: 900px) {
-  .hero-card-slot:nth-child(5) { display: none; }
-  .hero-card-inner { width: 150px; height: 188px; }
   .hero-label-slot--l { left: 5%; }
   .hero-label-slot--r { right: 4%; }
   .hero-arrow-slot--bl { display: none; }
@@ -638,15 +542,6 @@
     width: auto;
   }
 
-  .hero-cards { bottom: 9%; }
-  .hero-card-slot:nth-child(4) { display: none; }
-  .hero-card-slot { margin: 0 -9px; }
-  .hero-card-inner { width: 112px; height: 142px; border-width: 2px; }
-
-  .hero-card-caption { bottom: 8px; }
-  .hero-card-name { font-size: 11px; }
-  .hero-card-role { font-size: 9.5px; }
-
   .hero-label-slot--l { top: auto; left: 3%; bottom: 38%; }
   .hero-label-slot--r { top: auto; right: 3%; bottom: 30%; }
   .hero-label { font-size: 11px; padding: 7px 12px; border-radius: 12px; }
@@ -667,8 +562,6 @@
   .hero-container { padding-top: 70px; }
   .hero-title { font-size: clamp(3.6rem, 6.2vw, 6rem); margin-bottom: 14px; }
   .hero-subtitle { margin-bottom: 20px; }
-  .hero-cards { bottom: 3%; }
-  .hero-card-inner { width: 164px; height: 202px; }
   .hero-arrow-slot--tl { top: 24%; }
 }
 
@@ -676,8 +569,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hero-reveal,
-  .hero-card,
-  .hero-card-float,
   .hero-label,
   .hero-arrow,
   .hero-arrow svg,

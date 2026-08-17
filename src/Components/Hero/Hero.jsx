@@ -16,25 +16,6 @@ const suggestions = {
   locations: ['Kathmandu', 'Lalitpur', 'Pokhara', 'Biratnagar', 'Chitwan', 'Surkhet'],
 }
 
-const profileCards = [
-  { name: 'Asmita', role: 'Frontend Developer', bg: '#8B5CF6', fg: '#ffffff', rot: '-5deg', img: '' },
-  { name: 'Kiran', role: 'Data Analyst', bg: '#FFC857', fg: '#171717', rot: '3deg', img: '' },
-  { name: 'Pooja', role: 'UI/UX Designer', bg: '#F36F4F', fg: '#ffffff', rot: '-2deg', img: '' },
-  { name: 'Rajan', role: 'Marketing Lead', bg: '#ffffff', fg: '#171717', rot: '4deg', img: '' },
-  { name: 'Sneha', role: 'HR Manager', bg: '#8B5CF6', fg: '#ffffff', rot: '-4deg', img: '' },
-]
-
-function HeroPerson() {
-  return (
-    <svg viewBox="0 0 200 250" aria-hidden="true" focusable="false">
-      <g fill="#171717">
-        <path d="M100 30c19.6 0 35.5 15.9 35.5 35.5S119.6 101 100 101 64.5 85.1 64.5 65.5 80.4 30 100 30z" />
-        <path d="M26 250c0-55 30-86 74-86s74 31 74 86z" />
-      </g>
-    </svg>
-  )
-}
-
 function Hero() {
   const navigate = useNavigate()
   const heroRef = useRef(null)
@@ -158,24 +139,6 @@ function Hero() {
         </div>
         <span className="hero-blob-bubble hero-blob-bubble--one" />
         <span className="hero-blob-bubble hero-blob-bubble--two" />
-      </div>
-
-      <div className="hero-cards" aria-hidden="true">
-        {profileCards.map((c, i) => (
-          <div key={c.name} className="hero-card-slot">
-            <div className="hero-card" style={{ '--rot': c.rot, '--d': `${0.8 + i * 0.09}s` }}>
-              <div className="hero-card-float" style={{ '--fd': `${i * 0.7}s` }}>
-                <div className="hero-card-inner" style={{ background: c.bg, color: c.fg }}>
-                  {c.img ? <img className="hero-card-photo" src={c.img} alt="" /> : <HeroPerson />}
-                  <div className="hero-card-caption">
-                    <span className="hero-card-name">{c.name}</span>
-                    <span className="hero-card-role">{c.role}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
       </div>
 
       <div className="hero-arrows" aria-hidden="true">
