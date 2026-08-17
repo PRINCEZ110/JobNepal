@@ -17,8 +17,8 @@
 .navbar-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
-  height: 68px;
+  padding: 0 48px;
+  height: 76px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -284,7 +284,7 @@ body.dark .navbar-nav-link--active { color: var(--brand-300); background: var(--
 .navbar-mobile {
   display: none;
   position: fixed;
-  top: 68px;
+  top: 76px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -422,8 +422,33 @@ body.dark .navbar-mobile-sub-item--active { color: var(--brand-300); background:
   color: #fff;
 }
 .navbar--over-hero .navbar-notif-dot { border-color: rgba(5, 12, 24, 0.55); }
-.navbar--over-hero .navbar-btn--ghost { color: rgba(255, 255, 255, 0.9); }
-.navbar--over-hero .navbar-btn--ghost:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+.navbar--over-hero .navbar-btn--ghost {
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  border-radius: 10px;
+  background: transparent;
+  color: #fff;
+}
+.navbar--over-hero .navbar-btn--ghost:hover {
+  background: #fff;
+  border-color: #fff;
+  color: #171717;
+}
+.navbar--over-hero .navbar-btn--primary {
+  background: #f36f4f;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(243, 111, 79, 0.35);
+}
+.navbar--over-hero .navbar-btn--primary:hover {
+  background: #e85f3e;
+  box-shadow: 0 8px 20px rgba(243, 111, 79, 0.45);
+}
+.navbar--over-hero .navbar-btn--accent {
+  background: #ffc857;
+  border-radius: 10px;
+  color: #171717;
+  box-shadow: 0 6px 16px rgba(255, 200, 87, 0.3);
+}
+.navbar--over-hero .navbar-btn--accent:hover { background: #f5bd47; }
 .navbar--over-hero .navbar-user-btn {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.18);
@@ -443,7 +468,7 @@ body.dark .navbar-mobile-sub-item--active { color: var(--brand-300); background:
 }
 
 @media (max-width: 640px) {
-  .navbar-inner { padding: 0 16px; height: 62px; }
-  .navbar-mobile { top: 62px; }
+  .navbar-inner { padding: 0 20px; height: 66px; }
+  .navbar-mobile { top: 66px; }
   .navbar-auth .navbar-btn--ghost { display: none; }
 }

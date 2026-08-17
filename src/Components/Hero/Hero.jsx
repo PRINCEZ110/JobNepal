@@ -1,12 +1,11 @@
 import { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  HiMagnifyingGlass, HiMapPin, HiBriefcase, HiXMark,
-  HiChevronDown, HiBuildingOffice, HiSquares2X2, HiGlobeAsiaAustralia,
+  HiMagnifyingGlass, HiMapPin, HiBriefcase, HiXMark, HiChevronDown,
+  HiUserGroup, HiGlobeAsiaAustralia, HiStar,
 } from 'react-icons/hi2'
 import { useDebounce } from '../../hooks/useDebounce.js'
-import { getStats, getCategories } from '../../data/jobsStore.js'
-import { Skeleton } from '../ui/Skeleton.jsx'
+import { getCategories } from '../../data/jobsStore.js'
 import './Hero.css'
 
 const POSTER_SRC = '/images/jobnepal-hero-poster.jpg'
@@ -17,19 +16,35 @@ const suggestions = {
   locations: ['Kathmandu', 'Lalitpur', 'Pokhara', 'Biratnagar', 'Chitwan', 'Surkhet'],
 }
 
-const popularSearches = ['Laravel Developer', 'Accountant', 'Sales Executive', 'HR Manager']
+const profileCards = [
+  { name: 'Asmita', role: 'Frontend Developer', bg: '#8B5CF6', fg: '#ffffff', rot: '-5deg', img: '' },
+  { name: 'Kiran', role: 'Data Analyst', bg: '#FFC857', fg: '#171717', rot: '3deg', img: '' },
+  { name: 'Pooja', role: 'UI/UX Designer', bg: '#F36F4F', fg: '#ffffff', rot: '-2deg', img: '' },
+  { name: 'Rajan', role: 'Marketing Lead', bg: '#ffffff', fg: '#171717', rot: '4deg', img: '' },
+  { name: 'Sneha', role: 'HR Manager', bg: '#8B5CF6', fg: '#ffffff', rot: '-4deg', img: '' },
+]
+
+function HeroPerson() {
+  return (
+    <svg viewBox="0 0 200 250" aria-hidden="true" focusable="false">
+      <g fill="#171717">
+        <path d="M100 30c19.6 0 35.5 15.9 35.5 35.5S119.6 101 100 101 64.5 85.1 64.5 65.5 80.4 30 100 30z" />
+        <path d="M26 250c0-55 30-86 74-86s74 31 74 86z" />
+      </g>
+    </svg>
+  )
+}
 
 function Hero() {
   const navigate = useNavigate()
+  const heroRef = useRef(null)
   const [keyword, setKeyword] = useState('')
   const [location, setLocation] = useState('')
   const [category, setCategory] = useState('')
   const [categories, setCategories] = useState([])
-  const [stats, setStats] = useState(null)
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [suggestionType, setSuggestionType] = useState('jobs')
   const [videoFailed, setVideoFailed] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   )
@@ -39,7 +54,6 @@ function Hero() {
   useEffect(() => {
     let mounted = true
     getCategories().then((c) => { if (mounted) setCategories(c) })
-    getStats().then((s) => { if (mounted) setStats(s) })
     return () => { mounted = false }
   }, [])
 
@@ -51,13 +65,28 @@ function Hero() {
   }, [])
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 56)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  const showVideo = !prefersReducedMotion && !videoFailed
+    if (prefersReducedMotion || window.matchMedia('(pointer: coarse)').matches) return
+    let raf = null
+    const onMove = (e) => {
+      if (raf) return
+      raf = requestAnimationFrame(() => {
+        raf = null
+        const el = heroRef.current
+        if (!el) return
+        const r = el.getBoundingClientRect()
+        if (r.bottom < 0 || r.top > window.innerHeight) return
+        const x = ((e.clientX - r.left) / r.width - 0.5).toFixed(3)
+        const y = ((e.clientY - r.top) / r.height - 0.5).toFixed(3)
+        el.style.setProperty('--px', x)
+        el.style.setProperty('--py', y)
+      })
+    }
+    window.addEventListener('pointermove', onMove, { passive: true })
+    return () => {
+      window.removeEventListener('pointermove', onMove)
+      if (raf) cancelAnimationFrame(raf)
+    }
+  }, [prefersReducedMotion])
 
   const filteredSuggestions = useMemo(() => {
     return debouncedKeyword
@@ -83,24 +112,14 @@ function Hero() {
     return () => document.removeEventListener('mousedown', handleClick)
   }, [])
 
-  const scrollToJobs = useCallback(() => {
-    const next = document.getElementById('featured-jobs')
-    if (next) {
-      next.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' })
-    } else {
-      window.scrollTo({ top: window.innerHeight, behavior: prefersReducedMotion ? 'auto' : 'smooth' })
-    }
-  }, [prefersReducedMotion])
-
-  const statItems = [
-    { icon: HiBriefcase, value: stats?.jobs, label: 'Live jobs' },
-    { icon: HiBuildingOffice, value: stats?.companies, label: 'Hiring companies' },
-    { icon: HiSquares2X2, value: stats?.categories, label: 'Job categories' },
-    { icon: HiGlobeAsiaAustralia, value: stats?.provinces, label: 'Provinces covered' },
-  ]
+  const showVideo = !prefersReducedMotion && !videoFailed
+  const labelCategories = useMemo(() => {
+    if (categories.length >= 2) return [categories[0].name, categories[1].name]
+    return ['IT & Software', 'Design & Creative']
+  }, [categories])
 
   return (
-    <section className={`hero ${scrolled ? 'hero--scrolled' : ''}`}>
+    <section ref={heroRef} className="hero">
       <div className="hero-media" aria-hidden="true">
         {showVideo ? (
           <video
@@ -121,71 +140,145 @@ function Hero() {
           <img className="hero-poster" src={POSTER_SRC} alt="" loading="eager" fetchPriority="high" aria-hidden="true" />
         )}
       </div>
-      <div className="hero-overlay hero-overlay--dark" aria-hidden="true" />
-      <div className="hero-overlay hero-overlay--brand" aria-hidden="true" />
-      <div className="hero-overlay hero-overlay--bottom" aria-hidden="true" />
-      <div className="hero-vignette" aria-hidden="true" />
-      <div className="hero-grain" aria-hidden="true" />
+      <div className="hero-tint" aria-hidden="true" />
+
+      <div className="hero-blob-slot" aria-hidden="true">
+        <div className="hero-blob">
+          <svg viewBox="0 0 1440 360" preserveAspectRatio="none">
+            <path
+              d="M0 360
+                 C 40 310, 130 268, 240 280
+                 C 360 292, 420 228, 560 240
+                 C 700 252, 760 190, 900 210
+                 C 1040 230, 1120 158, 1260 178
+                 C 1340 188, 1400 148, 1440 158
+                 L 1440 360 Z"
+            />
+          </svg>
+        </div>
+        <span className="hero-blob-bubble hero-blob-bubble--one" />
+        <span className="hero-blob-bubble hero-blob-bubble--two" />
+      </div>
+
+      <div className="hero-cards" aria-hidden="true">
+        {profileCards.map((c, i) => (
+          <div key={c.name} className="hero-card-slot">
+            <div className="hero-card" style={{ '--rot': c.rot, '--d': `${0.8 + i * 0.09}s` }}>
+              <div className="hero-card-float" style={{ '--fd': `${i * 0.7}s` }}>
+                <div className="hero-card-inner" style={{ background: c.bg, color: c.fg }}>
+                  {c.img ? <img className="hero-card-photo" src={c.img} alt="" /> : <HeroPerson />}
+                  <div className="hero-card-caption">
+                    <span className="hero-card-name">{c.name}</span>
+                    <span className="hero-card-role">{c.role}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="hero-arrows" aria-hidden="true">
+        <div className="hero-arrow-slot hero-arrow-slot--tl">
+          <div className="hero-arrow" style={{ '--rot': '7deg', '--d': '1.0s' }}>
+            <svg viewBox="0 0 140 140" fill="none">
+              <path d="M22 118 C 46 100, 70 70, 102 32" stroke="#FFC857" strokeWidth="4" strokeLinecap="round" />
+              <path d="M28 112 C 50 96, 70 68, 96 36" stroke="#FFC857" strokeWidth="2" strokeLinecap="round" opacity="0.55" />
+              <path d="M102 32 L 81 29 M102 32 L 99 53" stroke="#FFC857" strokeWidth="4" strokeLinecap="round" />
+            </svg>
+          </div>
+        </div>
+        <div className="hero-arrow-slot hero-arrow-slot--bl">
+          <div className="hero-arrow" style={{ '--rot': '-6deg', '--d': '1.06s' }}>
+            <svg viewBox="0 0 140 140" fill="none">
+              <path d="M112 24 C 90 46, 64 74, 34 106" stroke="#ffffff" strokeWidth="4" strokeLinecap="round" />
+              <path d="M106 30 C 86 52, 62 76, 38 102" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" opacity="0.55" />
+              <path d="M34 106 L 36 85 M34 106 L 55 106" stroke="#ffffff" strokeWidth="4" strokeLinecap="round" />
+            </svg>
+          </div>
+        </div>
+        <div className="hero-arrow-slot hero-arrow-slot--br">
+          <div className="hero-arrow" style={{ '--rot': '5deg', '--d': '1.12s' }}>
+            <svg viewBox="0 0 140 140" fill="none">
+              <path d="M24 26 C 46 48, 70 76, 102 108" stroke="#ffffff" strokeWidth="4" strokeLinecap="round" />
+              <path d="M30 32 C 50 52, 72 78, 96 104" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" opacity="0.55" />
+              <path d="M102 108 L 82 105 M102 108 L 99 88" stroke="#ffffff" strokeWidth="4" strokeLinecap="round" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div className="hero-labels" aria-hidden="true">
+        <div className="hero-label-slot hero-label-slot--l">
+          <span className="hero-label hero-label--purple" style={{ '--rot': '-3deg', '--d': '0.65s' }}>
+            {labelCategories[0]}
+          </span>
+        </div>
+        <div className="hero-label-slot hero-label-slot--r">
+          <span className="hero-label hero-label--yellow" style={{ '--rot': '3deg', '--d': '0.72s' }}>
+            {labelCategories[1]}
+          </span>
+        </div>
+      </div>
 
       <div className="hero-container">
         <div className="hero-content">
-          <span className="hero-tag hero-reveal" style={{ '--d': '0.10s' }}>
-            <span className="hero-tag-dot" aria-hidden="true" />
-            Jobs across all 7 provinces of Nepal
+          <span className="hero-eyebrow hero-reveal" style={{ '--d': '0.2s' }}>
+            For Job Seekers
           </span>
 
-          <h1 className="hero-title hero-reveal" style={{ '--d': '0.18s' }}>
+          <h1 className="hero-title hero-reveal" style={{ '--d': '0.3s' }}>
             Find Your Next
-            <span className="hero-title-accent">Opportunity.</span>
+            <span className="hero-title-accent">Opportunity</span>
           </h1>
 
-          <p className="hero-subtitle hero-reveal" style={{ '--d': '0.28s' }}>
-            Discover opportunities from companies across Nepal and take the next step in your career.
+          <p className="hero-subtitle hero-reveal" style={{ '--d': '0.45s' }}>
+            Discover trusted opportunities from companies across Nepal and take the next step in your career.
           </p>
 
-          <form className="hero-form hero-reveal" style={{ '--d': '0.38s' }} onSubmit={handleSearch} ref={searchRef} role="search">
-            <div className="hero-form-inner">
-              <div className="hero-input-group">
-                <span className="hero-input-icon" aria-hidden="true"><HiBriefcase /></span>
+          <form className="hero-search hero-reveal" style={{ '--d': '0.55s' }} onSubmit={handleSearch} ref={searchRef} role="search">
+            <div className="hero-search-inner">
+              <div className="hero-search-field">
+                <span className="hero-search-icon" aria-hidden="true"><HiBriefcase /></span>
                 <input
                   type="text"
                   placeholder="Search jobs, skills, or companies"
                   value={keyword}
                   onChange={(e) => { setKeyword(e.target.value); setSuggestionType('jobs'); setShowSuggestions(true) }}
                   onFocus={() => setShowSuggestions(true)}
-                  className="hero-input"
+                  className="hero-search-input"
                   autoComplete="off"
                   aria-label="Search jobs, skills, or companies"
                   aria-autocomplete="list"
                 />
                 {keyword && (
-                  <button type="button" className="hero-input-clear" onClick={() => { setKeyword(''); setShowSuggestions(false) }} aria-label="Clear search">
+                  <button type="button" className="hero-search-clear" onClick={() => { setKeyword(''); setShowSuggestions(false) }} aria-label="Clear search">
                     <HiXMark />
                   </button>
                 )}
               </div>
-              <div className="hero-divider" aria-hidden="true" />
-              <div className="hero-input-group">
-                <span className="hero-input-icon" aria-hidden="true"><HiMapPin /></span>
+              <span className="hero-search-divider" aria-hidden="true" />
+              <div className="hero-search-field">
+                <span className="hero-search-icon" aria-hidden="true"><HiMapPin /></span>
                 <input
                   type="text"
                   placeholder="Location"
                   value={location}
                   onChange={(e) => { setLocation(e.target.value); setSuggestionType('locations'); setShowSuggestions(true) }}
                   onFocus={() => setShowSuggestions(true)}
-                  className="hero-input"
+                  className="hero-search-input"
                   autoComplete="off"
                   aria-label="Location"
                 />
                 {location && (
-                  <button type="button" className="hero-input-clear" onClick={() => { setLocation(''); setShowSuggestions(false) }} aria-label="Clear location">
+                  <button type="button" className="hero-search-clear" onClick={() => { setLocation(''); setShowSuggestions(false) }} aria-label="Clear location">
                     <HiXMark />
                   </button>
                 )}
               </div>
-              <div className="hero-input-group hero-input-group--select">
+              <div className="hero-search-field hero-search-field--select">
                 <select
-                  className="hero-select"
+                  className="hero-search-select"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                   aria-label="Job category"
@@ -195,11 +288,11 @@ function Hero() {
                     <option key={c.name} value={c.name}>{c.name}</option>
                   ))}
                 </select>
-                <HiChevronDown className="hero-select-arrow" aria-hidden="true" />
+                <HiChevronDown className="hero-search-arrow" aria-hidden="true" />
               </div>
-              <button type="submit" className="hero-btn" aria-label="Search jobs">
+              <button type="submit" className="hero-search-btn" aria-label="Search jobs">
                 <HiMagnifyingGlass aria-hidden="true" />
-                <span>Search Jobs</span>
+                <span>Search</span>
               </button>
             </div>
 
@@ -227,41 +320,18 @@ function Hero() {
               </div>
             )}
           </form>
-
-          <div className="hero-popular hero-reveal" style={{ '--d': '0.48s' }}>
-            <span className="hero-popular-label">Popular:</span>
-            {popularSearches.map((s) => (
-              <button
-                key={s}
-                type="button"
-                className="hero-chip"
-                onClick={() => { setKeyword(s); navigate('/search?keyword=' + encodeURIComponent(s)) }}
-              >
-                {s}
-              </button>
-            ))}
-          </div>
-
-          <div className="hero-stats hero-reveal" style={{ '--d': '0.58s' }}>
-            {statItems.map((stat) => (
-              <div key={stat.label} className="hero-stat">
-                <span className="hero-stat-icon" aria-hidden="true"><stat.icon /></span>
-                <div>
-                  <span className="hero-stat-number">
-                    {stats ? stat.value : <Skeleton width={36} height={18} />}
-                  </span>
-                  <span className="hero-stat-label">{stat.label}</span>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
-      <button type="button" className="hero-scroll-cue" onClick={scrollToJobs} aria-label="Scroll to explore jobs">
-        Explore jobs
-        <HiChevronDown aria-hidden="true" />
-      </button>
+      <div className="hero-bottom" aria-hidden="true">
+        <div className="hero-dividers"><span /><span /><span /></div>
+        <div className="hero-mini-icons">
+          <HiUserGroup />
+          <HiBriefcase />
+          <HiGlobeAsiaAustralia />
+          <HiStar />
+        </div>
+      </div>
     </section>
   )
 }
