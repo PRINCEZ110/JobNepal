@@ -176,6 +176,11 @@ body.dark .navbar-nav-link--active { color: var(--brand-300); background: var(--
   text-decoration: none;
   transition: all var(--dur-fast) var(--ease);
 }
+.navbar-auth {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 .navbar-btn--ghost { color: var(--text-secondary); }
 .navbar-btn--ghost:hover { background: var(--surface-hover); color: var(--text); }
 .navbar-btn--primary {
