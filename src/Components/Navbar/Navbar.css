@@ -398,6 +398,45 @@ body.dark .navbar-mobile-sub-item--active { color: var(--brand-300); background:
   .navbar-mobile { display: block; }
 }
 
+/* Transparent state over the cinematic hero (home page, top of page) */
+.navbar--over-hero {
+  background: linear-gradient(to bottom, rgba(5, 12, 24, 0.62), rgba(5, 12, 24, 0));
+  border-bottom-color: transparent;
+  box-shadow: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.navbar--over-hero .navbar-logo-text { color: #fff; }
+.navbar--over-hero .navbar-logo-text strong { color: var(--brand-300); }
+.navbar--over-hero .navbar-nav-link { color: rgba(255, 255, 255, 0.86); }
+.navbar--over-hero .navbar-nav-link:hover { color: #fff; background: rgba(255, 255, 255, 0.1); }
+.navbar--over-hero .navbar-nav-link--active { color: #fff; background: rgba(255, 255, 255, 0.14); }
+.navbar--over-hero .navbar-icon-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.9);
+}
+.navbar--over-hero .navbar-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+.navbar--over-hero .navbar-notif-dot { border-color: rgba(5, 12, 24, 0.55); }
+.navbar--over-hero .navbar-btn--ghost { color: rgba(255, 255, 255, 0.9); }
+.navbar--over-hero .navbar-btn--ghost:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+.navbar--over-hero .navbar-user-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+.navbar--over-hero .navbar-user-btn:hover { background: rgba(255, 255, 255, 0.16); border-color: rgba(255, 255, 255, 0.3); }
+.navbar--over-hero .navbar-hamburger {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+.navbar--over-hero .navbar-hamburger:hover { background: rgba(255, 255, 255, 0.16); }
+
 @media (max-width: 900px) {
   .navbar-post-btn { display: none; }
   .navbar-user-name { display: none; }

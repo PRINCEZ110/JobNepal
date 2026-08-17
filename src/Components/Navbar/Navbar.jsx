@@ -98,9 +98,10 @@ function Navbar() {
   }, [mobileOpen])
 
   const isActive = (path) => location.pathname === path
+  const overHero = location.pathname === '/' && !scrolled
 
   return (
-    <header className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
+    <header className={`navbar ${scrolled ? 'navbar--scrolled' : ''} ${overHero ? 'navbar--over-hero' : ''}`}>
       <div className="navbar-inner">
         <Link to="/" className="navbar-logo" aria-label="JobNepal home">
           <span className="navbar-logo-mark" aria-hidden="true">

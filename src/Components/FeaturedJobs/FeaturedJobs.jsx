@@ -40,7 +40,7 @@ function FeaturedJobs() {
   }
 
   return (
-    <section className="fj-section">
+    <section id="featured-jobs" className="fj-section">
       <div className="container-main">
         <div className="section-head">
           <span className="section-eyebrow">Trending now</span>
